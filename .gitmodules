@@ -6,3 +6,7 @@
 	path = tex/binder-wse-sketches
 	url = https://github.com/mmore500/wse-sketches
 	branch = binder
+[submodule "tex/binder-reconstruction-quality"]
+	path = tex/binder-reconstruction-quality
+	url = https://github.com/mmore500/hstrat-reconstruction-quality.git
+	branch = binder
