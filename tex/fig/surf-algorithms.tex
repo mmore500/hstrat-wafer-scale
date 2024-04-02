@@ -1,0 +1,49 @@
+\begin{figure*}
+  \centering
+\begin{subfigure}[b]{0.43\linewidth}
+\centering
+\textbf{steady retention policy}
+\end{subfigure}
+\begin{subfigure}[b]{0.43\linewidth}
+\centering
+\textbf{tilted retention policy}
+\end{subfigure}
+
+  \begin{subfigure}[b]{0.43\linewidth}
+    \centering
+  \includegraphics[height=\linewidth,angle=90,trim={0 2.4cm 0 0},clip]{binder-surface-concept/teeplots/10/cnorm=log+num-generations=4096+surface-size=256+viz=site-deposition-depth-by-rank-heatmap+ynorm=linear+ext=}
+    \caption{256 bit steady surface site age plot}
+    % \label{fig:runtime-posthoc-schematic}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.43\linewidth}
+    \centering
+  \includegraphics[height=\linewidth,angle=90, trim={0 0 0 2.4cm},clip]{binder-surface-concept/teeplots/21/cnorm=log+num-generations=4096+surface-size=256+viz=site-deposition-depth-by-rank-heatmap+ynorm=linear+ext=}
+    \caption{256 bit tilted surface site age plot}
+    % \label{fig:async-ga-schematic}
+  \end{subfigure}
+
+
+\begin{subfigure}[b]{0.43\linewidth}
+  \centering
+\includegraphics[width=\linewidth,trim={0 0 0 0},clip]{binder-surface-concept/teeplots/10/num-generations=262144+surface-size=64+viz=stratum-persistence-dripplot+ext=}
+  \caption{64 bit steady surface time retention plot}
+  % \label{fig:runtime-posthoc-schematic}
+\end{subfigure}
+\begin{subfigure}[b]{0.43\linewidth}
+  \centering
+\includegraphics[width=\linewidth,trim={0 0 0 0},clip]{binder-surface-concept/teeplots/21/num-generations=262144+surface-size=64+viz=stratum-persistence-dripplot+ext=}
+  \caption{64 bit tilted surface time retention plot}
+  % \label{fig:async-ga-schematic}
+\end{subfigure}
+
+\caption{%
+  Visualizations of steady (left) and tilted (right) surface site selection policies.
+  Top row heatmaps shows evolution of time-since-last-deposition for each site on a 256 bit field over the course of 4,096 depositions.
+  Bottom row drip plots show retention timelines for 3,000 ingested timepoints.
+  Eliminated time points are marked in red.
+  Note that for top row, time elapses from top to bottom.
+  For bottom row, time elapses bottom to top.
+  }
+\label{fig:surf-algorithms}
+
+\end{figure*}
