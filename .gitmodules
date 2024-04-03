@@ -1,7 +1,3 @@
-[submodule "tex/binder"]
-	path = tex/binder
-	url = https://github.com/mmore500/wse-sketches.git
-	branch = binder
 [submodule "tex/binder-wse-sketches"]
 	path = tex/binder-wse-sketches
 	url = https://github.com/mmore500/wse-sketches
@@ -13,4 +9,12 @@
 [submodule "tex/surface-concept-binder"]
 	path = tex/binder-surface-concept
 	url = https://github.com/mmore500/hstrat-surface-concept.git
+	branch = binder
+[submodule "tex/binder"]
+	path = tex/binder
+	url = https://github.com/hstrat-wafer-scale.git
+	branch = binder
+[submodule "tex/binder-wafer-scale"]
+	path = tex/binder-wafer-scale
+	url = https://github.com/mmore500/hstrat-wafer-scale.git
 	branch = binder
