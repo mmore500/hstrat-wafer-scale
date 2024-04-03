@@ -1,32 +1,58 @@
 \begin{figure*}
- \begin{subfigure}[b]{\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=e4ea2071-8228-42de-af8c-879cedff9ba7+viz=draw-biopython-tree+ext=}
+
+\begin{subfigure}[c]{\textwidth}
+\begin{minipage}[c]{0.1\textwidth}
     \caption{25 cycles}
     \label{fig:tagged_25}
-  \end{subfigure}
+  \end{minipage}
+  \begin{minipage}[c]{0.9\textwidth}
+    \includegraphics[width=\textwidth,,trim={0 0.81cm 0 0},clip]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=e4ea2071-8228-42de-af8c-879cedff9ba7+viz=draw-biopython-tree+ext=}
+  \end{minipage}
+\end{subfigure}
 
-  \begin{subfigure}[b]{\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=3d55af5f-7714-45da-9276-e860f46b4d94+viz=draw-biopython-tree+ext=}
+\vspace{-1ex}
+
+\begin{subfigure}[c]{\textwidth}  \begin{minipage}[c]{0.1\textwidth}
     \caption{50 cycles}
     \label{fig:tagged_50}
-  \end{subfigure}
+  \end{minipage}
+  \begin{minipage}[c]{0.9\textwidth}
+    \includegraphics[width=\textwidth,,trim={0 0.81cm 0 0},clip]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=3d55af5f-7714-45da-9276-e860f46b4d94+viz=draw-biopython-tree+ext=}
+  \end{minipage}
+\end{subfigure}
 
-  \begin{subfigure}[b]{\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=932aa302-becb-47e8-9712-7f550b02364c+viz=draw-biopython-tree+ext=}
+\vspace{-1ex}
+
+\begin{subfigure}[c]{\textwidth}
+  \begin{minipage}[c]{0.1\textwidth}
     \caption{100 cycles}
     \label{fig:tagged_100}
-  \end{subfigure}
-
-\begin{subfigure}[b]{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=42dbcbb3-b803-41a4-9285-4a450bfad6ed+viz=draw-biopython-tree+ext=}
-  \caption{250 cycles}
-  \label{fig:tagged_250}
-
-  \caption{TODO}
-  \label{fig:tagged}
+  \end{minipage}
+  \begin{minipage}[c]{0.9\textwidth}
+    \includegraphics[width=\textwidth,,trim={0 0.81cm 0 0},clip]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=932aa302-becb-47e8-9712-7f550b02364c+viz=draw-biopython-tree+ext=}
+  \end{minipage}
 \end{subfigure}
+
+\vspace{-1ex}
+
+\begin{subfigure}[c]{\textwidth}
+  \begin{minipage}[c]{0.1\textwidth}
+    \caption{250 cycles}
+    \label{fig:tagged_250}
+  \end{minipage}
+  \begin{minipage}[c]{0.9\textwidth}
+    \includegraphics[width=\textwidth]{binder-wse-sketches/binder/teeplots/genome=hsurftiltedsticky_tagged+replicate=42dbcbb3-b803-41a4-9285-4a450bfad6ed+viz=draw-biopython-tree+ext=}
+  \end{minipage}
+\end{subfigure}
+
+\caption{%
+\textbf{Implementation Validation Integration Test.}
+Example phylogenies reconstructed from runs of increasing duration on virtual grid of nine hardware-simulated PEs.
+Founding genomes were tagged with random 16-byte identifier values, which were held constant over the course of simulation (Figure TODO).
+Color-coding indicates each sampled taxon's founding ancestor according to this identifier value.
+As expected, taxa belonging to the same founding clade are reconstructed as more closely related than to other taxa and the number of distinct founding clades represented dwindles with increasing simulation duration.
+Simulation performed under drift conditions.
+}
+\label{fig:tagged}
+
 \end{figure*}
