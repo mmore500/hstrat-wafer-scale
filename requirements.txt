@@ -32,6 +32,10 @@ attrs==23.2.0
     #   referencing
 babel==2.14.0
     # via jupyterlab-server
+backstrip==0.2.4
+    # via
+    #   -r requirements.in
+    #   pecking
 beautifulsoup4==4.12.3
     # via nbconvert
 biopython==1.83
@@ -104,6 +108,8 @@ fonttools==4.49.0
     # via matplotlib
 fqdn==1.5.1
     # via jsonschema
+frozendict==2.4.1
+    # via backstrip
 gitdb==4.0.11
     # via gitpython
 gitpython==3.1.42
@@ -114,6 +120,8 @@ hstrat==1.11.1
     #   hsurf
 hsurf @ git+https://github.com/mmore500/hstrat-surface-concept.git@v0.3.0
     # via -r requirements.in
+hurry-filesize==0.9
+    # via nbmetalog
 idna==3.6
     # via
     #   anyio
@@ -131,10 +139,13 @@ interval-search==0.5.2
 ipykernel==6.29.0
     # via
     #   -r requirements.in
+    #   ipynbname
     #   jupyter
     #   jupyter-console
     #   jupyterlab
     #   qtconsole
+ipynbname==2023.2.0.0
+    # via nbmetalog
 ipython==8.20.0
     # via
     #   hsurf
@@ -219,6 +230,7 @@ jupyterlab-widgets==3.0.9
 keyname==0.6.0
     # via
     #   hstrat
+    #   nbmetalog
     #   teeplot
 kiwisolver==1.4.5
     # via matplotlib
@@ -234,6 +246,7 @@ markupsafe==2.1.4
     #   nbconvert
 matplotlib==3.8.3
     # via
+    #   backstrip
     #   hstrat
     #   hsurf
     #   seaborn
@@ -278,6 +291,8 @@ nbformat==5.9.2
     #   nb-clean
     #   nbclient
     #   nbconvert
+nbmetalog==0.2.6
+    # via -r requirements.in
 nest-asyncio==1.6.0
     # via ipykernel
 networkx==3.2.1
@@ -293,6 +308,7 @@ notebook-shim==0.2.3
 numpy==1.26.3
     # via
     #   alifedata-phyloinformatics-convert
+    #   backstrip
     #   biopython
     #   contourpy
     #   hstrat
@@ -301,6 +317,7 @@ numpy==1.26.3
     #   pandas
     #   pandera
     #   patsy
+    #   pecking
     #   scipy
     #   seaborn
     #   statsmodels
@@ -308,6 +325,7 @@ opytional==0.1.0
     # via
     #   -r requirements.in
     #   alifedata-phyloinformatics-convert
+    #   backstrip
     #   hstrat
     #   hsurf
 ordered-set==4.1.0
@@ -333,9 +351,12 @@ pandas==1.5.3
     # via
     #   -r requirements.in
     #   alifedata-phyloinformatics-convert
+    #   backstrip
     #   hstrat
     #   hsurf
+    #   nbmetalog
     #   pandera
+    #   pecking
     #   seaborn
     #   statsmodels
 pandera==0.18.0
@@ -348,6 +369,8 @@ pathspec==0.12.1
     # via black
 patsy==0.5.6
     # via statsmodels
+pecking==0.2.2
+    # via -r requirements.in
 pexpect==4.9.0
     # via ipython
 phylotrackpy==0.2.0
@@ -409,7 +432,9 @@ python-slugify==8.0.4
 pytz==2023.4
     # via pandas
 pyyaml==6.0.1
-    # via jupyter-events
+    # via
+    #   jupyter-events
+    #   nbmetalog
 pyzmq==25.1.2
     # via
     #   ipykernel
@@ -449,11 +474,14 @@ safe-assert==0.4.0
 scipy==1.12.0
     # via
     #   hsurf
+    #   pecking
     #   statsmodels
 seaborn==0.13.2
     # via
+    #   backstrip
     #   hstrat
     #   hsurf
+    #   pecking
 send2trash==1.8.2
     # via jupyter-server
 six==1.16.0
