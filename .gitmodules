@@ -18,3 +18,7 @@
 	path = tex/binder-wafer-scale
 	url = https://github.com/mmore500/hstrat-wafer-scale.git
 	branch = binder
+[submodule "tex/bindertex-evolutionary-inference"]
+	path = tex/bindertex-evolutionary-inference
+	url = https://github.com/mmore500/hstrat-evolutionary-inference.git
+	branch = tex
