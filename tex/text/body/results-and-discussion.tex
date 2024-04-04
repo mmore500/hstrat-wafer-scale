@@ -53,16 +53,16 @@ So, in addition to being capable of being implemented in a broader range of devi
 
 We performed benchmarking experiments to assess the computational performance of our new surface-based algorithms.
 Due to limited completed implementations of compiled-language algorithms, we performed the bulk of benchmarking using the Python implementations.
-While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance, and has an intrinsic performance penalty due to that, the algorithms were all in the same footing and we use the ``optimize''' flag to strip assert statements out of the benchmarks.
-However, in the process of porting the tilted surface algorithm over to Cerebras Software Language we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
+While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance and suffer an intrinsic performance penalty due to that, the algorithms were all on the same footing and we use the ``optimize''' flag to strip assert statements out of the benchmarks.
+However, in the process of porting the tilted surface algorithm over to Cerebras Software Language, we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
 We augment the Python with a benchmark of this algorithm.
-Figure \ref{fig:benchmarking} provides an overview of results.
+Figure \ref{fig:benchmarking} provides an overview of the results.
 
 % https://github.com/mmore500/hstrat-surface-concept/blob/51d636d768d474fc5148b9fcaa199c1b7776e915/benchmark.ipynb
 We found that the Python implementations of the surface tilted and steady algorithms both took around 4,200ns per operation (SEM c. 50; $n=20$).
 For context, this was about $4\times$ the measured time for a surface placement using a trivial calculation (SEM c. 0.05; $n=20$).
 The column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
-Mann-Whitney U tests confirmed that surface implemnetations significantly outperformed their column counterparts. (Figure \ref{fig:benchmarking}).
+Mann-Whitney U tests confirmed that surface implementations significantly outperformed their column counterparts. (Figure \ref{fig:benchmarking}).
 
 % https://github.com/mmore500/wse-sketches/blob/d4ab0155f63ff5809f8eeca1169ad9b272c30a68/binder/benchmark.ipynb
 Zig implementation of tilted surface:
@@ -81,10 +81,10 @@ Extensive other work TODOCITE has validated the underlying hereditary surface al
 We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
 
 Here, we report the results of an integration test to assess the general validity of phylogenetic reconstructions on the WSE platform.
-We used special genomes tagged with a randomly-geerated identifier at simulation startup.
+We used special genomes tagged with a randomly-generated identifier at simulation startup.
 Figure \ref{fig:genome-layout} explains the content laid out within each genome.
 These identifiers identified clades descending from each founding genome.
-We used the hardware simulator to perform on a simulation on the $3\times3$ PE collective under drift conditions for 25, 50, 100, and 250 generation cycles.
+We used the hardware simulator to perform a simulation on the $3\times3$ PE collective under drift conditions for 25, 50, 100, and 250 generation cycles.
 
 \input{fig/tagged.tex}
 
@@ -95,8 +95,8 @@ As expected, taxa belonging to the same founding clade are reconstructed as more
 
 We used the cycle counter on the WSE hardware simulator to test the amount of real time elapsed over the course of a 100 generation cycle simulation on a $3\times3$ PE collective with the tagged 3 word genome, applying a tilted hereditary stratigraphy every generation.
 
-Each PE completed a mean 29,500 generation cycles per second (SEM 155; $n=9$), or around 2 billion generations a day.
-Over the course of the simulation each PE immigrated a mean of 277 genomes (SEM 23; $n=9$).
+Each PE completed a mean of 29,500 generation cycles per second (SEM 155; $n=9$), or around 2 billion generations a day.
+Over the course of the simulation, each PE immigrated a mean of 277 genomes (SEM 23; $n=9$).
 
 How would this look on a full piece of hardware?
 Keeping 32 individuals per PE would result in a net population size of around 27 million on a full WSE.
@@ -238,8 +238,8 @@ Naive extrapolation would estimate on the order of a quadrillion agent replicati
 
 \input{fig/wse-phylogenies}
 
-In order to perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
-We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32 bit tilted hstrat surface.
+To perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
+We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32-bit tilted hstrat surface.
 We performed evolutionary runs under two conditions, one with tournament size 2 and one with tournament size 8.
 We performed TODO replicates per condition, running each for Y minutes.
 This was sufficient to observe a mean of TODO generations per cycle, SD TODO.
