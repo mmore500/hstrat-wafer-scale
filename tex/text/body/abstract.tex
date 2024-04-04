@@ -1,4 +1,13 @@
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.].
+Evolutionary processes underlie key questions in public health, medicine, and natural resources management.
+Understanding the dynamics of these systems benefits real-world challenges like epidemiology, antibiotic resistance, cancer treatment, and conservation biology.
+Phylogenetic information (i.e., the history of evolutionary relatedness among organisms) can answer important questions about the mode and tempo of evolution within these systems.
+Modeling the dynamics of very large-scale evolving systems requires extensive compute power, possible using new hardware accelerators like the Cerebras Wafer Scale Engine (WSE).
+However, existing phylogenetic tracking techniques for evolution simulations use a centralized, direct lineage tracking approach poorly aligned to such many-processor hardware architectures.
+Recently introduced decentralized hereditary stratigraphy (hstrat) algorithms provide a potential solution for phylogenetic tracking of evolutionary simulations on the WSE, enabling analyses necessary to key science questions.
+To enable phylogenetic tracking on the WSE, we developed new WSE-compatible software implementing hstrat algorithms.
+Software development proceeded in three parts: (1) translating hstrat algorithms to the Cerebras Software Language, (2) validating implementations through unit tests, then (3) optimizing for distributed processing.
+Then, to verify the functionality of the entire implementation, we performed end-to-end validation tests.
+Our work provides means for efficient large-scale evolutionary simulations in future WSE projects, bridging key gaps between agent-based model simulations and emerging hardware accelerators.
+Developed software will allow previously computationally intractable research, benefiting further explorations of evolutionary processes impacting public health, medicine, and beyond.
 \end{abstract}
