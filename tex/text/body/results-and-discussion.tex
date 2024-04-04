@@ -177,3 +177,15 @@ Naive extrapolation would estimate on the order of a quadrillion agent replicati
 \subsection{On-hardware Demonstration with Evolutionary Inference from Phylogenetic Analysis}
 
 \input{fig/wse-phylogenies}
+
+In order to perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
+We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32 bit tilted hstrat surface.
+We performed evolutionary runs under two conditions, one with tournament size 2 and one with tournament size 8.
+We performed TODO replicates per condition, running each for Y minutes.
+This was sufficient to observe a mean of TODO generations per cycle, SD TODO.
+At the conclusion of the run, we collected one genome from each PE.
+
+Figure \ref{fig:wse-phylogenies} compares two example reconstructed phylogenies, one from each treatment.
+Performing a reconstruction with all 850,000 genomes took X minutes.
+We used a Mann-Whitney U test between inner node time distributions for pairs of trees to test whether the difference in selection pressure was detectable.
+Indeed, the recovered phylogenetic information was sufficient to detect this difference in evolutionary dynamics for all pairs ($p < TODO$ for all $n=TODO$).
