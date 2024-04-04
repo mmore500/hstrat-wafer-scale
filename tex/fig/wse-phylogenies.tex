@@ -1,0 +1,48 @@
+\begin{figure*}
+  \centering
+  \begin{minipage}{\textwidth}
+    \centering
+    Generations Ago (approx.)
+  \end{minipage}
+  \begin{minipage}{\textwidth}
+    \hspace{0.02\linewidth}
+    \rotatebox{30}{\makebox[0.1\linewidth][c]{200,000}}
+    \hfill
+    \rotatebox{30}{\makebox[0.1\linewidth][c]{50,000}}
+    \hfill
+    \rotatebox{30}{\makebox[0.1\linewidth][c]{10,000}}
+    \hfill
+    \rotatebox{30}{\makebox[0.1\linewidth][c]{2,000}}
+    \hfill
+    \rotatebox{30}{\makebox[0.1\linewidth][c]{30}}
+    \rotatebox{90}{\makebox[0.04\linewidth][c]{0}}
+  \end{minipage}
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+  \includegraphics[width=\linewidth,height=0.3\linewidth]{bindertex-evolutionary-inference/img/perfect-tree-phylogenies-log/epoch=7+resolution=3+treatment=22/a=collapsed-phylogeny+epoch=00007+mut_distn=np.random.standard_normal+num_generations=32768+num_islands=1024+num_niches=4+p_island_migration=0.01+p_niche_invasion=3.0517578125e-08+population_size=3276.../8+replicate=0+tournament_size=2+treatment=22+_generation=262144+_index=22+scale=log+ext=}
+    \caption{%
+    Tournament size 2.
+    STAND-IN IMAGE.
+    }
+    \label{fig:wse-phylogenies-tsize2}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{\linewidth}
+    \centering
+\includegraphics[width=\linewidth,height=0.3\linewidth]{bindertex-evolutionary-inference/img/perfect-tree-phylogenies-log/epoch=7+resolution=3+treatment=6/a=collapsed-phylogeny+epoch=00007+mut_distn=np.random.standard_normal+num_generations=32768+num_islands=1024+num_niches=1+p_island_migration=0.01+p_niche_invasion=3.0517578125e-08+population_size=3276.../8+replicate=0+tournament_size=2+treatment=6+_generation=262144+_index=6+scale=log+ext=}
+    \caption{%
+      Tournament size 8.
+      STAND-IN IMAGE.
+    }
+    \label{fig:wse-phylogenies-tsize8}
+  \end{subfigure}
+
+\caption{%
+\textbf{Phylogenies from on-hardware experiment.}
+Subfigures \ref{fig:wse-phylogenies-tsize2} and \ref{fig:wse-phylogenies-tsize8} contrast phylogenies from experiments with lower and higher selection pressure, respectively.
+Note the recognizable decrease in phylogenetic richness under high selection pressure.
+Each phylogeny subsampled to 131,072 taxa.
+}
+\label{fig:wse-phylogenies}
+
+\end{figure*}
