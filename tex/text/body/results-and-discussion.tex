@@ -91,6 +91,16 @@ We used the hardware simulator to perform a simulation on the $3\times3$ PE coll
 Figure \ref{fig:tagged} shows reconstructed phylogenies from each duration.
 As expected, taxa belonging to the same founding clade are reconstructed as more closely related than to other taxa and the number of distinct founding clades represented dwindles with increasing simulation duration.
 
+At the end of simulation, one genome was sampled per PE.
+Figure \ref{fig:validation-example:phylogeny} shows the result of phylogenetic reconstruction on these sampled genomes.
+To simplify visualization of the phylogeny with existing phyloinformatic tools, all clades were stitched together into a single tree by attaching them to a common ancestor.
+Taxa are colored according to their clade genesis tag.
+Clade arrangement in the reconstructed tree agrees well with founding clade identities.
+All different-colored taxa are predicted to have had ancient common ancestry.
+Note that relatedness between \texttt{0x5fb} and \texttt{0xde40} is slightly overestimated, due to a configured lack of precise resolution necessary to ensure compact genetic annotations.
+Applications where high reconstruction precision is required can opt to use larger annotation sizes.
+
+
 \subsection{WSE Genetic Algorithm Benchmark}
 
 We used the cycle counter on the WSE hardware simulator to test the amount of real time elapsed over the course of a 100 generation cycle simulation on a $3\times3$ PE collective with the tagged 3 word genome, applying a tilted hereditary stratigraphy every generation.
