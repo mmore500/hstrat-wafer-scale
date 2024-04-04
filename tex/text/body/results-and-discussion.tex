@@ -1,7 +1,5 @@
 \section{Results and Discussion} \label{sec:results}
 
-\input{fig/tagged.tex}
-
 \input{fig/col-vs-surf.tex}
 
 \subsection{Surface Algorithm Benchmark}
@@ -30,6 +28,23 @@ For context, this time a little more than twice the amount of time required for 
 Note that further speedups and optimizations can likely to be had.
 For single-bit differentiae, half of the time placement need not be calculated if the coin flip indicates that the bit isn't going to be flipped.
 Further, in synchronous and near-synchronous simulations, placement positions can be cached meaning they would only need to be calculated once for an entire subpopulation.
+
+\subsection{WSE Hereditary Stratigraphy Validation Experiment}
+
+We performed extensive tests to be confident in our implementation of phylogenetic tracking for the Cerebras Software Language on the WSE device.
+Extensive other work TODOCITE has validated the underlying hereditary surface algorithm and the reconstruction algorithm.
+We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
+
+Here, we report the results of an integration test to assess the general validity of phylogenetic reconstructions on the WSE platform.
+We used special genomes tagged with a randomly-geerated identifier at simulation startup.
+Figure \ref{fig:genome-layout} explains the content laid out within each genome.
+These identifiers identified clades descending from each founding genome.
+We used the hardware simulator to perform on a simulation on the $3\times3$ PE collective under drift conditions for 25, 50, 100, and 250 generation cycles.
+
+\input{fig/tagged.tex}
+
+Figure \ref{fig:tagged} shows reconstructed phylogenies from each duration.
+As expected, taxa belonging to the same founding clade are reconstructed as more closely related than to other taxa and the number of distinct founding clades represented dwindles with increasing simulation duration.
 
 \subsection{WSE Genetic Algorithm Benchmark}
 
