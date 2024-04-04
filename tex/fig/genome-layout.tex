@@ -8,6 +8,9 @@
 
 \begin{figure*}
     \centering
+\begin{minipage}[t]{\textwidth}
+\centering
+\footnotesize
 \begin{tabular}{
 c
 >{\columncolor{LighterBlue}}c
@@ -43,17 +46,19 @@ Byte & {\cellcolor{white}0} & {\cellcolor{white}1} & {\cellcolor{white}2} & {\ce
 \cmidrule(l{1.5pt}r{1.5pt}){12-12}
 \cmidrule(l{1.5pt}r{1.5pt}){13-13}
 & \multicolumn{4}{cq}{\cellcolor{white}} & \multicolumn{4}{cq}{\cellcolor{white}} & \multicolumn{4}{c}{\cellcolor{white}} \\[-2ex]
-Genome 0 & \texttt{F9} & \texttt{02} & \texttt{79} & \texttt{00} & \texttt{8D} & \texttt{22} & \texttt{4F} & \texttt{F3} & \texttt{D2} & \texttt{78} & \texttt{AD} & \texttt{C7} \\
+\scriptsize{Genome 0} & \texttt{F9} & \texttt{02} & \texttt{79} & \texttt{00} & \texttt{8D} & \texttt{22} & \texttt{4F} & \texttt{F3} & \texttt{D2} & \texttt{78} & \texttt{AD} & \texttt{C7} \\
 & \multicolumn{4}{cq}{\cellcolor{white}} & \multicolumn{4}{cq}{\cellcolor{white}} & \multicolumn{4}{c}{\cellcolor{white}} \\[-2ex]
-Genome 1 & \texttt{F9} & \texttt{02} & \texttt{75} & \texttt{00} & \texttt{8D} & \texttt{A1} & \texttt{CB} & \texttt{F2} & \texttt{D1} & \texttt{5B} & \texttt{CC} & \texttt{D4} \\
+\scriptsize{Genome 1} & \texttt{F9} & \texttt{02} & \texttt{75} & \texttt{00} & \texttt{8D} & \texttt{A1} & \texttt{CB} & \texttt{F2} & \texttt{D1} & \texttt{5B} & \texttt{CC} & \texttt{D4} \\
 & \multicolumn{4}{cq}{\cellcolor{white}} & \multicolumn{4}{cq}{\cellcolor{white}} & \multicolumn{4}{c}{\cellcolor{white}} \\[-2ex]
-Genome 2 & \texttt{61} & \texttt{B6} & \texttt{65} & \texttt{00} & \texttt{66} & \texttt{29} & \texttt{B4} & \texttt{F0} & \texttt{62} & \texttt{99} & \texttt{5A} & \texttt{61} \\
+\scriptsize{Genome 2} & \texttt{61} & \texttt{B6} & \texttt{65} & \texttt{00} & \texttt{66} & \texttt{29} & \texttt{B4} & \texttt{F0} & \texttt{62} & \texttt{99} & \texttt{5A} & \texttt{61} \\
 {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} &
 {\cellcolor{white}\ldots} & {\cellcolor{white}\ldots} \\
 \end{tabular}
+\end{minipage}
 
+\begin{minipage}[t]{\textwidth}
 \caption{%
-\textbf{Example genomes sampled after simulation completion.}
+\textbf{Example genomes sampled after validation experiment completion.}
   In validation testing, genomes were composed of three 32-bit words.
   The first two bytes (blue) are fixed random markers generated at simulation start-up, indicating independent lineage originations.
   The next two bytes (salmon) are a generation counter.
@@ -61,4 +66,5 @@ Genome 2 & \texttt{61} & \texttt{B6} & \texttt{65} & \texttt{00} & \texttt{66} &
   Note that this genome does not include any content affecting agent traits or fitness --- neutral selection was used for this validation experiment.
 }
 \label{fig:genome-layout}
+\end{minipage}
 \end{figure*}
