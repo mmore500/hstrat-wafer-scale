@@ -55,25 +55,34 @@ Beyond alife, broader realms of application-oriented evolutionary computation ha
 
 \subsection{Untapped Computational Resources and Emerging Hardware Capabilities}
 
-In important regards, the question of scale within artificial life parallels that within artificial intelligence, except that artificial intelligence is a lot further along in this regard.
-However, the utility and ubiquity of ANNs has since increased dramatically \citep{marcus2018deep}.
-The development of AlexNet is widely considered pivotal to this transformation.
-AlexNet united methodological innovations from the field (such as big datasets, dropout, and ReLU) with GPU computing that enabled training of orders-of-magnitude-larger networks.
-In fact, some aspects of their deep learning architecture were expressly modified to accommodate multi-GPU training \citep{krizhevsky2012imagenet}.
-By adapting existing methodology to exploit commercially available hardware, AlexNet spurred the greater availability of compute resources to the research domain and eventually the introduction of custom hardware to expressly support deep learning \citep{jouppi2017datacenter}.
+% , it turns out in retrospect,
+% Retrospectively,
+With retrospect, connectionist artificial intelligence turns out to have been profoundly scale-dependent.
+The utility and ubiquity of ANNs have exploded in tandem with torrential growth in training set sizes, parameter counts, and training FLOPs \citep{marcus2018deep}.
+Recruitment of multi-GPU training for image classification, requisite particular accomodating adjustments to the underlying deep learning architecture, is commonly identified as the watershed moment to this transformation
+ \citep{krizhevsky2012imagenet}.
+Commerical interest in AI capabilies set in motion a virtuous cycle of further-enabling hardware advances to support deep learning \citep{jouppi2017datacenter}.
+Indeed, the scaling relationship between deep learning and training resources has itself become a major area of active study, with influential visions envisioning this virtuous cycle continuing for the forseeable future \citep{CITETODOTHATGOOGLEPAPERPREPRINT}.
+
+% The relationship between artificial life and scaling can be argued similar to that of connectionist artificial intelligence and scaling.
+% except that artificial intelligence is a lot further along in this regard.
+% % In important regards, the question of scale within artificial life parallels that within artificial intelligence, 
+% However, .
+% The development of 
+% AlexNet united methodological innovations from the field (e.g., big data, dropout, ReLU) with GPU computing that enabled training of orders-of-magnitude-larger networks.
+% In fact, .
 
 % Spectacular advances achieved with artificial neural networks over the last decade illuminate one conceivable progression of events.
 % As with digital evolution, artificial neural networks (ANNs) were traditionally understood as a versatile but auxiliary methodology --- both techniques have been described as ``the second best way to do almost anything'' \citep{miaoulis2008intelligent,eiben2015introduction}.
 
-The commercial utility of deep learning has sparked a constellation of spectacularly capable next-generation compute accelerators \citep{zhang2016cambricon,emani2021accelerating,jia2019dissecting,medina2020habana}.
-Within this category, the emerging class of fabric-based accelerators, most notably the recently-introduced 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, is a particularly exciting --- and fairly uncharted, with applications to HPC workloads still in early days.
+A major upshot of the deep learning race is the emergence of a new constellation of spectacularly capable next-generation compute accelerators \citep{zhang2016cambricon,emani2021accelerating,jia2019dissecting,medina2020habana}.
+Although designed expressly for deep learning workloads, these hardware platforms represent an exceptional opportunity to realize scaling ambitions crux to broad swaths of artificial life work.
+The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, holds particular promise as a vehicle for alife simulation.
 This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently using individual on-chip memory and local PEs interacting through a network-like interface.
+Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in ABM capabilities \citep{perumalla2022computer}.
+Cerebras themselves very recently announced the CS-3 chip, which, among other spec enhancemments, boosts clustering support to potentiallly thousands of constituent accelerators.
 
-We have the opportunity today to take advantage of orders-of-magnitude more computational power due to emerging architectures being built to support deep learning, if only we can figure out how to operate within their framings.
-Rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in ABM capabilities \citep{perumalla2022computer}.
 % This will require changes and impose limitations to what is possible, artificial life.
-Ride the coat tails of artificial intelligence to cross the more is different boundary \citep{anderson1972more}
-Implicit among much of the field, it seems, is an anticipation that order-of-magnitude changes in artificial life systems may unlock a qualitative sea change in simulation outcomes.
 % This is not an entirely unreasonable notion of a possible future of artificial life.
 
 \subsection{Observability at Scale for Experimental Usefulness as a Scientific Tool}
