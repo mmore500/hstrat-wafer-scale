@@ -1,5 +1,6 @@
 \section{Introduction}
 
+% defining? fundamental?
 A quintessential characteristic of computational artificial life experiments is the near total malleability of the simulacrum \citep{pattee1989simulations}.
 Indeed, capability to explore arbitrary possibilities as-they-could-be defines alife's role as a tool for inquiry \citep{langton1997artificial}.
 Such near-limitless freedom to realize arbitrary system configurations, however, can somewhat obscure an intrinsic limitation of most computational alife work: scale.
@@ -14,37 +15,43 @@ Although Alife systems can typically observe generational cycles at orders-of-ma
 % Natural organisms have vastly more genetic content and phenotypic state, as well as more and more diverse interactions with the environment and with other cells.
 
 % Adversely? Crucially? Conversely? Formidabbly? Aversely? Cumbrously?
-Exigently, scale lies core to key directions in artificial life research, like transitions in individuality, ecological dynamics, and rare evolutionary innovations \citep{CITETODO}.
+Exigently, however, scale lies core to key directions in artificial life research, like transitions in individuality, ecological dynamics, and rare evolutionary innovations \citep{CITETODO}.
 % Indeed, there is some evidence that limitations in scale are holding back TODO \citep{CITEGEB}.
 Cross-scale dynamics are also crucial to key real-world challenges from evolving populations related to public health, medicine, and natural resources management, for instance interactions between within-host infection dynamics and population-level epidemiological patterns for evolving disease agents \citep{TODOCITE}.
 However, because capabilities of current Silicon-based processor cores are expected unlikely to improve markedly in the forseeable future \citep{sutter2005free},
 scale-up necessary to progress on these key frontiers demands many-processor computation.
-Parallel and distributed computation, however, imposes compromises with respect to the convienence, flexibility, observability, interprability, and replicability enjoyed under centralized, serial models of computation. % incorporation, compromise
-Here, we explore alignment of digital evolution to hardware at the extreme cutting-edge of massively-parallel, accelerator-driven computation and develop algorithms to mitigate limitations of distributed computation.
+Transition to and distributed computation, however, imposes compromises with respect to the convienence, flexibility, observability, interprability, total reliability, and perfect replicability enjoyed under classical centralized, serial models of computation. % incorporation, compromise
+Indeed, these challenges are implicit to work with biological organisms and,
+fortunately, ongoing success of organismal biology evidence that they are surmountable and even hint at strategies that can be used to solve them.
+Here, we explore alignment of digital evolution to HPC accelerator hardware at the extreme cutting-edge of massively distributed computation, and use decentralized tracking techniques inspired by work with natural organisms to mitigate limitations of distributed computation with respect to tracking phylogrnies.
 
 \subsection{Approaches and Progress toward Scale-up in Artificial Life}
 
-Highly-scalable artificial life and digital evolution systems typically thread two distinct aspects of engineering effort.
-As with any work in high-performance scientific computing, careful design is required to appropriately divvy computation and communication workloads across available hardware.
+% effort
+Achievement of highly-scalable artificial life and digital evolution systems typically thread together two distinct engineering considerations.
+First, as with any high-performance scientific computing, careful design is required to appropriately divvy computation and communication workloads across available hardware.
 % flexible/pliable/creative/abstract/representational/invites
-However, the discretionary nature of artificial life modeling, permits intentional formulation of simulation semantics to tailor the structure of underlying computation suitable for hardware capabilities.
-Ackley's ongoing work with the T2 Tile Project and ULAM exemplifies this dichotomy \citep{CITEULAM}.
-Ackley formulates simulation content in terms of local interactions between discrete particles, providing for a mapping between simulation space and hardware components and minimizing requirements for hardware connectivity.
-Attention is also paid to ensure robustness of simulation to lost or corrupted state to enable relaxation of guarantees from the underlying hardware.
-software infrastructure necessary to instantiate across, with additionally dipped down a level to engineer bespoke underlying hardware \citep{ILLUMINAXMACHINA,T2PROJECT}.
+% formulation
+The second thread arises from the exceptionally discretionary nature of artificial life modeling: intentional tailoring of simulation semantics to suit underlying hardware capabilities.
+% dichotomy
+Ackley's ongoing work with the T2 Tile Project and ULAM exemplifies a strong synthesis of this engineering duality \citep{CITEULAM}.
+At the level of simulation semantics, Ackley formulates update procedures in terms of local interactions between discrete, spatially situated particles.
+This design provides for an efficient one-to-one mapping between simulation space and hardware components, minimizing requirements for intra-hardware connectivity and preventing global impacts from on-the-fly augmentations or reductions of available hardware.
+The ULAM framework then ties into implementation-level infrastrucutre necessary to accomplish performant, best-effort lock/release of spatial event windows spanning multiple T2 tile hardwares (movable2013).
+The Santa Fe Board project provided analogous infrastructure foundations for earlier work, coordinating efficient packet-framed, non-blocking communication between hardware tile elements \citep{https://livingcomputation.com/s/doc/}.
+Ackley's work is distinguished, in fact, in dipping to a yet-lower level of abstraction and tackling design of bespoke, modular distributed processing hardware \citep{ILLUMINAXMACHINA,T2PROJECT}.
 % to engineer computational artificial life systems for scalability
 % This work joins/builds on a longstanding chorus of interest in scale-up of artificial life, and already some exciting work in that domain.
 % Of particular note is ADVOCACY/ARGUMENTATION Ackley has bespoke hardware \citep{ILLUMINAXMACHINA,ackley2023robust}.
 
 % parallel and distributed
-A good number of additional digital evolution systems have made progress on these two engineering fronts, enabling incorporation of rich interactions between parallelized simulation components.
-explored this design space.
-Harding applied GPU acceleration to cellular automata models of artificial development systems, which involve intensive interaction between spatially-distributed instantiation of a genetic program \citep{harding2007fast_ieee}.
-Likewise, Network Tierra featured arbitrary communication between digital organisms residing on different machines \citep{ray1995proposal}.
-More recently, in a continuation of much earlier work, Heinemann's ALIEN project has leveraged GPU acceleration for perform physics-based simulation of numerous soft body agents within a 2D arena \citep{heinemann2008artificial}.
-TODO cite conduit/dishtiny here
-
-Beyond alife, broader realms of application-oriented evolutionary computation have explored, notably island-model and director-worker paradigms \citep{TODO}.
+Several additional digital evolution projects have made notable headway synthesizing alife model content with sophisticated, scalable technical backing, achieving rich interactions among numerous parallelized simulation components.
+Harding demonsrated large-scalle cellular automota-based artificial development systems, achieved through GPU-parallelized instantiations of a genetic program  \citep{harding2007fast_ieee}.
+Early work by Ray with Network Tierra used an island model to distribute digital organisms across federated servers, with migration  handled according to the real-time latencies and topology of the underlying network \citep{ray1995proposal}.
+More recently, Heinemann's ALIEN project has leveraged GPU acceleration to achieve spectacularly elaborate simulations with rich interactions between numerous spatially-situated soft body agents \citep{heinemann2008artificial}.
+Likewise, the Distributed Hierarchical Transitions in Individuality (DISHTINY) project has incorporated event-driven agent-agent interaction schemes amenable to best-effort, asynchronous interlocution \cittep{TODO,TODOconduit}.
+GPU-first agent-based modeling (ABM) packages like Flame2 also tackle this problem of hardware-simulacrum matching, albeit framed at a higher level of abstraction \citep{TODO}.
+Beyond alife, broader realms of application-oriented evolutionary computation have dovetailed many-processor computation, most commonly through island-model and director-worker evaluation paradigms \citep{TODO}.
 
 \subsection{Untapped Computational Resources and Emerging Hardware Capabilities}
 
