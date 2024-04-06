@@ -1,5 +1,28 @@
 \section{Conclusion} \label{sec:conclusion}
 
+
+Such work should be made with an eye for contribution back to HPC.
+As noted earlier, the unique character of artificial life simulation suits it to serve at the tip of the spear in HPC evolution.
+High-performance computing hardware with transformative capabilities is coming to market right now, and some of it --- like the Cerebras wafer scale engine \citep{lauterbach2021path} --- is built explicitly for decentralized, asynchronous computation.
+Given ubiquity of deep net training and stencil-based numerical solvers in applications (CITE), programming for agent-based simulation can be of interest insofar as it flexes harware capabilities in unimagined ways.
+Effort to establish artificial life simulation as a flagship HPC application could be of mutual benefit.
+
+Researchers using agent-based evolution recognize HPC as critical to the future of the field \citep{ackley2016indefinite}.
+Indeed, the field has played host to notable boundary-pushing approaches to computing at the frontiers of computing hardware and modalities such as best-effort computing, reservoir computing, global-scale time-available computing, and modular tile-based computing in addition to more traditional cluster and GPU-oriented approaches \citep{moreno2021conduit,ackley2020best,ackley2023robust,heinemann2008artificial,miikkulainen2024evolving}.
+
+The diversity of HPC strategies for evolutionary simulation stems in large part from unique properties largely distinct from other HPC application domains.
+Given its inherent underlying stochastic nature and the stabilizing influence of adaptive selection, evolutionary simulation can often tolerate significant arbitrary asynchronicity or even entirely lost simulation components (e.g., dropped messages, crashed nodes, etc.).
+Likewise, digital evolution is typically amenable to locality restrictions of computation due to the inherent spatial structure of natural systems we are seeking to model.
+% In particular, massively-distributed, spatial computing being directly highlighted to be of particular interest \citep{ackleyTODO}.
+Because agent behavior evolves over time, the influence of population-level drift and adaptive change can inject extreme heterogeneity into the computational workload profile of evolutionary simulation over time and simulation space.
+Finally, emerging research questions have introduced challenging communication-intensive requirements to support rich interactions between evolving agents.
+The largely decoupled nature of classic approaches within evolutionary computation like island models or controller/worker schemes  \citep{bennett1999building,cantu2001master} no longer suffice to realize the dynamic, communication-intensive interaction characteristic of major transitions in individuality (e.g., multicellularity) and ecological communities \citep{moreno2022engineering}.
+
+These distinctive workload properties position agent-based evolution as a potentially valuable testbed for HPC innovation and leadership.
+% There is reason to expect a highly synergistic, reciprocal relationship between digital evolution and the broader HPC enterprise.
+Work proposed here steps in this direction, seeking to blaze new territory that opens new possibilities to benefit broader constituencies of ABM/HPC practitioners.
+
+
 Proposed work lays foundations to harness wafer-scale computing for agent-based modeling.
 Orders-of-magnitude scale-up will bring entirely new classes of cross-scale dynamics within reach across many ABM application areas.
 To advance on this front, we explore a fundamental re-frame of simulation that shifts from a paradigm of complete, perfect data observability to dynamic, approximate observability akin to estimation approaches traditionally used to study physical systems.
@@ -13,3 +36,7 @@ We are committed to organizing project implementation to produce reusable CSL an
 Potential extensions of this work include repurposing of HStrat's rolling cross-temporal sampling algorithms to facilitate efficient downsampled observability in additional application domains.
 Possibilities include sampling time series activity at simulation sites or extracting coarsened agent histories (e.g., position over time).
 Within the domain of evolution modeling, we anticipate building from work proposed here to conduct cross-scale evo-epidemiological research into how pathogen trait evolution confronts fitness trade-offs related to within-host infection dynamics and between-host transmissibility.
+
+This will require effort.
+It is easy to do experiments on your laptop or on traditional HPC resources you can access without having to ask for money.
+But just like other science domains acquire resources for paradigm-changing resources we need to do the same thing.
