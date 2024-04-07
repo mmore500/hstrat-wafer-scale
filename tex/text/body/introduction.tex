@@ -139,14 +139,20 @@ In a stroke of convergent thinking, Ackley's recent work reports use of ``bar co
 
 \subsection{Contributions}
 
-Here, we report work that takes advantage of the Cerebras Wafer Scale Engine, a hardware accelerator originally developed to target deep learning, for radcally scaled-up evolution simulation.
-We report the design of an asynchronous island-based genetic algorithm to suit the highly-constrained mesh of PEs.
-We also report on new improvements to the fundamental asis of hereditary stratigraphy to enable fast, simple annotations necessary in this constrained environment.
-We use benchmark tests to evaluate the performance of both of these introduced approaches.
-Additionally, we measured the reconstruction quality of the new ``surface''' approach to see if we are sacrificing quality with the faster implementation.
+In this paper, we report new software and algoriths that harness the Cerebras Wafer Scale Engine to enable radcally scaled-up agent-based evolution simulations while retaining key aspects of observability necessary to fully support hypothesis-driven computational experiments.
+Implementation comprises two primary aspects:
+\begin{enumerate}
+  \item an asynchronous island-based genetic algorithm (GA) suited to the memory-scarce, highly-distributed, data-oriented WSE architecture, and
+  \item a fundamental reformulation of hereditary stratigraphy's core storage and update procedures to achieve fast, simple, resource-lean annotations compatible with unconventional, resource-constrained accelerator and embedded hardware like the WSE.
+\end{enumerate}
 
-We implemented the hstrat surface annotation algorithm in Cerebras Software Language (CSL) and did a simple validation experiment on the hardware emulator to integration test phylogeny tracking.
-We incorporated the tracking into an asynchronous island model algorithm for the WSE and benchmarked it on the emulator with phylogenetic tracking enabled --- this suggests we can potentially do on the order of quadrillions of replication events a day on the full size hardware.
+Both are implemented in Cerebras Software Language (CSL) and validated using Cerebras' SDK hardware emulator.
+We use benchmark experiments to evaluate the runtime performance characteristics of the new hereditary stratigraphy algorithms in isolation, and in the integrated context providing tracking-enabled support for the island-model GA.
+To evaluate whether the new, stripped-down ``surface''-based hereditary stratigraphy algorithms degraded inference power, we compared reconstruction qualities to the existing ``column''-based approach across a wide variety of evolutionary scenarios.
+
+Results from both experiments are promising
+We find that, in expected usage, new surface-based algorithmms match, or actually enhance, existing reconstruction quality.
+Scaled-down emulator benchmarks suggests potential, with phylogenetic tracking enabled, to achieve on the order of quadrillions of agent replication events a day on WS-2 hardware at full wafer scale.
 
 % \item WANT TO DO: we ran the async GA at full wafer scale on hardware with high/low selection pressure (tournament size 2 vs 8 ) and extracted  phylogenetic information; this phylogenetic information was sufficient to detect the difference in selection dynamics between the two runs.
 % \end{itemize}
