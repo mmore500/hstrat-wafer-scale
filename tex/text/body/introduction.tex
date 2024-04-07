@@ -95,7 +95,7 @@ The very recently announced the CS-3 chip, is fitting to this respect; among oth
 % more is different More is different \citep{anderson1972more}.
 % Likewise, progress of artificial life systems along a path, in the most ambitious framing, to indefinite scalability seems likely to unfold through incremental investments spurred by progressive scientific achievements.
 % In tandem with more farsighted efforts, progress will also require prosaic leverage of existing, commercially-available parallel and distributed compute resources at circumstantially-feasible scales.
-Fundamental orthogonalities between the fundamental structure and objectives of AI and AL methods will complicate any effort too requisition AI hardware for AL purposes.
+Fundamental orthogonalities between the fundamental structure and objectives of AI and AL methods will complicate any effort to requisition AI hardware for AL purposes.
 In common use, deep learning operates as a black box medium \citep{TODO} (but not always \citep{TODO}).
 This paradigm de-emphasizes accessibility of inner state.
 In contrast, artificial life simulations more often function as a tool for inquiry.
@@ -111,11 +111,11 @@ Intentional engineering effort will be required to ensure large-scale simulation
 % Observability  and interpretability \citep{} will be key concerns, as will .
 
 % To serve as a useful experimental platform, digital evolution simulations must be observable.
-Here, we focusto confront just a single aspect of simulation observability within distributed evolutionary simulation: phylogenetic history (i.e., the overall set of evolutionary ancestry relationships).
+Here, we focus to confront just a single aspect of simulation observability within distributed evolutionary simulation: phylogenetic history (i.e., the overall set of evolutionary ancestry relationships).
 Phylogenetic history plays a critical role in many evolution studies, across study domains and \textit{in vivo} and \textit{in silico} model systems alike \citep{faithConservationEvaluationPhylogenetic1992, STAMATAKIS2005phylogenetics, frenchHostPhylogenyShapes2023,kim2006discovery,TODOCITESOMESIMULATIONPAPERS}.
 Phylogenetic analysis can trace the history of notable evolutionary events (e.g., extinctions, evolutionary innovations), but also characterize more general questions about the underlying mode and tempo of evolution \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling,lewinsohnStatedependentEvolutionaryModels2023a}.
-Particularly notable, recent work has used comparison of observed phylogenies against those produced under differing simulation conditions can to test hypotheses describing underlying dynamics within real-life evo-epidemiological systems \citep{giardina2017inference,voznica2022deep}.
-Additionally, \textit{in silico}, phylogenetic information can even serve as mechanism to guide evolution in application-oriented domains \citep{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
+Particularly notable, recent work has used comparison of observed phylogenies against those produced under differing simulation conditions to test hypotheses describing underlying dynamics within real-life evo-epidemiological systems \citep{giardina2017inference,voznica2022deep}.
+Additionally, \textit{in silico}, phylogenetic information can even serve as a mechanism to guide evolution in application-oriented domains \citep{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
 
 \subsection{Decentralized Phylogenetic Tracking}
 
@@ -129,7 +129,7 @@ To overcome this limitation to phylogenetic analysis within many-processor HPC c
 These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons between end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
 Figure \ref{fig:runtime-posthoc-schematic} depicts our reconstruction-based strategy.
 
-Deferment to reconstruction, however, is no panacea --- analogous work with natural biosequences is notoriously challenging, uncertain, biased, and data intensive \citep{TODOthatcitationfromabsractofpreprint}.
+Deferment to reconstruction, however, is no panacea --- analogous work with natural biosequences is notoriously challenging, uncertain, biased, and data-intensive \citep{TODOthatcitationfromabsractofpreprint}.
 Careful consideration is required to achieve efficient, accurate, and data-lean phylogenetic reconstructions in practice.
 These concerns motivated our recent development of HStrat, a genetic architecture explicitly designed for fast, accurate reconstruction requiring only small amounts of data.
 Work reported here uses just 96 bits of tracking information per agent genome.
@@ -139,7 +139,7 @@ In a stroke of convergent thinking, Ackley's recent work reports use of ``bar co
 
 \subsection{Contributions}
 
-In this paper, we report new software and algoriths that harness the Cerebras Wafer Scale Engine to enable radcally scaled-up agent-based evolution simulations while retaining key aspects of observability necessary to fully support hypothesis-driven computational experiments.
+In this paper, we report new software and algorithms that harness the Cerebras Wafer Scale Engine to enable radically scaled-up agent-based evolution simulations while retaining key aspects of observability necessary to fully support hypothesis-driven computational experiments.
 Implementation comprises two primary aspects:
 \begin{enumerate}
   \item an asynchronous island-based genetic algorithm (GA) suited to the memory-scarce, highly-distributed, data-oriented WSE architecture, and
@@ -147,12 +147,12 @@ Implementation comprises two primary aspects:
 \end{enumerate}
 
 Both are implemented in Cerebras Software Language (CSL) and validated using Cerebras' SDK hardware emulator.
-We use benchmark experiments to evaluate the runtime performance characteristics of the new hereditary stratigraphy algorithms in isolation, and in the integrated context providing tracking-enabled support for the island-model GA.
+We use benchmark experiments to evaluate the runtime performance characteristics of the new hereditary stratigraphy algorithms in isolation and in the integrated context providing tracking-enabled support for the island-model GA.
 To evaluate whether the new, stripped-down ``surface''-based hereditary stratigraphy algorithms degraded inference power, we compared reconstruction qualities to the existing ``column''-based approach across a wide variety of evolutionary scenarios.
 
 Results from both experiments are promising
-We find that, in expected usage, new surface-based algorithmms match, or actually enhance, existing reconstruction quality.
-Scaled-down emulator benchmarks suggests potential, with phylogenetic tracking enabled, to achieve on the order of quadrillions of agent replication events a day on WS-2 hardware at full wafer scale.
+We find that, in expected usage, new surface-based algorithms match, or actually enhance, existing reconstruction quality.
+Scaled-down emulator benchmarks suggest potential, with phylogenetic tracking enabled, to achieve on the order of quadrillions of agent replication events a day on WS-2 hardware at full wafer scale.
 
 % \item WANT TO DO: we ran the async GA at full wafer scale on hardware with high/low selection pressure (tournament size 2 vs 8 ) and extracted  phylogenetic information; this phylogenetic information was sufficient to detect the difference in selection dynamics between the two runs.
 % \end{itemize}
