@@ -81,8 +81,10 @@ Although designed expressly for deep learning workloads, these hardware platform
 % realize scaling ambitions crux to broad swaths of artificial life work.
 The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, holds particular promise as a vehicle for alife simulation.
 This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently using individual on-chip memory and local PEs interacting through a network-like interface.
+
+Our work here explores how such hardware might be recurited for large-scale evolution simulations, demonstrating an genetic algorithm implementation tailored to the asynchronous, dataflow-oriented computing model of the CS-2 platform.
 Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in ABM capabilities \citep{perumalla2022computer}.
-Cerebras themselves very recently announced the CS-3 chip, which, among other spec enhancemments, boosts clustering support to potentiallly thousands of constituent accelerators.
+The very recently announced the CS-3 chip, is fitting to this respect; among other spec enhancemments, boosts clustering support to potentiallly thousands of constituent accelerators.
 
 % This will require changes and impose limitations to what is possible, artificial life.
 % This is not an entirely unreasonable notion of a possible future of artificial life.
