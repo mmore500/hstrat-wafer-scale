@@ -1,48 +1,68 @@
 \section{Conclusion} \label{sec:conclusion}
 
-We have the opportunity today to take advantage of orders-of-magnitude more computational power due to emerging architectures being built to support deep learning, if only we can figure out how to operate within their framings.
-Ride the coat tails of artificial intelligence to cross the more is different boundary \citep{anderson1972more}
-Implicit among much of the field, it seems, is an anticipation that order-of-magnitude changes in artificial life systems may unlock a qualitative sea change in simulation outcomes.
+Computing hardware with transformative capabilities is coming to market right now.
+% and some of it --- like the Cerebras wafer scale engine \citep{lauterbach2021path} --- is built explicitly for decentralized, asynchronous computation.
+This fact presents an immediate opportunity to bring orders-of-magnitude greater simulation scale to bear on grand challenges in artificial life.
+It is not unreasonable to anticipate possibility that with such resources some aspects these open questions will be revealed to harbor more-is-different dispositions \citep{anderson1972more}.
+Riding the coattails of AI-workload-driven hardware development, itself largely driven by profound more-is-different payoffs in deep learning, provides perhaps the most immediate means toward this possibility.
 
-Such work should be made with an eye for contribution back to HPC.
-exciting --- and fairly uncharted, with applications outside deep learning workloads still in early days
-As noted earlier, the unique character of artificial life simulation suits it to serve at the tip of the spear in HPC evolution.
-High-performance computing hardware with transformative capabilities is coming to market right now, and some of it --- like the Cerebras wafer scale engine \citep{lauterbach2021path} --- is built explicitly for decentralized, asynchronous computation.
-Given ubiquity of deep net training and stencil-based numerical solvers in applications (CITE), programming for agent-based simulation can be of interest insofar as it flexes harware capabilities in unimagined ways.
-Effort to establish artificial life simulation as a flagship HPC application could be of mutual benefit.
+Such an endeavour is a community-level challenge that will require extensive collaborative effort and pursuit of outside resources.
+ % a community-scale challenge that will require and pursuing collaborations and resources beyond the present comfort zone.
+% And
+% But just like other science domains have united to acquire resources for paradigm-changing resources we need to do the same thing.
+Work presented here is an early step in methods and wide-ranging infrastructure development necessary to scale up what's possible in digital evolution research.
+We have demonstrated new algorithms and software for phylogeny-enabled agent-based evolution on a next-generation HPC accelerator hardware platorm.
+With respect to instrumentative simulation components, microbenchmarking results show that proposed algorithms achieve several-fold improvement in computational efficiency, as well as more informative information extraction in some cases.
+Early emulated integrative benchmarking suggest that for simple agent models on the order of quintillions of replication cycles per day may be possible at full wafer scale on CS-2 hardware.
 
-Researchers using agent-based evolution recognize HPC as critical to the future of the field \citep{ackley2016indefinite}.
-Indeed, the field has played host to notable boundary-pushing approaches to computing at the frontiers of computing hardware and modalities such as best-effort computing, reservoir computing, global-scale time-available computing, and modular tile-based computing in addition to more traditional cluster and GPU-oriented approaches \citep{moreno2021conduit,ackley2020best,ackley2023robust,heinemann2008artificial,miikkulainen2024evolving}.
+% However, in the wide-ranging .
+% that will be necessary to achieve rich simulation at scales with potential to reveal
+Special characteristics set agent-based evolution simulation apart from many other HPC application domains, and position it as a potentially valuable testbed innovation and leadership.
+Among these factors are challenging workload heterogeniety (varying within a population and over evolutionary time), resiliency of global state to local perturbations, and perhaps unparalleled freedom to recompose underlying simulation semantics to accomodate hardware capabilities.
+Indeed, artificial life and digital evolution have played host to notable boundary-pushing approaches to computing at the frontiers of computing modalities such as best-effort computing, reservoir computing, globe-spanning time-available computing, and modular tile-based computing in addition to more traditional cluster and GPU-oriented approaches \citep{moreno2021conduit,ackley2020best,ackley2023robust,heinemann2008artificial,miikkulainen2024evolving}.
+Work done to scale up digital evolution simulation should be done with an eye for contributions back to broader HPC constituencies.
+% As noted earlier, the unique character of artificial life simulation suits it to serve at the tip of the spear in HPC evolution.
+% Effort to establish artificial life simulation as a flagship HPC application could be of mutual benefit.
 
-The diversity of HPC strategies for evolutionary simulation stems in large part from unique properties largely distinct from other HPC application domains.
-Given its inherent underlying stochastic nature and the stabilizing influence of adaptive selection, evolutionary simulation can often tolerate significant arbitrary asynchronicity or even entirely lost simulation components (e.g., dropped messages, crashed nodes, etc.).
-Likewise, digital evolution is typically amenable to locality restrictions of computation due to the inherent spatial structure of natural systems we are seeking to model.
-% In particular, massively-distributed, spatial computing being directly highlighted to be of particular interest \citep{ackleyTODO}.
-Because agent behavior evolves over time, the influence of population-level drift and adaptive change can inject extreme heterogeneity into the computational workload profile of evolutionary simulation over time and simulation space.
-Finally, emerging research questions have introduced challenging communication-intensive requirements to support rich interactions between evolving agents.
-The largely decoupled nature of classic approaches within evolutionary computation like island models or controller/worker schemes  \citep{bennett1999building,cantu2001master} no longer suffice to realize the dynamic, communication-intensive interaction characteristic of major transitions in individuality (e.g., multicellularity) and ecological communities \citep{moreno2022engineering}.
-
-These distinctive workload properties position agent-based evolution as a potentially valuable testbed for HPC innovation and leadership.
 % There is reason to expect a highly synergistic, reciprocal relationship between digital evolution and the broader HPC enterprise.
-Work proposed here steps in this direction, seeking to blaze new territory that opens new possibilities to benefit broader constituencies of ABM/HPC practitioners.
+% Work proposed here steps in this direction, seeking to blaze new territory that opens new possibilities to benefit broader constituencies of ABM/HPC practitioners.
+% exciting --- and fairly uncharted, with applications outside deep learning workloads still in early days
+% Researchers using agent-based evolution recognize HPC as critical to the future of the field \citep{ackley2016indefinite}.
+
+% due to emerging architectures being built to support deep learning, if only we can developm methods necessary to operate within their framings.
+% It is easy to do experiments on your laptop or on traditional HPC resources you can access without having to ask for money.
+% Given ubiquity of deep net training and stencil-based numerical solvers in applications (CITE), programming for agent-based simulation can be of interest insofar as it flexes harware capabilities in unimagined ways.
+
+In this vein, presented ``surface'' indexing algorithms stand to benefit larger classes of stream curation problems, situations in which a rolling feed of sequenced observations must be dynamically downsampled to ensure retention of elements representative across observed history \citep{streamcurationpreprint}.
+% Potential extensions of this work include repurposing of HStrat's rolling cross-temporal sampling algorithms to facilitate efficient downsampled observability in additional application domains.
+In particular, with respect to agent-based modeling, we are interested in exploring applications sampling time series activity at simulation sites or distilling coarsened agent histories (e.g., position over time).
+
+The immediate goal of presented work, however, is to build means for progress toward existing research agendas held across realms of digital evolution and artificial life.
+To this end, our work has prioritized production reusable CSL and Python software tools ready to be harnessed by the broader research community.
+In particular, CSL code implementing the presented island-model GA is defined in a modularized, extensible, annd flexible manner to support drop-in support arbitrary fixed-length genome content and corresponding fitness criteria.
+We look forward to tandem efforts to harness this hardware platform, and others, in folow-on work.
+
+% These new HStrat methods, and extensive development targeting the Cerebras CSL using the SDK hardware simulator, position our project
+to hit the ground running.
 
 
-Proposed work lays foundations to harness wafer-scale computing for agent-based modeling.
-Orders-of-magnitude scale-up will bring entirely new classes of cross-scale dynamics within reach across many ABM application areas.
-To advance on this front, we explore a fundamental re-frame of simulation that shifts from a paradigm of complete, perfect data observability to dynamic, approximate observability akin to estimation approaches traditionally used to study physical systems.
+% Within ABM, our proposed work focuses in particular on the topic of evolutionary computation.
+% Our project design emphasizes explicit steps to demonstrate and evaluate novel components of underlying implementation in order to form technical foundations for ongoing work in this vein.
 
-Within ABM, our proposed work focuses in particular on the topic of evolutionary computation.
-We will harness cutting-edge \textit{hereditary stratigraphy} (HStrat) approaches to distributed phylogenetic tracking to investigate fundamental questions about the relationship between phylogenetic structure, population scale, and time scale.
-These new HStrat methods, and extensive development targeting the Cerebras CSL using the SDK hardware simulator, position our project to hit the ground running.
-Our project design emphasizes explicit steps to demonstrate and evaluate novel components of underlying implementation in order to form technical foundations for ongoing work in this vein.
-We are committed to organizing project implementation to produce reusable CSL and Python software tools to catalyze research projects in this area among the broader ABM community.
 
-Potential extensions of this work include repurposing of HStrat's rolling cross-temporal sampling algorithms to facilitate efficient downsampled observability in additional application domains.
-Possibilities include sampling time series activity at simulation sites or extracting coarsened agent histories (e.g., position over time).
-Within the domain of evolution modeling, we anticipate building from work proposed here to conduct cross-scale evo-epidemiological research into how pathogen trait evolution confronts fitness trade-offs related to within-host infection dynamics and between-host transmissibility.
 
-This will require effort.
-It is easy to do experiments on your laptop or on traditional HPC resources you can access without having to ask for money.
-But just like other science domains acquire resources for paradigm-changing resources we need to do the same thing.
+% The diversity of HPC strategies for evolutionary simulation stems in large part from unique properties largely distinct from other HPC application domains.
+% Given its inherent underlying stochastic nature and the stabilizing influence of adaptive selection, evolutionary simulation can often tolerate significant arbitrary asynchronicity or even entirely lost simulation components (e.g., dropped messages, crashed nodes, etc.).
+% Likewise, digital evolution is typically amenable to locality restrictions of computation due to the inherent spatial structure of natural systems we are seeking to model.
+% % In particular, massively-distributed, spatial computing being directly highlighted to be of particular interest \citep{ackleyTODO}.
+% Because agent behavior evolves over time, the influence of population-level drift and adaptive change can inject extreme heterogeneity into the computational workload profile of evolutionary simulation over time and simulation space.
+% Finally, emerging research questions have introduced challenging communication-intensive requirements to support rich interactions between evolving agents.
+% The largely decoupled nature of classic approaches within evolutionary computation like island models or controller/worker schemes  \citep{bennett1999building,cantu2001master} no longer suffice to realize the dynamic, communication-intensive interaction characteristic of major transitions in individuality (e.g., multicellularity) and ecological communities \citep{moreno2022engineering}.
 
-The CSL algorithms are hosted publicly and designed in a modularized, extensible, annd flexible manner to support trivial re-use by other researchers.
+% Proposed work lays foundations to harness wafer-scale computing for agent-based modeling.
+% Orders-of-magnitude scale-up will bring entirely new classes of cross-scale dynamics within reach across many ABM application areas.
+% To advance on this front, we explore a fundamental re-frame of simulation that shifts from a paradigm of complete, perfect data observability to dynamic, approximate observability akin to estimation approaches traditionally used to study physical systems.
+
+% We will harness cutting-edge \textit{hereditary stratigraphy} (HStrat) approaches to distributed phylogenetic tracking to investigate fundamental questions about the relationship between phylogenetic structure, population scale, and time scale.
+
+% Within the domain of evolution modeling, we anticipate building from work proposed here to conduct cross-scale evo-epidemiological research into how pathogen trait evolution confronts fitness trade-offs related to within-host infection dynamics and between-host transmissibility.
