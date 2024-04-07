@@ -50,35 +50,67 @@ This pattern follows an intuition to prefer high absolute precision is more usef
 In practice, it may be desirable to use a hybrid approach that allocates half of annotation space to each strategy \citep{oTHERPAPERTODO}.
 Figure \ref{fig:surf-algorithms} includes retention drip plots that contrast behavior of steady and tilted algorithms.
 
-\subsection{New Surface Algorithms}
+\subsection{Surface-based Hereditary Stratigraphy Algorithms}
 
-Although designed with efficiency in mind, existing ``column''-based hereditary stratigraphy algorithms have several properties that make them a poor fit with a resource-constrained environment like the the Cerebras WSE:
-\begin{enumerate}
-\item an annotation size cap is guaranteed, but the entire space is not guaranteed to be used leading to a percentage of wasted space for strictly fixed-sized annotations,
-\item current algorithm implementations use complex data structures with dynamically allocated memory to perform operations like set subtraction,
-\item computation of retention policies can take time proportional to annotation size, with operations to maintain differentia in sorted order within the annotation also scaling linearly with annotation size, and
-\item algorithms make use of divide and modulo operations, which are slow.
-\end{enumerate}
+% Although designed with efficiency in mind, existing ``column''-based  have several properties that make them a poor fit with a resource-constrained environment like the the Cerebras WSE:
+At the outset of this project, several problematic aspects of porting existing hereditary stratigraphy algorithms to the WSE became apparent.
+Issues stemmed, in part, from a fundamental feature of these algorithms: organization of retained strata in contiguous, sorted order.
+Forthwith, we refer to algorithms following this convention as ``column''-based.
+The columnn design, and attendant implementation details, impose various drawbacks:
+\begin{itemize}
+\item \textbf{wated space}: an annotation size cap can be guaranteed, but a percentage of available space typically goes unused;
+\item \textbf{high-level feature dependencies:} in places, existing column code usse complex data structures with dynamically allocated memory to perform operations like set subtraction,
+\item \textbf{annotation size scaling:} slide-down procedures to maintain sorted order among differentia can take time linearly proportional to annotation size.
+% \item \textbf{expensive operations:} in places, slow divide and modulo operations. heavy use
+\end{itemize}
 
 \input{fig/surf-vs-column-schematic}
 
-Thus, the objectives of this project required significant elaboration of hereditary stratigraphy algorithms.
-We use a constant-time indexing scheme that maps each lineage's fingerprint stream onto a fixed-width memory buffer such that eviction of existing fingerprint values by new placements maintains a temporally-representative sampling over elapsed time .
-We call this approach ``surface''-based to distinguish it from earlier hereditary stratigraphy methods.
-Time stamps can be positionally inferred and thus do not need to be stored --- a several-fold savings that enables fingerprint values to be shrunk down and packed together.
-Figure \ref{fig:surf-vs=column-schematic} illustrates the difference between the existing ``column'' based approach and the new ``surface'' based approach which streamlines the annotation generational update procedure to a single operation.
+Addressing these concerns required fundamental reformulation of hereditary stratigraphy conventions.
+To this end, we introduce a constant-time indexing scheme that maps each lineage's fingerprint stream directly onto a fixed-width memory buffer.
+Differentia pruning occurs implicitly, as a result of resident differentia being overwritten by new placements.
+As before, care is taken to guarantee maintainance of a temporally-representative collections of resident within the memory buffer over elapsed time.
+We refer to this new approach as ``surface''-based, as opposed to ``column''-based.
+Figure \ref{fig:surf-vs=column-schematic} contrasts the two.
+% to distinguish it from earlier conventions
+
+
+% New approach uses a constant-time indexing scheme that maps each lineage's fingerprint stream onto a fixed-width memory buffer such that eviction of existing fingerprint values by new placements maintains a temporally-representative sampling over elapsed time .
+% We call this approach ``surface''-based to distinguish it from earlier hereditary stratigraphy methods.
+% As before, time stamps can be positionally inferred and thus do not need to be stored --- a several-fold savings that enables fingerprint values to be shrunk down and packed together.
+
 
 \input{fig/surf-algorithms}
 
-Figure \ref{fig:surf-algorithms} depicts how our algorithms sequence depositions onto the surface (heatmap) and the resulting stratum retention patterns (drip plot).
-We leave formal descriptions of the site selection algorithms developed for tilted and steady surface algorithms --- and the reverse procedure necessary to efficiently infer the deposition times of each site on a surface at an arbitrary timepoint in the surface to future work.
-However, reference implementations of the described algorithms in Python are provided in supplementary material Listing TODO.
-For this work, we also translated the tilted algorithm to Zig--like Cerebras Software Language for use on the WSE and, as an intermediate step, to the general-purpose Zig programming language.
-These implementations can be found in associated software repositories with the project.
+In the course of this work, steady- and tilted-policy surface-based hereditary stratigraphy algorithms have both been developed.
+Figure \ref{fig:surf-algorithms} depicts implementation behaviors, with the top panels tracking how placements are sequenced over time in buffer space and the bottom panels showing the consequent distributions of retained timepoints across history.
+We leave formal descriptions of underlying indexing algorithms to future work.
+However, reference implementations can be found supplementary material (Listing TODO).
+% For this work, we also translated the tilted algorithm to Zig--like Cerebras Software Language for use on the WSE and, as an intermediate step, to the general-purpose Zig programming language.
+% These implementations can be found in associated software repositories with the project.
+These algorithms are notable in providing a novel and highly-efficient solution the more general problem of curating dynamic temporal cross-samples from a data stream, and may lend themselves to a broad set of applications outside the scope of phylogeny tracking \citep{TODOCITEPREPRINT}.
 
-Notably, these algorithms are solving the more general problem of stream curation in a new and highly efficient way, and may find other uses in data stream applications \citep{TODOCITEPREPRINT}.
+% async microthread to send from sendBuf to neighbor
+% fn dispatchSend_S() void {
+%   @fmovs(sendDsd_S, sendBufDsd_S,
+%     .{
+%       .async = true,
+%       .activate = sendFinalizeTaskID_S
 
-\subsection{Asynchronous Island-model Evolutionary Computation}
+% const recvDsd_N = @get_dsd(fabin_dsd, .{
+%   .fabric_color = recvColor_N,
+%   .extent = recvBufSize,
+%   .input_queue = @get_input_queue(q_in_N)
+% });
+% // open an async microthread to recv from neighbor into recvBuf
+% fn dispatchRecv_N() void {
+%   @fmovs(recvBufDsd_N, recvDsd_N,
+%     .{
+%       .async = true,
+
+% color swapping
+
+\subsection{Asynchronous Island-model Genetic Algorithm}
 
 We apply an island-model genetic algorithm to instantiate an evolutionary process spanning PEs.
 Island-model approaches are common in applications of parallel and distributed computing to evolutionary computation \citep{bennett1999building}.
