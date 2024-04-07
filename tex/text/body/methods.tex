@@ -1,11 +1,8 @@
 \section{Methods} \label{sec:methods}
 
-In this section, we describe the primary two algorithmic components for our on-device simulation:
-\begin{enumerate}
-\item the lightweight hereditary stratigraphy element used to annotate virtual genomes and facilitate robust post-hoc phylogenetic reconstruction, and
-\item the asynchronous compute-communicate cycle used to instantiate an island model evolutionary process across the WSE engine.
-\end{enumerate}
-
+This section details the algorithm and implementation design used in this work.
+After briefly recounting the core mechanics of hereditary stratigraphy methods for phylogenetic tracking, we motivate and describe new lightweight ``surface'' data structures used to annotate agent genomes in this work.
+Then, we describe the asynchronous compute-communicate implementation strategy behind the testbed WSE-oriented island-based genetic algorithm used for validation and benchmarking experiments.
 
 \input{fig/schematic}
 
