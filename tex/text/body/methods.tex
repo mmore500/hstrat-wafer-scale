@@ -8,42 +8,47 @@ Then, we describe the asynchronous compute-communicate implementation strategy b
 
 \subsection{Distributed Phylogenetic Tracking}
 
-Our approach to analysis of evolutionary history for wafer-scale simulation draws inspiration from the inference-based paradigm used to characterize history in natural systems.
-This approach is fully-distributed, with ancestry information contained within genomes themselves rather than in any external tracking mechanism.
-Just as mutational drift encodes ancestry information in DNA genomes, the inference-based paradigm requires only local updates to individual genomes at runtime as generations elapse.
+Natural history of biological life operates under no extrinsic provision for interprable record-keeping, yet efforts to study it have proved immensely fruitful.
+This fact bodes well that scaled-up simulation studies can succeed a platform for rich hypothesis-driven experiments despite potential sacrifices to aspects of observability currently enjoyed with centralized, storage-rich processing.
+Indeed, observational and analytical strategies already developed to confront limitations in biological data can solve, or at least guide, work with massively distributed evolution simulations.
 
-Recent work introducing \textit{hereditary stratigraphy} (HStrat) methodology has explored how best to organize genetic material to maximize reconstruction quality and minimize memory footprint \citep{moreno2022hstrat, moreno2022hereditary}.
-Proposed work bundles HStrat material with underlying agent genomes as an instrumentative ornament akin to non-coding DNA, entirely neutral with respect to agent traits or fitness.
-Agents' \textit{HStrat} annotations can then be used to estimate their phylogenetic history after-the-fact, as depicted in Figure \ref{fig:runtime-posthoc-schematic}.
+In biology, decoupled processes of mutational drift encodes ancestry information in DNA genomes.
+Prooposed methods approach analysis of evolutionary operates analogously, with ancestry information contained within genomes themselves rather than in any external tracking mechanism.
+Phylogenetic history can then be estimated after-the-fact, as depicted in Figure \ref{fig:runtime-posthoc-schematic}.
+This ensures low runtime communication overhead, as well as near total resiliency to germane modes of data loss (e.g., dropped messages, hardware crash-out).
+
+Recent work introducing \textit{hereditary stratigraphy} (hstrat) methodology has explored how best to organize genetic material to maximize reconstruction quality and minimize memory footprint \citep{moreno2022hstrat, moreno2022hereditary}.
+hstrat material can be bundled to agent genomes in a manner akin to non-coding DNA, entirely neutral with respect to agent traits and fitness.
 
 The hereditary stratigraphy algorithm associates each generation along individual lineages with an identifying ``fingerprint'' value, referred to as a differentia.
-Each time a generation elapses, all offspring generate a new identifier value.
-Within each offspring, generated identifiers append to an inherited running chronological record of differentia values.
-To prevent $\mathcal{O}(n)$ space complexity as generations elapse, not all fingerprints can be kept.
-Instead, excess fingerprints are pruned away according to a deterministic programme that ensures retention of differentia values from checkpoint generations spaced across evolutionary history.
-
-Reducing differentia size also constitutes another important way to save memory space.
-For instance, using a single-bit differentia would accrue a 32-fold savings over a one-word differentia and an 8-fold savings over a byte.
-Although shrinking differentia size increases the probability of spurious collisions that result in overestimation of phylogenetic relatedness, this can be balanced by increasing the density with which differentiaare retained.
-We anticipate that most scenarios will call for differentia sized on the order of a single bit or a byte.
-However, benefits of small differentia cannot be accrued if differentia timepoints need to be stored.
-In fact, storing one 32 or 64bit timestamp per differentia would likely bloat the majority of memory use for annotations, significantly reducing the amount of meaningful lineage-identifying differentia that can be stored.
-Thus, existing algorithms provide calculations capabable of predicting the set of differentia that will be retained at any single point in time, allowing for the time stamps of differentia to be deduced solely from the current time point and the position of the site within the annotation.
-
-Single-bit checkpoints have been shown to produce good quality phylogenies using only 96 bits per genome \citep{moreno2023toward}.
-The semantic structure of HStrat annotations streamlines \textit{post hoc} phylogenetic reconstruction, which essentially boils down to a simple trie-building procedure
+On birth, offspring generate a new differentia value and append it to an inherited chronological record of differentia values, each corresponding to a generation along that lineage.
+Under this scheme, mismatching differentia can be used to delimit the extent of common ancestry.
+This semantic streamlines \textit{post hoc} phylogenetic reconstructio to a simple trie-building procedure
 \citep{moreno2024analysis}.
 
-Another notable complication in design of hereditary stratigraphy algorithms is the difference between ``steady'' and ``tilted'' retention patterns \citep{TODOFROMPREPRINT}.
-In prior work, these are termed depth-proportional resolution and recency-proportional resolution.
-This refers to the difffference in how retained time points are distributed over historical time.
-For steady,retention, sampled time points are distributed evenly over history.
-For tilted retention, more-recent time points are preferred.
-So, there is tighter spacing between more recent time points and looser spacing between more ancient time points.
-Intuitively, this reflects what is often the case in natural history work wehere we have higher absolute precision in pinpointing more recent events and looser absolute precision in pinpointing more ancient events.
-Comparisons of reconstruction quality have shown that tilted algorithms give higher quality reconstructions for the same amount of space.
-However, this is not always the case and new work (cite other paper) suggests that a hybrid approach where half of annotation space is allocated for each strategy may be robust and perform well across scenarios.
-Figure \ref{fig:surf-algorithms} includes retention drip plots that illustrate the difference between steady and tilted algorithms.
+To save space, differentia may be pruned away.
+However, care must be taken to ensure retention of checkpoint generations that maximize coverage across evolutionary history.
+Downsizing bits per differentia can also save memory space.
+For instance, single-bit differentia occupy $32\times$ less memory than full-word differentia.
+Such space savings can be invested to increase the quantity of differentia retained, improving the density of records' coverage across elapsed generations.
+However, it comes at the cost of increased probability for spurious differentia value collisions, which can make two lineages appear more closely related than they actually are.
+We anticipate that most use cases will call for differentia sized on the order of a single bit or a byte.
+Indeed, single-bit differentia have been shown to yield good quality phylogenies using only 96 bits per genome \citep{TODOOTHERPAPER}.
+
+Small differentia size intensifies need for a lean data structure to back differentia record management.
+In particular, shrinking differentia to a single bit absurdifies accompanying each with a generational timestamp.
+To safely drop timestamps, though, we must have means to recalculate them on demand.
+As such, all described algorithms include means to deduce timestamps of retained differentia solely from their storage index and the count of the record's elapsed generations.
+
+As a final elaboration, design of hstrat annotations must also consider how available storage space should be allocated across the span of history.
+In one possible stategy, retained time points would be distributed evenly across history.
+In another, more-recent time points would be preferred.
+We term these as ``steady'' and ``tilted'' policies, respectively \citep{THEPAPERWHERETHETERMSAREFROMTODO}.
+Note that prior hereditary stratigraphy work refers to them instead as ``depth-proportional'' and ``recency-proportional resolution.''
+Comparisons of reconstruction quality have shown that tilted policy gives higher quality reconstructions from the same amount of reconsttruction space in most --- but not all --- circumstances \citep{oTHERPAPERTODO}.
+This pattern follows an intuition to prefer high absolute precision is more useful to resolving recent events than more ancient ones.
+In practice, it may be desirable to use a hybrid approach that allocates half of annotation space to each strategy \citep{oTHERPAPERTODO}.
+Figure \ref{fig:surf-algorithms} includes retention drip plots that contrast behavior of steady and tilted algorithms.
 
 \subsection{New Surface Algorithms}
 
