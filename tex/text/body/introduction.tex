@@ -67,9 +67,9 @@ Indeed, the scaling relationship between deep learning and training resources ha
 
 % The relationship between artificial life and scaling can be argued similar to that of connectionist artificial intelligence and scaling.
 % except that artificial intelligence is a lot further along in this regard.
-% % In important regards, the question of scale within artificial life parallels that within artificial intelligence, 
+% % In important regards, the question of scale within artificial life parallels that within artificial intelligence,
 % However, .
-% The development of 
+% The development of
 % AlexNet united methodological innovations from the field (e.g., big data, dropout, ReLU) with GPU computing that enabled training of orders-of-magnitude-larger networks.
 % In fact, .
 
@@ -107,7 +107,7 @@ Unfortunately, scale complicates simulation observability.
 % Scale transforms simulation into relentless data streams with
 It is not uncommon for volume and velocity of data streams from contemporary simulation to outstrip hardware bandwidth and storage capacity \citep{TODODOEDATAREDUCTIONPHAMPHLET}.
 Intentional engineering effort will be required to ensure large-scale simulation retains utility in pursuing rigorous hypothesis-driven objectives.
-% , and this problem is ubiquitous across simulation, observational, and experimental sciences 
+% , and this problem is ubiquitous across simulation, observational, and experimental sciences
 % Observability  and interpretability \citep{} will be key concerns, as will .
 
 % To serve as a useful experimental platform, digital evolution simulations must be observable.
@@ -120,19 +120,21 @@ Additionally, \textit{in silico}, phylogenetic information can even serve as mec
 \subsection{Decentralized Phylogenetic Tracking}
 
 % Unfortunately, existing approaches to recording phylogenetic history from digital evolution simulations do not scale robustly.
-Simulation phylogenies have typically been collected using a centralized record-keeping approach where every reproduction event is stitched together in a tree data structure to produce a complete record.
-Record-keeping often involves pruning the records of extinct lineages to prevent memory bloat \citep{dolson2023phylotrack}.
-Although the direct-tracking approach is well suited to serial simulation substantial limitations and runtime overhead make scaling this up to highly parallel/distributed systems --- particularly those with low memory capacity like the Cerebras WSE --- essentially untenable \citep{moreno2024analysis}.
+In order to analyze the phylogenetic history of an evolving system, we must first collect it.
+In existing simulation work, a typical approach uses centralized record-keeping to assemble an exact, complete record comprising all parent-offspring relationships that have existed over the course of a simulation \citep{phylotrackandeverythingphylotrackcitedTODO}.
+This process often involves pruning the records of extinct lineages to prevent memory bloat \citep{TODOcitepreprint}.
+Although the direct-tracking approach is well suited to serial simulation or centralized controller-worker schemes, extreme sensitivity to missing data and runtime communication overheads impede scaling this approach up to highly parallel/distributed systems --- particularly those with low memory capacity like the Cerebras WSE \citep{moreno2024analysis}.
 
-To overcome this limitation to phylogenetic analysis within many-processor HPC contexts, we have developed a new class of reconstruction-based approaches to phylogenetic tracking in silico \citep{moreno2022hereditary}.
-These approaches require no centralized data collection during simulation runtime; instead, they use post hoc comparisons between end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
+To overcome this limitation to phylogenetic analysis within many-processor HPC contexts, we have developed reconstruction-based approaches to phylogenetic tracking in silico \citep{moreno2022hereditary}.
+These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons between end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
 Figure \ref{fig:runtime-posthoc-schematic} depicts our reconstruction-based strategy.
 
-To achieve efficient, tractable phylogenetic reconstructions in practice, some careful consideration is required.
-DNA-based is notoriously data-hungry, typically requiring on the order of thousands of genome sites, and can be significantly biased by physical/functional traits of the underlying genetic information.
+Deferment to reconstruction, however, is no panacea --- analogous work with natural biosequences is notoriously challenging, uncertain, biased, and data intensive \citep{TODOthatcitationfromabsractofpreprint}.
+Careful consideration is required to achieve efficient, accurate, and data-lean phylogenetic reconstructions in practice.
 These concerns motivated our recent development of HStrat, a genetic architecture explicitly designed for fast, accurate reconstruction requiring only small amounts of data.
-HStrat data is designed to be attached to the underlying genomes within particular digital evolution systems as a neutral annotation, akin to noncoding DNA.
-% Benchmarking experiments to evaluate HStrat performance have achieved high-quality reconstruction of phylogenetic histories for tens of thousands of fully-distributed agents using just 96 bits of tracking information per agent genome.
+Work reported here uses just 96 bits of tracking information per agent genome.
+HStrat data is designed to be attached to the underlying genomes within particular digital evolution systems as a neutral annotation, akin to noncoding DNA, making it a general-purpose technique applicable to any domain host to decentralized digital copy trees \citep{FUNCITATIonsFRomPREPRINT}.
+In a stroke of convergent thinking, Ackley's recent work reports use of ``bar code'' annotations on his self replicators to achieve a measure of coarse-grained lineage tracing \citep{ackley2023TODO}.
 % Details on this methodology and our proposed approach to translate it to the WSE context is provided in Section \ref{sec:methods}.
 
 \subsection{Contributions}
