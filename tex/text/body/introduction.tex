@@ -51,6 +51,7 @@ Early work by Ray with Network Tierra used an island model to distribute digital
 More recently, Heinemann's ALIEN project has leveraged GPU acceleration to achieve spectacularly elaborate simulations with rich interactions between numerous spatially-situated soft body agents \citep{heinemann2008artificial}.
 Likewise, the Distributed Hierarchical Transitions in Individuality (DISHTINY) project has incorporated event-driven agent-agent interaction schemes amenable to best-effort, asynchronous interlocution \cittep{TODO,TODOconduit}.
 GPU-first agent-based modeling (ABM) packages like Flame2 also tackle this problem of hardware-simulacrum matching, albeit framed at a higher level of abstraction \citep{TODO}.
+% fold in
 Beyond alife, broader realms of application-oriented evolutionary computation have dovetailed many-processor computation, most commonly through island-model and director-worker evaluation paradigms \citep{TODO}.
 
 \subsection{Untapped Computational Resources and Emerging Hardware Capabilities}
@@ -61,7 +62,7 @@ With retrospect, connectionist artificial intelligence turns out to have been pr
 The utility and ubiquity of ANNs have exploded in tandem with torrential growth in training set sizes, parameter counts, and training FLOPs \citep{marcus2018deep}.
 Recruitment of multi-GPU training for image classification, requisite particular accomodating adjustments to the underlying deep learning architecture, is commonly identified as the watershed moment to this transformation
  \citep{krizhevsky2012imagenet}.
-Commerical interest in AI capabilies set in motion a virtuous cycle of further-enabling hardware advances to support deep learning \citep{jouppi2017datacenter}.
+Commerical investment in AI capabilies set in motion a virtuous cycle of further-and-further-enabling hardware advances \citep{jouppi2017datacenter}.
 Indeed, the scaling relationship between deep learning and training resources has itself become a major area of active study, with influential visions envisioning this virtuous cycle continuing for the forseeable future \citep{CITETODOTHATGOOGLEPAPERPREPRINT}.
 
 % The relationship between artificial life and scaling can be argued similar to that of connectionist artificial intelligence and scaling.
@@ -76,7 +77,8 @@ Indeed, the scaling relationship between deep learning and training resources ha
 % As with digital evolution, artificial neural networks (ANNs) were traditionally understood as a versatile but auxiliary methodology --- both techniques have been described as ``the second best way to do almost anything'' \citep{miaoulis2008intelligent,eiben2015introduction}.
 
 A major upshot of the deep learning race is the emergence of a new constellation of spectacularly capable next-generation compute accelerators \citep{zhang2016cambricon,emani2021accelerating,jia2019dissecting,medina2020habana}.
-Although designed expressly for deep learning workloads, these hardware platforms represent an exceptional opportunity to realize scaling ambitions crux to broad swaths of artificial life work.
+Although designed expressly for deep learning workloads, these hardware platforms represent an exceptional opportunity to leapfrog artificial life to toward potential more-is-different thresholds latent in many of the field's interests.
+% realize scaling ambitions crux to broad swaths of artificial life work.
 The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, holds particular promise as a vehicle for alife simulation.
 This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently using individual on-chip memory and local PEs interacting through a network-like interface.
 Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in ABM capabilities \citep{perumalla2022computer}.
@@ -87,29 +89,33 @@ Cerebras themselves very recently announced the CS-3 chip, which, among other sp
 
 \subsection{Observability at Scale for Experimental Usefulness as a Scientific Tool}
 
+
 % more is different More is different \citep{anderson1972more}.
 % Likewise, progress of artificial life systems along a path, in the most ambitious framing, to indefinite scalability seems likely to unfold through incremental investments spurred by progressive scientific achievements.
 % In tandem with more farsighted efforts, progress will also require prosaic leverage of existing, commercially-available parallel and distributed compute resources at circumstantially-feasible scales.
+Fundamental orthogonalities between the fundamental structure and objectives of AI and AL methods will complicate any effort too requisition AI hardware for AL purposes.
+In common use, deep learning operates as a black box medium \citep{TODO} (but not always \citep{TODO}).
+This paradigm de-emphasizes accessibility of inner state.
+In contrast, artificial life simulations more often function as a tool for inquiry.
+This orientation imbues a special emphasis on capability to observe, and interpret, underlying simulation state \citep{moreno2023toward,horgan1995complexity}.
+(A similar argument holds for alife work driven by artistic objectives, as well.)
+Although less vital to application-oriented aspects of evolutionary computation, in these contexts observability can nonetheless benefit diagnostics required to tune configuration to achieve good solution quality \citep{hernandez2022can}.
 
-A key difference, however, exists between artificial intelligence.
-One key aspect of challenge introduced by scaleup is observability \citep{DOEDATAREDUCTIONPHAMPHLET}.
-Unlike deep learning systems, which are largely application oriented, artificial life systems are typically scientifically oriented and so we need to be able to observe them.
-Whereas in AI the output is paramount, although some work does investigate state within ANNs, in alife the underlying simulation itself is the output.
-To that end, observability \citep{moreno2023toward} and interpretability \citep{horgan1995complexity} will be key concerns, as will intentionally focuusing engineering effort to support hypothesis-driven objectives.
-(Indeed, observability likely also comprise a priority for alife work driven by artistic objectives.)
-Even in application-oriented aspects of evolutionary computation, observability counts too because such data serves as a critical diagnostic to tune configuration for good performance \citep{hernandez2022can}.
-% It is also important to be able to observe systems that are meant for artistic means, likewise.
+Unfortunately, scale complicates simulation observability.
+% Scale transforms simulation into relentless data streams with
+It is not uncommon for volume and velocity of data streams from contemporary simulation to outstrip hardware bandwidth and storage capacity \citep{TODODOEDATAREDUCTIONPHAMPHLET}.
+Intentional engineering effort will be required to ensure large-scale simulation retains utility in pursuing rigorous hypothesis-driven objectives.
+% , and this problem is ubiquitous across simulation, observational, and experimental sciences 
+% Observability  and interpretability \citep{} will be key concerns, as will .
 
 % To serve as a useful experimental platform, digital evolution simulations must be observable.
-In addition to end-state information (i.e., evolved traits), scientific questions demand information sufficient to characterize underlying mode and tempo of evolution.
-Additionally, it is often useful to be able to trace the history of notable evolutionary events (e.g., extinctions, evolutionary innovations)
-In evolutionary biology, phylogenetic history is a valuable tool to triangulating the context of notable evolutionary events, as well as characterizing the underlying mode and tempo of evolution.
-The same holds true in evolutionary simulation.
+Here, we focusto confront just a single aspect of simulation observability within distributed evolutionary simulation: phylogenetic history (i.e., the overall set of evolutionary ancestry relationships).
+Phylogenetic history plays a critical role in many evolution studies, across study domains and \textit{in vivo} and \textit{in silico} model systems alike \citep{faithConservationEvaluationPhylogenetic1992, STAMATAKIS2005phylogenetics, frenchHostPhylogenyShapes2023,kim2006discovery,TODOCITESOMESIMULATIONPAPERS}.
+Phylogenetic analysis can trace the history of notable evolutionary events (e.g., extinctions, evolutionary innovations), but also characterize more general questions about the underlying mode and tempo of evolution \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling,lewinsohnStatedependentEvolutionaryModels2023a}.
+Particularly notable, recent work has used comparison of observed phylogenies against those produced under differing simulation conditions can to test hypotheses describing underlying dynamics within real-life evo-epidemiological systems \citep{giardina2017inference,voznica2022deep}.
+Additionally, \textit{in silico}, phylogenetic information can even serve as mechanism to guide evolution in application-oriented domains \citep{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
 
-% https://github.com/mmore500/phylotrack-algorithm-analysis/blob/fe16d2b2d7df99faade09c01b72f681160749f51/tex/text/body/introduction.tex
-In addition to addressing questions of natural history, access to the phylogenetic record of biological life has proven informative to conservation biology, epidemiology, medicine, and biochemistry among other domains \citep{faithConservationEvaluationPhylogenetic1992, STAMATAKIS2005phylogenetics, frenchHostPhylogenyShapes2023,kim2006discovery}.
-Nonetheless, existing analyses of phylogenetic structure within digital systems have already proven valuable, enabling diagnosis of underlying evolutionary dynamics \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling, lewinsohnStatedependentEvolutionaryModels2023a} and even serving as mechanism to guide evolution in application-oriented domains \citep{lalejini2024phylogeny,lalejini2024runtime,murphy2008simple,burke2003increased}.
-Further, comparison of observed phylogenies against simulation phylogenies can be used to evaluate hypotheses for underlying dynamics within real-life evolutionary/epidemiological systems \citep{giardina2017inference,voznica2022deep}.
+\subsection{Decentralized Phylogenetic Tracking}
 
 % Unfortunately, existing approaches to recording phylogenetic history from digital evolution simulations do not scale robustly.
 Simulation phylogenies have typically been collected using a centralized record-keeping approach where every reproduction event is stitched together in a tree data structure to produce a complete record.
