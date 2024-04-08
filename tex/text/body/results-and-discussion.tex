@@ -3,10 +3,9 @@
 Here, we report a series of benchmarks that evaluate the viability of our proposed approaches to harness the CS-2 accelerator for digital evolution simulations and extract phylogenetic records from said simulations.
 First, we compare performance characteristics of new surface-oriented herditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operation.
 %For assessment of  we refer the reader to related work TODOCITE.
-Then, we validate the credibility of our end-to-end annotation-to-reconstruction pipeline by reviewing the clade structure from varying-duration emulated WSE evolutionary runs.
-Finally, we benchmark phylogeny-tracked WSE genetic algorithm implementation.
+Then, we benchmark phylogeny-tracked WSE genetic algorithm implementation.
 To assess the runtime overhead of surface-based tracking, we compare against benchmarking results with phylogenetic tracking disabled.
-
+Finally, we validate the credibility of the presented end-to-end annotation-to-reconstruction pipeline by reviewing the clade structure from varying-duration emulated WSE evolutionary runs.
 % Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
 
 % TODO transpant this into the other paper
@@ -85,61 +84,43 @@ Half of update operations on surfaces with single bit differentia can be skipped
 Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
 Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
-\subsection{WSE Hereditary Stratigraphy Validation Experiment}
+\subsection{WSE Genetic Algorithm Benchmarks}
 
-We performed extensive tests to be confident in our implementation of phylogenetic tracking for the Cerebras Software Language on the WSE device.
-Extensive other work TODOCITE has validated the underlying hereditary surface algorithm and the reconstruction algorithm.
-We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
+Next, we sought to characterize the performance of island model genetic algorithm on WSE hardware, and estimate the magnitude of simulation that might be achieved with on-device execution.
+We used per-PE cycle counters in emulation to test the amount of real time elapsed over the course of a 40 generation cycle simulation.
+We tested using a $3\times3$ PE collective with the tagged 3 word genome and a per-PE population size of 32, applying a tilted hereditary stratigraphy every generation.
 
-Here, we report the results of an integration test to assess the general validity of phylogenetic reconstructions on the WSE platform.
-We used special genomes tagged with a randomly-generated identifier at simulation startup.
-Figure \ref{fig:genome-layout} explains the content laid out within each genome.
-These identifiers identified clades descending from each founding genome.
-We used the hardware simulator to perform a simulation on the $3\times3$ PE collective under drift conditions for 25, 50, 100, and 250 generation cycles.
+PEs completed a mean of 24,138 generation cycles per second (SEM 99; $n=9$).
+As an indicator of inter-PE exchange throughput, over the course of the simulation each PE immigrated a mean of 118 genomes (SEM 11; $n=9$).
 
-\input{fig/tagged.tex}
+What scale of simulation does this performance imply at full scale on CS-2 hardware?
+A 24 kHz turnover rate multiplies out to around 2 billion generations a day.
+With 32 individuals hosted per PE, net population size would sit around 27 million at full wafer scale.
+(Note, though, that available on-chip memory could support on the order of thousands of our very simple agents per PE, raising potential for a net population size on the order of a billion agents.)
+% 24,000 * 850,000 * 60 * 60 * 24 * 32 ---> ?? quadrillion
+From these figures, a naive extrapolation estimates on the order of a quadrillion agent replications could be achieved hourly at full wafer scale.
+Such a calculation, however, does not account for the likelihood for some level of scaling slowdown.
+We eagerly anticipate putting this question directly to the test in on-hardware trials in the very near future.
+%The barebones simplicity of the model should also be noted.
 
-Figure \ref{fig:tagged} shows reconstructed phylogenies from each duration.
-As expected, taxa belonging to the same founding clade are reconstructed as more closely related than to other taxa and the number of distinct founding clades represented dwindles with increasing simulation duration.
+Recall that these figures are inclusive of phylogenetic tracking.
+How fast does simulation run without hereditary stratigraphy instrumentation?
+We repeated the benchmark using one-word genomes stripped of all instrumentation.
+Under these conditions, PEs completed a mean of 47,175 generations per second (SEM 220; $n=20$)
+Over the course of the simulation each PE immigrated a the same mean 118 genomes (SEM 12; $n=12$).
 
-At the end of simulation, one genome was sampled per PE.
-Figure \ref{fig:validation-example:phylogeny} shows the result of phylogenetic reconstruction on these sampled genomes.
-To simplify visualization of the phylogeny with existing phyloinformatic tools, all clades were stitched together into a single tree by attaching them to a common ancestor.
-Taxa are colored according to their clade genesis tag.
-Clade arrangement in the reconstructed tree agrees well with founding clade identities.
-All different-colored taxa are predicted to have had ancient common ancestry.
-Note that relatedness between \texttt{0x5fb} and \texttt{0xde40} is slightly overestimated, due to a configured lack of precise resolution necessary to ensure compact genetic annotations.
-Applications where high reconstruction precision is required can opt to use larger annotation sizes.
+These timings indicte that phylogeny tracking achieves rougly half performance.
+Given the highly minimalistic nature of the agent model and selection process, this result is highly promising.
+In actual use, most experiments will likely involve a much more sophisticated agent model and, thus, relative overhead of tracking will diminsish significantly.
+It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce performance costs of tracking considerably.
 
-
-\subsection{WSE Genetic Algorithm Benchmark}
-
-We used the cycle counter on the WSE hardware simulator to test the amount of real time elapsed over the course of a 100 generation cycle simulation on a $3\times3$ PE collective with the tagged 3 word genome, applying a tilted hereditary stratigraphy every generation.
-
-Each PE completed a mean of 29,500 generation cycles per second (SEM 155; $n=9$), or around 2 billion generations a day.
-Over the course of the simulation, each PE immigrated a mean of 277 genomes (SEM 23; $n=9$).
-
-How would this look on a full piece of hardware?
-Keeping 32 individuals per PE would result in a net population size of around 27 million on a full WSE.
-(Although generation time would be slower, available memory on the CS-2 could support on the order of thousands of agents per PE potentially yielding a net population size on the order of a billion agents.)
-% 29,500 * 850,000 * 60 * 60 * 24 * 32 ---> 69 quadrillion
-Naive extrapolation would estimate on the order of a quadrillion agent replications every half hour, notwithstanding scaling slowdown.
-
-% https://github.com/mmore500/wse-sketches-mirror/actions/runs/8546407499/job/23416697013
-% from https://github.com/mmore500/wse-sketches-mirror/commit/fb7f9c4e175818253f844909297d747cd813b9c7
-% Reading file out/out.json
-% Reading file out/bin/out_rpc.json
-% Reading file out/west/out.json
-% Reading file out/east/out.json
-% fab w,h = 10,5
-% Kernel x,y w,h = 4,1 3,3
-% memcpy x,y w,h = 1,1 8,3
-% ASYNC_GA_GLOBAL_SEED 3
-% ASYNC_GA_NCYCLE 100
-% CSLC cslc
-% ASYNC_GA_GENOME_FLAVOR genome_hsurftiltedsticky_tagged
-% ASYNC_GA_GLOBAL_SEED 3
-% ASYNC_GA_NCYCLE 100
+% https://github.com/mmore500/wse-sketches-mirror/actions/runs/8590107511/job/23537207835
+% from https://github.com/mmore500/wse-sketches-mirror/commit/3a1bf8e9f2820a38cb7387a7624a86361485174b
+% ASYNC_GA_GENOME_FLAVOR genome_purifyingplus
+% ASYNC_GA_GLOBAL_SEED 0
+% ASYNC_GA_NCYCLE_AT_LEAST 40
+% ASYNC_GA_MSEC_AT_LEAST 0
+% ASYNC_GA_TSC_AT_LEAST 0
 % INFO: Using SIF: /home/runner/cerebras/bin/cbcore_sdk-202311111408-10-4a54bce5.sif
 % INFO: User's specified CSL_IMPORT_PATH=
 % NOTE: CSL_IMPORT_PATH accepts colon separated list of paths generated by 'realpath <path>'
@@ -162,111 +143,211 @@ Naive extrapolation would estimate on the order of a quadrillion agent replicati
 %  [1 1 1]
 %  [2 2 2]]
 % cycle counter =======================================================
-% [[100 100 100]
-%  [100 100 100]
-%  [100 100 100]]
+% [[40 40 40]
+%  [40 40 40]
+%  [40 40 40]]
 % recv counter N ========================================================
 % [[ 1  1  1]
-%  [29 25 29]
-%  [27 25 26]]
+%  [ 9 13 11]
+%  [15 12 12]]
 % recv counter S ========================================================
-% [[23 25 25]
-%  [25 27 23]
+% [[ 7  9  8]
+%  [10 11  9]
 %  [ 1  1  1]]
 % recv counter E ========================================================
-% [[25 29  1]
-%  [25 26  1]
-%  [23 27  1]]
+% [[12 11  1]
+%  [12 13  1]
+%  [ 9 13  1]]
 % recv counter W ========================================================
-% [[ 1 23 24]
-%  [ 1 23 25]
-%  [ 1 25 27]]
+% [[ 1 11  9]
+%  [ 1  7  9]
+%  [ 1 10 11]]
 % recv counter sum =====================================================
-% [50, 78, 51, 80, 101, 78, 52, 78, 55]
-% np.mean(recvSum)=69.22222222222223 np.std(recvSum)=16.857426835260856 sps.sem(recvSum)=5.960000414284516
+% [21, 32, 19, 32, 44, 30, 26, 36, 25]
+% np.mean(recvSum)=29.444444444444443 np.std(recvSum)=7.304657739508267 sps.sem(recvSum)=2.5825865109265465
 % send counter N ========================================================
-% [[100 100 100]
-%  [100 100 100]
-%  [100 100 100]]
+% [[ 0  0  0]
+%  [24 32 34]
+%  [40 46 34]]
 % send counter S ========================================================
-% [[112 102 112]
-%  [108 100 104]
-%  [  0   0   0]]
+% [[38 50 46]
+%  [58 50 48]
+%  [ 0  0  0]]
 % send counter E ========================================================
-% [[ 90 100   0]
-%  [ 94 102   0]
-%  [102 110   0]]
+% [[44 32  0]
+%  [24 32  0]
+%  [40 46  0]]
 % send counter W ========================================================
-% [[  0 102 112]
-%  [  0 100 104]
-%  [  0  92 108]]
+% [[ 0 50 46]
+%  [ 0 50 48]
+%  [ 0 36 48]]
 % send counter sum =====================================================
-% [202, 304, 224, 296, 404, 306, 204, 312, 202]
-% np.mean(sendSum)=272.6666666666667 np.std(sendSum)=65.40812046085885 sps.sem(sendSum)=23.125262761269934
+% [82, 132, 92, 106, 164, 130, 80, 128, 82]
+% np.mean(sendSum)=110.66666666666667 np.std(sendSum)=27.744869395579748 sps.sem(sendSum)=9.809292646374773
 % tscControl values ====================================================
 % [30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187]
 % tscStart values ======================================================
-% [2623, 2137, 1653, 3133, 2648, 2114, 1627, 3111, 3111]
+% [2220, 2222, 2731, 2731, 1716, 2738, 3241, 3243, 3237]
 % tscEnd values ========================================================
-% [2833350, 2958017, 2834797, 2901552, 2894748, 2906881, 2847462, 2935863, 2847357]
+% [1414233, 1414662, 1406657, 1388294, 1438771, 1433887, 1412082, 1403426, 1390454]
 % tsc diffs ============================================================
 % --------------------------------------------------------------- ticks
-% [2830727, 2955880, 2833144, 2898419, 2892100, 2904767, 2845835, 2932752, 2844246]
-% np.mean(tsc_ticks)=2881985.5555555555 np.std(tsc_ticks)=43041.3869074125 sps.sem(tsc_ticks)=15217.428276952633
+% [1412013, 1412440, 1403926, 1385563, 1437055, 1431149, 1408841, 1400183, 1387217]
+% np.mean(tsc_ticks)=1408709.6666666667 np.std(tsc_ticks)=16415.157825754963 sps.sem(tsc_ticks)=5803.63470641938
 % -------------------------------------------------------------- seconds
-% [0.0033302670588235294, 0.0034775058823529412, 0.003333110588235294, 0.003409904705882353, 0.003402470588235294, 0.0034173729411764706, 0.003348041176470588, 0.0034502964705882353, 0.003346171764705882]
-% np.mean(tsc_sec)=0.0033905712418300657 np.std(tsc_sec)=5.0636925773426534e-05 sps.sem(tsc_sec)=1.7902856796414882e-05
+% [0.0016611917647058824, 0.0016616941176470588, 0.0016516776470588235, 0.0016300741176470588, 0.0016906529411764705, 0.0016837047058823528, 0.00165746, 0.0016472741176470588, 0.00163202]
+% np.mean(tsc_sec)=0.0016573054901960784 np.std(tsc_sec)=1.9311950383241098e-05 sps.sem(tsc_sec)=6.827805536963963e-06
 % ---------------------------------------------------- seconds per cycle
-% [3.330267058823529e-05, 3.477505882352941e-05, 3.333110588235294e-05, 3.409904705882353e-05, 3.402470588235294e-05, 3.4173729411764705e-05, 3.348041176470588e-05, 3.4502964705882353e-05, 3.346171764705882e-05]
-% np.mean(tsc_cysec)=3.390571241830066e-05 np.std(tsc_cysec)=5.063692577342663e-07 sps.sem(tsc_cysec)=1.7902856796414917e-07
+% [4.152979411764706e-05, 4.154235294117647e-05, 4.129194117647059e-05, 4.075185294117647e-05, 4.226632352941176e-05, 4.209261764705882e-05, 4.1436499999999995e-05, 4.1181852941176466e-05, 4.0800500000000003e-05]
+% np.mean(tsc_cysec)=4.143263725490196e-05 np.std(tsc_cysec)=4.827987595810268e-07 sps.sem(tsc_cysec)=1.7069513842409884e-07
 % ---------------------------------------------------------- cycle hertz
-% [30027.621879467715, 28756.241796013368, 30002.00483985283, 29326.332735191147, 29390.408353791365, 29262.243753113416, 29868.210911735925, 28983.016634205687, 29884.897438547865]
-% np.mean(tsc_cyhz)=29500.1087046577 np.std(tsc_cyhz)=438.84515891452514 sps.sem(tsc_cyhz)=155.15519387967439
+% [24079.09842189838, 24071.81897992127, 24217.800653310787, 24538.761499837972, 23659.498070707108, 23757.135001317125, 24133.312417795907, 24282.540210815303, 24509.50356000539]
+% np.mean(tsc_cyhz)=24138.829868401026 np.std(tsc_cyhz)=280.43062795032466 sps.sem(tsc_cyhz)=99.14719933803819
 % --------------------------------------------------------- ns per cycle
-% [33302.67058823529, 34775.05882352941, 33331.10588235294, 34099.04705882353, 34024.70588235294, 34173.7294117647, 33480.41176470588, 34502.964705882354, 33461.717647058824]
-% np.mean(tsc_cyns)=33905.71241830065 np.std(tsc_cyns)=506.36925773426583 sps.sem(tsc_cyns)=179.028567964149
-% genome values ========================================================
-% ------------------------------------------------ genome binary strings
-% 110101001011011001011001000000001110100101011110101001110010101000110100110101111010000000000100
-% 000001111101100101011000000000001111110001111111110001100000101111101011110011001100110110110010
-% 110110011001011101011101000000001010011011101000100100110001110110010000100010100111001111000101
-% 001110001101110101011100000000001000110110011100000010010011100010010011110001101001011100001110
-% 001110001101110101011011000000001000110100000100100000110001100000010010100000101001011100001100
-% 000001111101100101100000000000001111110000100110110001111111000011110010010111101111001100100101
-% 001110001101110101011011000000001100111100010101010000110011000011110110000100111011010001000101
-% 000001111101100101010101000000001011110001011101100000000101010111110101110101000111010001001001
-% 100110001100100101001111000000001000100110101110011111111000010001011101000001000110010001011110
-% --------------------------------------------------- genome hex strings
-% D4B65900E95EA72A34D7A004
-% 07D95800FC7FC60BEBCCCDB2
-% D9975D00A6E8931D908A73C5
-% 38DD5C008D9C093893C6970E
-% 38DD5B008D0483181282970C
-% 07D96000FC26C7F0F25EF325
-% 38DD5B00CF154330F613B445
-% 07D95500BC5D8055F5D47449
-% 98C94F0089AE7F845D04645E
-% SUCCESS!
-% Reading file out/out.json
-% Reading file out/bin/out_rpc.json
-% Reading file out/west/out.json
-% Reading file out/east/out.json
-% fab w,h = 10,5
-% Kernel x,y w,h = 4,1 3,3
-% memcpy x,y w,h = 1,1 8,3
+% [41529.79411764706, 41542.35294117647, 41291.94117647059, 40751.852941176476, 42266.32352941176, 42092.61764705882, 41436.49999999999, 41181.85294117647, 40800.5]
+% np.mean(tsc_cyns)=41432.63725490196 np.std(tsc_cyns)=482.7987595810264 sps.sem(tsc_cyns)=170.6951384240987
+% fitness =============================================================
+% [[0.00316905 0.00565182 0.0022315 ]
+%  [0.00687918 0.00742484 0.00589414]
+%  [0.00582986 0.0057458  0.00379858]]
 
-\subsection{On-hardware Demonstration with Evolutionary Inference from Phylogenetic Analysis}
 
-\input{fig/wse-phylogenies}
+% https://github.com/mmore500/wse-sketches-mirror/actions/runs/8590107511/job/23537207835
+% from https://github.com/mmore500/wse-sketches-mirror/commit/3a1bf8e9f2820a38cb7387a7624a86361485174b
+% CSLC cslc
+% ASYNC_GA_GENOME_FLAVOR genome_purifyingstripped
+% ASYNC_GA_GLOBAL_SEED 0
+% ASYNC_GA_NCYCLE_AT_LEAST 40
+% ASYNC_GA_MSEC_AT_LEAST 0
+% ASYNC_GA_TSC_AT_LEAST 0
+% INFO: Using SIF: /home/runner/cerebras/bin/cbcore_sdk-202311111408-10-4a54bce5.sif
+% INFO: User's specified CSL_IMPORT_PATH=
+% NOTE: CSL_IMPORT_PATH accepts colon separated list of paths generated by 'realpath <path>'
+% INFO:    Environment variable SINGULARITYENV_CSL_SUPPRESS_SIMFAB_TRACE is set, but APPTAINERENV_CSL_SUPPRESS_SIMFAB_TRACE is preferred
+% compile successful
+% Updated 1 path from the index
+% CS_PYTHON cs_python
+% INFO: Using SIF: /home/runner/cerebras/bin/cbcore_sdk-202311111408-10-4a54bce5.sif
+% INFO:    Environment variable SINGULARITYENV_CSL_SUPPRESS_SIMFAB_TRACE is set, but APPTAINERENV_CSL_SUPPRESS_SIMFAB_TRACE is preferred
+% whoami ===============================================================
+% [[0 3 6]
+%  [1 4 7]
+%  [2 5 8]]
+% whereami x ===========================================================
+% [[0 1 2]
+%  [0 1 2]
+%  [0 1 2]]
+% whereami y ===========================================================
+% [[0 0 0]
+%  [1 1 1]
+%  [2 2 2]]
+% cycle counter =======================================================
+% [[40 40 40]
+%  [40 40 40]
+%  [40 40 40]]
+% recv counter N ========================================================
+% [[ 1  1  1]
+%  [13 11 14]
+%  [11  7 11]]
+% recv counter S ========================================================
+% [[ 9 13  9]
+%  [11 13 11]
+%  [ 1  1  1]]
+% recv counter E ========================================================
+% [[11 15  1]
+%  [ 7 11  1]
+%  [ 7  9  1]]
+% recv counter W ========================================================
+% [[ 1  7  9]
+%  [ 1  9 13]
+%  [ 1 11 13]]
+% recv counter sum =====================================================
+% [22, 36, 20, 32, 44, 39, 20, 28, 26]
+% np.mean(recvSum)=29.666666666666668 np.std(recvSum)=8.16496580927726 sps.sem(recvSum)=2.886751345948129
+% send counter N ========================================================
+% [[ 0  0  0]
+%  [38 52 38]
+%  [42 52 44]]
+% send counter S ========================================================
+% [[54 44 56]
+%  [44 30 44]
+%  [ 0  0  0]]
+% send counter E ========================================================
+% [[28 38  0]
+%  [38 52  0]
+%  [42 52  0]]
+% send counter W ========================================================
+% [[ 0 44 56]
+%  [ 0 30 44]
+%  [ 0 30 38]]
+% send counter sum =====================================================
+% [82, 126, 112, 120, 164, 126, 84, 134, 82]
+% np.mean(sendSum)=114.44444444444444 np.std(sendSum)=26.192073063391234 sps.sem(sendSum)=9.260296238228726
+% tscControl values ====================================================
+% [30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187, 30064968187]
+% tscStart values ======================================================
+% [1131, 1130, 1644, 1641, 628, 1650, 2151, 2155, 2149]
+% tscEnd values ========================================================
+% [709983, 736796, 714836, 730020, 721384, 731436, 713213, 730922, 713242]
+% tsc diffs ============================================================
+% --------------------------------------------------------------- ticks
+% [708852, 735666, 713192, 728379, 720756, 729786, 711062, 728767, 711093]
+% np.mean(tsc_ticks)=720839.2222222222 np.std(tsc_ticks)=9500.522988853212 sps.sem(tsc_ticks)=3358.9421151183965
+% -------------------------------------------------------------- seconds
+% [0.0008339435294117647, 0.0008654894117647059, 0.0008390494117647059, 0.0008569164705882353, 0.0008479482352941177, 0.0008585717647058823, 0.0008365435294117647, 0.0008573729411764705, 0.00083658]
+% np.mean(tsc_sec)=0.0008480461437908496 np.std(tsc_sec)=1.1177085869239065e-05 sps.sem(tsc_sec)=3.9516966060216395e-06
+% ---------------------------------------------------- seconds per cycle
+% [2.0848588235294117e-05, 2.1637235294117648e-05, 2.097623529411765e-05, 2.1422911764705883e-05, 2.119870588235294e-05, 2.1464294117647056e-05, 2.0913588235294118e-05, 2.1434323529411762e-05, 2.0914499999999998e-05]
+% np.mean(tsc_cysec)=2.1201153594771243e-05 np.std(tsc_cysec)=2.7942714673097676e-07 sps.sem(tsc_cysec)=9.879241515054106e-08
+% ---------------------------------------------------------- cycle hertz
+% [47964.878423140515, 46216.62547949749, 47672.99689284232, 46678.995413102246, 47172.6908967806, 46589.00006303218, 47815.80227884488, 46654.14323096409, 47813.71775562409]
+% np.mean(tsc_cyhz)=47175.427825980936 np.std(tsc_cyhz)=620.9035009060691 sps.sem(tsc_cyhz)=219.52253797657457
+% --------------------------------------------------------- ns per cycle
+% [20848.58823529412, 21637.235294117647, 20976.23529411765, 21422.91176470588, 21198.70588235294, 21464.294117647056, 20913.58823529412, 21434.323529411762, 20914.499999999996]
+% np.mean(tsc_cyns)=21201.15359477124 np.std(tsc_cyns)=279.42714673097595 sps.sem(tsc_cyns)=98.79241515054076
+% fitness =============================================================
+% [[0. 0. 0.]
+%  [0. 0. 0.]
+%  [0. 0. 0.]]
 
-To perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
-We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32-bit tilted hstrat surface.
-We performed evolutionary runs under two conditions, one with tournament size 2 and one with tournament size 8.
-We performed TODO replicates per condition, running each for Y minutes.
-This was sufficient to observe a mean of TODO generations per cycle, SD TODO.
-At the conclusion of the run, we collected one genome from each PE.
+\subsection{WSE Hereditary Stratigraphy Validation Experiment}
 
-Figure \ref{fig:wse-phylogenies} compares two example reconstructed phylogenies, one from each treatment.
-Performing a reconstruction with all 850,000 genomes took X minutes.
-We used a Mann-Whitney U test between inner node time distributions for pairs of trees to test whether the difference in selection pressure was detectable.
-Indeed, the recovered phylogenetic information was sufficient to detect this difference in evolutionary dynamics for all pairs ($p < TODO$ for all $n=TODO$).
+% We performed extensive tests to be confident in our implementation of phylogenetic tracking for the Cerebras Software Language on the WSE device.
+% Extensive other work TODOCITE has validated the underlying hereditary surface algorithm and the reconstruction algorithm.
+% We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
+
+Here, we report the results of an integration test to assess the general validity of phylogenetic reconstructions on the WSE platform.
+We used special genomes tagged with a randomly-generated identifier at simulation startup.
+Figure \ref{fig:genome-layout} explains the content laid out within each genome.
+These identifiers identified clades descending from each founding genome.
+We used the hardware simulator to perform a simulation on the $3\times3$ PE collective under drift conditions for 25, 50, 100, and 250 generation cycles.
+
+\input{fig/tagged.tex}
+
+Figure \ref{fig:tagged} shows reconstructed phylogenies from each duration.
+As expected, taxa belonging to the same founding clade are reconstructed as more closely related than to other taxa and the number of distinct founding clades represented dwindles with increasing simulation duration.
+
+At the end of simulation, one genome was sampled per PE.
+Figure \ref{fig:validation-example:phylogeny} shows the result of phylogenetic reconstruction on these sampled genomes.
+To simplify visualization of the phylogeny with existing phyloinformatic tools, all clades were stitched together into a single tree by attaching them to a common ancestor.
+Taxa are colored according to their clade genesis tag.
+Clade arrangement in the reconstructed tree agrees well with founding clade identities.
+All different-colored taxa are predicted to have had ancient common ancestry.
+Note that relatedness between \texttt{0x5fb} and \texttt{0xde40} is slightly overestimated, due to a configured lack of precise resolution necessary to ensure compact genetic annotations.
+Applications where high reconstruction precision is required can opt to use larger annotation sizes
+
+% \subsection{On-hardware Demonstration with Evolutionary Inference from Phylogenetic Analysis}
+
+% \input{fig/wse-phylogenies}
+
+% To perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
+% We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32-bit tilted hstrat surface.
+% We performed evolutionary runs under two conditions, one with tournament size 2 and one with tournament size 8.
+% We performed TODO replicates per condition, running each for Y minutes.
+% This was sufficient to observe a mean of TODO generations per cycle, SD TODO.
+% At the conclusion of the run, we collected one genome from each PE.
+
+% Figure \ref{fig:wse-phylogenies} compares two example reconstructed phylogenies, one from each treatment.
+% Performing a reconstruction with all 850,000 genomes took X minutes.
+% We used a Mann-Whitney U test between inner node time distributions for pairs of trees to test whether the difference in selection pressure was detectable.
+% Indeed, the recovered phylogenetic information was sufficient to detect this difference in evolutionary dynamics for all pairs ($p < TODO$ for all $n=TODO$).

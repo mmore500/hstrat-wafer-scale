@@ -144,6 +144,7 @@ On simulation startup, asynchronous receive operations are opened to accept geno
 At startup, additionally, each emigration buffer is populated with genomes copied the population and asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
 Asynchronous operations are registered to on-completion callbacks that set a per-buffer ``send complete'' or ``receive complete'' flag variable.
 In this work, we arbitrarily size send buffers to hold one genome and the receive buffers to hold four genomes.
+The main population buffer was sized to 32 genomes.
 
 Subsequently, the main update loop tests all ``send complete'' and ``receive complete'' flags.
 For each immigration flag that is set, buffered genomes are copied into the main population buffer, replacing randomly-chosen population members.
