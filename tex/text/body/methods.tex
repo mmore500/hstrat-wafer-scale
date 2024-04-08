@@ -185,12 +185,19 @@ For benchmarking experiments, a 128-bit genome layout was used instead, with the
 
 \subsection{Software and Data Availability}
 
-Software, configuration files, and executable notebooks for this work are available at \url{https://github.com/mmore500/hstrat-wafer-scale} TODO.
-CSL Software can be found on at \url{https://github.com/mmore500/wse-sketches/tree/v0.1.0} \citep{moreno2024wse}.
-Data and supplemental materials are available via the Open Science Framework \url{https://osf.io/bfm2z/} \citep{foster2017open}.
+Software, configuration files, and executable notebooks for this work are available via Zenodo at \url{https://github.com/mmore500/hstrat-wafer-scale} TODO.
+% TODO add as a submodule to hstrat-wafer-scale:
+% CSL software can be found on at \url{https://github.com/mmore500/wse-sketches/tree/v0.1.0} \citep{moreno2024wse}.
+% and hsurf too!
+Data and supplemental materials are available via the Open Science Framework at \url{https://osf.io/bfm2z/} \citep{foster2017open}.
 
-All hereditary stratigraph annotation, reference phylogeny generation, and phylogenetic reconstruction tools used in this work are published in the \texttt{hstrat} Python package \citep{moreno2022hstrat}.
-This project uses data formats and tools associated with the ALife Data Standards project \citep{lalejini2019data} and benefited from many pieces of open-source scientific software \citep{sand2014tqdist,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,sukumaran2010dendropy,cock2009biopython,dolson2024phylotrackpy,torchiano2016effsize,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2023teeplot,torchiano2016effsize,moreno2024pecking,moreno2024joinem,moreno2024hsurf}.
+Hereditary stratigraphy utilities are published in the \texttt{hstrat} Python package \citep{moreno2022hstrat}.
+This project uses data formats and tools associated with the ALife Data Standards project \citep{lalejini2019data} and benefited from many pieces of open-source scientific software \citep{sand2014tqdist,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,sukumaran2010dendropy,cock2009biopython,dolson2024phylotrackpy,torchiano2016effsize,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2023teeplot,torchiano2016effsize,moreno2024pecking,moreno2024joinem,moreno2024hsurf,moreno2024wse}. %TODO check/update me
 
-The experiments in this use the Cerebras SDK to compile and test on a hardware simulator \citep{TODOCITE}.
-Access to the SDK can be requested, currently free of charge, via their website.
+WSE experiments reported in this work used the CSL compiler CS-2 hardware emulator bundled with the Cerebras SDK v1.0.0 \citep{selig2022cerebras}, available via request form on the Cerebras website.
+SDK utilities can be run from any Linux desktop environment, regardless of access to CS-2 hardware.
+
+% Cerebras currently makes SDK materials available upon request, which can be .
+% In preparation for proposed work, we joined the Cerebras SDK program \citep{selig2022cerebras} and assembled Cerebras Software Language (CSL) software implementations that will be necessary to conduct experiments with WSE hardware.
+% Access to the SDK can be requested, currently free of charge, via their website.
+% For the time being, we have used Cerebras' hardware emulator to test our software implementations.
