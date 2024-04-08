@@ -59,14 +59,12 @@ Beyond alife, broader realms of application-oriented evolutionary computation ha
 
 \subsection{Untapped Computational Resources and Emerging Hardware Capabilities}
 
-% , it turns out in retrospect,
-% Retrospectively,
-With retrospect, connectionist artificial intelligence turns out to have been profoundly scale-dependent.
+In retrospect, connectionist artificial intelligence turns out to have been profoundly scale-dependent.
 The utility and ubiquity of ANNs have exploded in tandem with torrential growth in training set sizes, parameter counts, and training FLOPs \citep{marcus2018deep}.
 Recruitment of multi-GPU training for image classification, requisite particular accomodating adjustments to the underlying deep learning architecture, is commonly identified as the watershed moment to this transformation
  \citep{krizhevsky2012imagenet}.
-Commerical investment in AI capabilies set in motion a virtuous cycle of further-and-further-enabling hardware advances \citep{jouppi2017datacenter}.
-Indeed, the scaling relationship between deep learning and training resources has itself become a major area of active study, with influential visions envisioning this virtuous cycle continuing for the forseeable future \citep{CITETODOTHATGOOGLEPAPERPREPRINT}.
+Commerical investment in AI capabilies then set in motion a virtuous cycle of further-and-further-enabling hardware advances \citep{jouppi2017datacenter}.
+Indeed, the scaling relationship between deep learning and training resources has itself become a major area of active study, with expectation for this virtuous cycle to continue through the forseeable future \citep{CITETODOTHATGOOGLEPAPERPREPRINTSCALEISALLYOUNEED}.
 
 % The relationship between artificial life and scaling can be argued similar to that of connectionist artificial intelligence and scaling.
 % except that artificial intelligence is a lot further along in this regard.
@@ -79,15 +77,14 @@ Indeed, the scaling relationship between deep learning and training resources ha
 % Spectacular advances achieved with artificial neural networks over the last decade illuminate one conceivable progression of events.
 % As with digital evolution, artificial neural networks (ANNs) were traditionally understood as a versatile but auxiliary methodology --- both techniques have been described as ``the second best way to do almost anything'' \citep{miaoulis2008intelligent,eiben2015introduction}.
 
-A major upshot of the deep learning race is the emergence of a new constellation of spectacularly capable next-generation compute accelerators \citep{zhang2016cambricon,emani2021accelerating,jia2019dissecting,medina2020habana}.
-Although designed expressly for deep learning workloads, these hardware platforms represent an exceptional opportunity to leapfrog artificial life to toward potential more-is-different thresholds latent in many of the field's interests.
-% realize scaling ambitions crux to broad swaths of artificial life work.
-The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, holds particular promise as a vehicle for alife simulation.
-This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently using individual on-chip memory and local PEs interacting through a network-like interface.
+A major upshot of the deep learning race is emergence of a constellation of spectacularly capable next-generation compute accelerators \citep{zhang2016cambricon,emani2021accelerating,jia2019dissecting,medina2020habana}.
+Although tailored expressly to deep learning workloads, these hardware platforms represent an exceptional opportunity to leapfrog progress on grand challenges in artificial life.
+The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, holds particular promise as a vehicle for artificial life models.
+This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently with private on-chip memory and interacting locally through a network-like interface.
 
-Our work here explores how such hardware might be recurited for large-scale evolution simulations, demonstrating an genetic algorithm implementation tailored to the asynchronous, dataflow-oriented computing model of the CS-2 platform.
-Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in ABM capabilities \citep{perumalla2022computer}.
-The very recently announced the CS-3 chip, is fitting to this respect; among other spec enhancemments, boosts clustering support to potentiallly thousands of constituent accelerators.
+Our work here explores how such hardware might be recruited for large-scale digital evolution, demonstrating a genetic algorithm implementation tailored to the asynchronous, dataflow-oriented computing model of the CS-2 platform.
+Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in agent-based model capabilities \citep{perumalla2022computer}.
+The very recent CS-3 chip announcement is fitting in this respect; among other spec enhancemments, it boosts clustering support to potentiallly thousands of constituent accelerators.
 
 % This will require changes and impose limitations to what is possible, artificial life.
 % This is not an entirely unreasonable notion of a possible future of artificial life.
