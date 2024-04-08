@@ -310,31 +310,34 @@ It is additionally worthwhile to note that caching and coarsening strategies dis
 %  [0. 0. 0.]
 %  [0. 0. 0.]]
 
-\subsection{WSE Hereditary Stratigraphy Validation Experiment}
+\subsection{WSE-to-Reconstruction Validation Experiment}
 
 % We performed extensive tests to be confident in our implementation of phylogenetic tracking for the Cerebras Software Language on the WSE device.
 % Extensive other work TODOCITE has validated the underlying hereditary surface algorithm and the reconstruction algorithm.
 % We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
 
-Here, we report the results of an integration test to assess the general validity of phylogenetic reconstructions on the WSE platform.
-We used special genomes tagged with a randomly-generated identifier at simulation startup.
-Figure \ref{fig:genome-layout} explains the content laid out within each genome.
-These identifiers identified clades descending from each founding genome.
-We used the hardware simulator to perform a simulation on the $3\times3$ PE collective under drift conditions for 25, 50, 100, and 250 generation cycles.
+Here, we demonstrate phylogenetic reconstructions from the WSE platform and inspect clade structure to qualitatively assess their credibility.
+% report the results of an integration test to assess the general validity of .
+For these experiments, we tagged genomes with a 16 bit randomly-generated identifier at simulation startup, as shown in Figure \ref{fig:genome-layout}.
+% These identifiers identified clades descending from each founding genome.
+Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations 25, 50, 100, and 250 generation cycles under drift conditions.
+At the end of simulation, one genome was sampled per PE.
 
 \input{fig/tagged.tex}
 
 Figure \ref{fig:tagged} shows reconstructed phylogenies from each duration.
-As expected, taxa belonging to the same founding clade are reconstructed as more closely related than to other taxa and the number of distinct founding clades represented dwindles with increasing simulation duration.
+As expected, taxa belonging to the same founding clade (shown by color) are reconstructed as more closely related to each other than to other taxa.
+Additionally, and also as expected, the number of distinct remaining founding clades diminishes monotonically with increasing simulation duration.
+These consistencies corroborate the general integrity of implemented annotation and reconstruction processes.
+Note, however, the incidence of moderate overestimations for relatedness between independently-tagged clades throughout.
+As mentioned earlier, and discussed in greater depth elsewhere \citep{TODOOTHERPAPER}, this is an expected artifact of hereditary stratigraphy with single-bit differentia.
+Applications requiring greater reconstruction precision can opt for larger differentia sizes and/or higher differentia counts.
 
-At the end of simulation, one genome was sampled per PE.
-Figure \ref{fig:validation-example:phylogeny} shows the result of phylogenetic reconstruction on these sampled genomes.
-To simplify visualization of the phylogeny with existing phyloinformatic tools, all clades were stitched together into a single tree by attaching them to a common ancestor.
-Taxa are colored according to their clade genesis tag.
-Clade arrangement in the reconstructed tree agrees well with founding clade identities.
-All different-colored taxa are predicted to have had ancient common ancestry.
-Note that relatedness between \texttt{0x5fb} and \texttt{0xde40} is slightly overestimated, due to a configured lack of precise resolution necessary to ensure compact genetic annotations.
-Applications where high reconstruction precision is required can opt to use larger annotation sizes
+% Figure \ref{fig:validation-example:phylogeny} shows the result of phylogenetic reconstruction on these sampled genomes.
+% To simplify visualization of the phylogeny with existing phyloinformatic tools, all clades were stitched together into a single tree by attaching them to a common ancestor.
+% Taxa are colored according to their clade genesis tag.
+% Clade arrangement in the reconstructed tree agrees well with founding clade identities.
+% All different-colored taxa are predicted to have had ancient common ancestry.
 
 % \subsection{On-hardware Demonstration with Evolutionary Inference from Phylogenetic Analysis}
 
