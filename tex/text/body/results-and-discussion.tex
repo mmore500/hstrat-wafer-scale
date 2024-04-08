@@ -1,14 +1,14 @@
 \section{Results and Discussion} \label{sec:results}
 
 Here, we report a series of benchmarks that evaluate the viability of our proposed approaches to harness the CS-2 accelerator for digital evolution simulations and extract phylogenetic records from said simulations.
-First, we compare performance characteristics of new surface-oriented herditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operation.
+First, we compare the performance characteristics of new surface-oriented hereditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operation.
 %For assessment of  we refer the reader to related work TODOCITE.
 Then, we benchmark phylogeny-tracked WSE genetic algorithm implementation.
 To assess the runtime overhead of surface-based tracking, we compare against benchmarking results with phylogenetic tracking disabled.
 Finally, we validate the credibility of the presented end-to-end annotation-to-reconstruction pipeline by reviewing the clade structure from varying-duration emulated WSE evolutionary runs.
 % Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
 
-% TODO transpant this into the other paper
+% TODO transplant this into the other paper
 % \subsection{Reconstruction Quality of New Surface Algorithms}
 
 % \input{fig/col-vs-surf.tex}
@@ -54,8 +54,8 @@ Finally, we validate the credibility of the presented end-to-end annotation-to-r
 
 \input{fig/benchmarking}
 
-We performed microbenchmarking experiments to test computaitonal efficiency gains from new surface-based algorithms.
-These trials measured per-generation execution time of repeated sequential updates to one annotation with capacity for 64 differentia. % TODO check this
+We performed microbenchmark experiments to test computational efficiency gains from new surface-based algorithms.
+Trials measured the per-generation execution time of repeated sequential updates to one annotation with capacity for 64 differentia. % TODO check this
 Benchmarks were conducted both using Python, for comparability with existing column algorithm implementations, and Zig, to assess performance in absolute terms under compiler optimization.
 Figure \ref{fig:benchmarking} overviews results.
 
@@ -69,7 +69,7 @@ For context, this was about $4\times$ the measured time for a surface placement 
 As expected, column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
 In both cases, surface implementations significantly outperformed their column counterparts (Mann-Whitney U test, $\alpha = 0.05$).
 It should be noted that these results reflect an intrinsic performance penalty due to interpreter overhead of Python evaluation.
-However, comparisons among these Python implementations are nontheless informative because all are on equal footing in this regard.
+However, comparisons among these Python implementations are nonetheless informative because all are on equal footing in this regard.
 % While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance and suffer an intrinsic performance penalty due to that, the algorithms were all on the same footing and
 % We use the ``optimize''' flag to strip superfluous safety checks.
 
@@ -80,23 +80,23 @@ Our results measure the operation at $47\times$ the measured time for a trivial 
 Steady results are not included in this comparison due to a Zig implementation not yet being completed.
 
 Low-hanging speedups and optimizations exist to further improve per-operation surface update performance achieved in practice.
-Half of update operations on surfaces with single bit differentia can be skipped entirely, owing to coin-flip odds that randomization fails to change a stored differentia value.
+Half of update operations on surfaces with single-bit differentia can be skipped entirely, owing to coin-flip odds that randomization fails to change a stored differentia value.
 Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
 Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
 \subsection{WSE Genetic Algorithm Benchmarks}
 
-Next, we sought to characterize the performance of island model genetic algorithm on WSE hardware, and estimate the magnitude of simulation that might be achieved with on-device execution.
-We used per-PE cycle counters in emulation to test the amount of real time elapsed over the course of a 40 generation cycle simulation.
-We tested using a $3\times3$ PE collective with the tagged 3 word genome and a per-PE population size of 32, applying a tilted hereditary stratigraphy every generation.
+Next, we sought to characterize the performance of our island model genetic algorithm implementation on WSE hardware and estimate the magnitude of simulation that might be achieved with on-device execution.
+We used per-PE cycle counters in emulation to test the amount of real-time elapsed over the course of a 40 generation-cycle simulation.
+We tested using a $3\times3$ PE collective with the tagged 3-word genome and a per-PE population size of 32, applying a tilted hereditary stratigraphy every generation.
 
-PEs completed a mean of 24,138 generation cycles per second (SEM 99; $n=9$).
-As an indicator of inter-PE exchange throughput, over the course of the simulation each PE immigrated a mean of 118 genomes (SEM 11; $n=9$).
+PEs completed a mean of 24,138 generation-cycles per second (SEM 99; $n=9$).
+As an indicator of inter-PE exchange throughput, each PE immigrated a mean of 118 genomes (SEM 11; $n=9$) over 40 elapsed generation-cycles.
 
 What scale of simulation does this performance imply at full scale on CS-2 hardware?
 A 24 kHz turnover rate multiplies out to around 2 billion generations a day.
-With 32 individuals hosted per PE, net population size would sit around 27 million at full wafer scale.
-(Note, though, that available on-chip memory could support on the order of thousands of our very simple agents per PE, raising potential for a net population size on the order of a billion agents.)
+With 32 individuals hosted per PE, the net population size would sit around 27 million at full CS-2 wafer scale.
+(Note, though, that available on-chip memory could support thousands of our very simple agents per PE, raising the potential for a net population size on the order of a billion agents.)
 % 24,000 * 850,000 * 60 * 60 * 24 * 32 ---> ?? quadrillion
 From these figures, a naive extrapolation estimates on the order of a quadrillion agent replications could be achieved hourly at full wafer scale.
 Such a calculation, however, does not account for the likelihood for some level of scaling slowdown.
@@ -107,12 +107,12 @@ Recall that these figures are inclusive of phylogenetic tracking.
 How fast does simulation run without hereditary stratigraphy instrumentation?
 We repeated the benchmark using one-word genomes stripped of all instrumentation.
 Under these conditions, PEs completed a mean of 47,175 generations per second (SEM 220; $n=20$)
-Over the course of the simulation each PE immigrated a the same mean 118 genomes (SEM 12; $n=12$).
+As before, over the course of simulation, each PE immigrated on average 118 genomes (SEM 12; $n=12$).
 
-These timings indicte that phylogeny tracking achieves rougly half performance.
+These timings indicate cost of phylogeny tracking as approximately equivalent to that of the other aspects of simulation combined.
 Given the highly minimalistic nature of the agent model and selection process, this result is highly promising.
-In actual use, most experiments will likely involve a much more sophisticated agent model and, thus, relative overhead of tracking will diminsish significantly.
-It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce performance costs of tracking considerably.
+In actual use, most experiments will likely involve a much more sophisticated agent model and, thus, the relative overhead of tracking will diminish significantly.
+It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce performance penalty of tracking considerably.
 
 % https://github.com/mmore500/wse-sketches-mirror/actions/runs/8590107511/job/23537207835
 % from https://github.com/mmore500/wse-sketches-mirror/commit/3a1bf8e9f2820a38cb7387a7624a86361485174b
@@ -318,10 +318,10 @@ It is additionally worthwhile to note that caching and coarsening strategies dis
 
 Here, we demonstrate phylogenetic reconstructions from the WSE platform and inspect clade structure to qualitatively assess their credibility.
 % report the results of an integration test to assess the general validity of .
-For these experiments, we tagged genomes with a 16 bit randomly-generated identifier at simulation startup, as shown in Figure \ref{fig:genome-layout}.
+For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Figure \ref{fig:genome-layout}.
 % These identifiers identified clades descending from each founding genome.
-Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations 25, 50, 100, and 250 generation cycles under drift conditions.
-At the end of simulation, one genome was sampled per PE.
+Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation-cycles under drift conditions.
+At the end of simulation, phylogenetic reconstruction was conducted using one genome sampled per PE.
 
 \input{fig/tagged.tex}
 
