@@ -173,16 +173,14 @@ The process then repeats, with a self-activating wavelet dispatched to execute t
 % Kernel source code implementing described procedures can be viewed at \url{https://hopth.ru/cl}.
 % Our implementation is defined modularity with respect to genome size, layout, mutational operator, and fitness evaluation criteria, allowing for direct re-use of produced software for follow-on evolution experiments on WSE hardware.
 
+At implmentation level, genomes were handled as fixed-length segments of raw memory.
+Figure \ref{fig:genome-layout} shows an example 96-bit genome layout used for validation experiments.
+% Figure \ref{fig:validation-example:genomes} details the content and layout of genomes, and provides example genome values yielded from simulation.
+The first sixteen bits were used to identify genomes descending from the same founding ancestor.
+At the outset of simulation, founding population members were each assigned a randomized tag value, and the value was inherited without mutation over the course of simulation.
+The next 80 bits were used for hereditary stratigraph annotation, 16 bits for a generation counter and the remaining 64 as a field for single-bit differentia managed according to a tilted surface policy.
 
-Genomes were fixed-length 128 bit memory structs.
-Figure \ref{fig:genome-layout} shows an example genome layout including hstrat instrumentation.
-Figure \ref{fig:validation-example:genomes} details the content and layout of genomes, and provides example genome values yielded from simulation.
-Notably, the first sixteen bits were used to tag clade geneses.
-At the outset of simulation, founding population members were each assigned a randomized tag value.
-This value was inherited without mutation over the course of simulation.
-Thus, it can be used to identify end-state genomes that evolved from the same original ancestor.
-
-
+For benchmarking experiments, a 128-bit genome layout was used instead, with the first 32 bits used for a floating point ``fitness'' value and the generation counter upgraded from 16 to 32 bits.
 % A key question will be the extent to which intentionally desynchronizing affects performance, stability, and computation quality.
 
 \subsection{Software and Data Availability}
