@@ -110,7 +110,26 @@ These algorithms are notable in providing a novel and highly-efficient solution 
 
 % color swapping
 
+\subsection{Wafer-Scale Engine Architecture and Programming Model}
+
+The Wafer Scale Engine comprises a networked grid of independently-executing compute cores (Processing Elements or PEs).
+Eache PE contains special message-handling infrastructure, which routes tagged 32-bit packets (``wavelets'') to neighboring PEs and/or to be processed locally, according to a programmed rule set.
+Each Processor Element is equipped with 48kb of private on-chip memory, which can be accessed wihin a single clock cycle.
+Communication with neighboring PEs, too, occurs within a single clock cycle \citep{TODO}.
+Processor Elements provide faculties for standard arihmetic and flow-control operaions, as well as vectorized 32- and 16-bit integer and floating point operations.
+
+The WSE device is programmed by providing ``kernel'' code, written in the Cerebras Software Language (CSL), to be executed on each PE.
+This language's programming model purposefully reflects underlying capabilities and particularities of the WSE architecture.
+CSL organizes code within an event-driven framework, with the programmer defining tasks to be triggered in response to wavelet activation signals exchanged between --- and within --- PEs.
+Scheduling of active tasks occurs via a hardware-level microthreading, which allows for some level of concurrency.
+Special faculties are providided for asynchronous send-receive operations that exchange contiguous, or strided, buffer data between PEs.
+
+For further detail, we refer readers to extensive developer documentation made available by Cerebras through their SDK program.
+Access can be requested, currently free of charge, via their website.
+
 \subsection{Asynchronous Island-model Genetic Algorithm}
+
+% concordant
 
 We apply an island-model genetic algorithm to instantiate an evolutionary process spanning PEs.
 Island-model approaches are common in applications of parallel and distributed computing to evolutionary computation \citep{bennett1999building}.
