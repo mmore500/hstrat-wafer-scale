@@ -1,10 +1,13 @@
 \section{Results and Discussion} \label{sec:results}
 
-This section begins by assessing the newly proposed surface-based hereditary stratigraphy algorithms against the existing column-based algorithms in terms of their semantic behavior (how does what data they store influence reconstruction accuracy?) and implementation efficiency (how much time does one annotation update take?).
-Then, we report results of an experiment validating end-to-end application of the implementation of the tilted surface algorithm for the Cerebras Software Language on the WSE hardware emulator.
+Here, we report a series of benchmarks that evaluate the viability of our proposed approaches to harness the CS-2 accelerator for digital evolution simulations and extract phylogenetic records from said simulations.
+First, we compare performance characteristics of new surface-oriented herditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operation.
+%For assessment of  we refer the reader to related work TODOCITE.
+Then, we validate the credibility of our end-to-end annotation-to-reconstruction pipeline by reviewing the clade structure from varying-duration emulated WSE evolutionary runs.
+Finally, we benchmark phylogeny-tracked WSE genetic algorithm implementation.
+To assess the runtime overhead of surface-based tracking, we compare against benchmarking results with phylogenetic tracking disabled.
 
-Next, we report benchmarking experiments for the asynchronous island-model genetic algorithm implemented for the WSE platform, also conducted on the hardware emulator.
-Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
+% Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
 
 \subsection{Reconstruction Quality of New Surface Algorithms}
 
