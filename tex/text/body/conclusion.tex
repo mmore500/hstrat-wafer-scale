@@ -3,8 +3,8 @@
 Computing hardware with transformative capabilities is coming to market right now.
 % and some of it --- like the Cerebras wafer scale engine \citep{lauterbach2021path} --- is built explicitly for decentralized, asynchronous computation.
 This fact presents an immediate opportunity to bring orders-of-magnitude greater simulation scale to bear on grand challenges in artificial life.
-It is not unreasonable to anticipate possibility that with such resources some aspects of these open questions will be revealed to harbor more-is-different dispositions \citep{anderson1972more}.
-Riding the coattails of AI-workload-driven hardware development, itself largely driven by profound more-is-different payoffs in deep learning, provides perhaps the most immediate means toward this possibility.
+It is not unreasonable to anticipate possibility that with such resources some aspects of these open questions will be revealed to harbor more-is-different dispositions, in which larger scales demonstrate qualitativey different dynamics \citep{anderson1972more}.
+Riding the coattails of AI-workload driven hardware development, itself largely driven by profound more-is-different payoffs in deep learning, provides perhaps the most immediate means toward this possibility.
 
 Such an endeavor is a community-level challenge that will require extensive collaborative effort and pursuit of outside resources.
  % a community-scale challenge that will require and pursuing collaborations and resources beyond the present comfort zone.
@@ -13,11 +13,11 @@ Such an endeavor is a community-level challenge that will require extensive coll
 Work presented here is an early step in methods and wide-ranging infrastructure development necessary to scale up what's possible in digital evolution research.
 We have demonstrated new algorithms and software for phylogeny-enabled agent-based evolution on a next-generation HPC accelerator hardware platform.
 With respect to instrumentative simulation components, microbenchmarking results show that proposed algorithms achieve several-fold improvement in computational efficiency, as well as more informative information extraction in some cases.
-Early emulated integrative benchmarking suggests that for simple agent models on the order of quintillions of replication cycles per day may be possible at full wafer scale on CS-2 hardware.
+Early emulated integrative benchmarking suggests that, for simple agent models, on the order of quintillions of replication cycles per day may be possible at full wafer scale on CS-2 hardware.
 
 % However, in the wide-ranging .
 % that will be necessary to achieve rich simulation at scales with potential to reveal
-Special characteristics set agent-based evolution simulation apart from many other HPC application domains and position it as a potentially valuable testbed innovation and leadership.
+Special characteristics set agent-based digital evolution apart from many other HPC application domains and position it as a potentially valuable testbed for innovation and leadership.
 Among these factors are challenging workload heterogeneity (varying within a population and over evolutionary time), resiliency of global state to local perturbations, and perhaps unparalleled freedom to recompose underlying simulation semantics to accommodate hardware capabilities.
 Indeed, artificial life and digital evolution have played host to notable boundary-pushing approaches to computing at the frontiers of computing modalities such as best-effort computing, reservoir computing, globe-spanning time-available computing, and modular tile-based computing in addition to more traditional cluster and GPU-oriented approaches \citep{moreno2021conduit,ackley2020best,ackley2023robust,heinemann2008artificial,miikkulainen2024evolving}.
 Work done to scale up digital evolution simulation should be done with an eye for contributions back to broader HPC constituencies.
@@ -37,10 +37,10 @@ In this vein, presented ``surface'' indexing algorithms stand to benefit larger 
 % Potential extensions of this work include repurposing of HStrat's rolling cross-temporal sampling algorithms to facilitate efficient downsampled observability in additional application domains.
 In particular, to further benefit observable agent-based modeling, we are interested in exploring applications sampling time series activity at simulation sites or distilling coarsened agent histories (e.g., position over time).
 
-The immediate goal of our presented work, however, is to build means for progress toward existing research agendas held across realms of digital evolution and artificial life.
+The immediate goal of our presented work, however, is to build means for progress toward existing research agendas held across the realms of digital evolution and artificial life.
 To this end, our work has prioritized production of reusable CSL and Python software tools ready to be harnessed by the broader research community.
-In particular, CSL code implementing the presented island-model GA is defined in a modularized, extensible, and flexible manner to support drop-in support arbitrary fixed-length genome content and corresponding fitness criteria.
-We look forward to tandem efforts to harness this hardware platform, and others, in folow-on work.
+In particular, CSL code implementing the presented island-model GA is defined in a modularized and extensible manner to support drop-in for arbitrary fixed-length genome content with fitness criteria corresponding to research interests within the community.
+We look forward to tandem efforts to harness this hardware platform, and others, in follow-on work.
 
 % These new HStrat methods, and extensive development targeting the Cerebras CSL using the SDK hardware simulator, position our project
 % to hit the ground running.
