@@ -57,7 +57,7 @@ Likewise, the Distributed Hierarchical Transitions in Individuality (DISHTINY) p
 GPU-first agent-based modeling (ABM) packages like Flame2 also tackle this problem of hardware-simulacrum matching, albeit framed at a higher level of abstraction \citep{TODO}.
 Beyond alife, broader realms of application-oriented evolutionary computation have folded in with many-processor computation, most commonly through island-model and director-worker evaluation paradigms \citep{TODO}.
 
-\subsection{Untapped Computational Resources and Emerging Hardware Capabilities}
+\subsection{Untapped Emerging Hardware}
 
 In retrospect, connectionist artificial intelligence turns out to have been profoundly scale-dependent.
 The utility and ubiquity of ANNs have exploded in tandem with torrential growth in training set sizes, parameter counts, and training FLOPs \citep{marcus2018deep}.
@@ -89,19 +89,18 @@ The very recent CS-3 chip announcement is fitting in this respect; among other s
 % This will require changes and impose limitations to what is possible, artificial life.
 % This is not an entirely unreasonable notion of a possible future of artificial life.
 
-\subsection{Observability at Scale for Experimental Usefulness as a Scientific Tool}
-
+\subsection{Maintaining Observability}
 
 % more is different More is different \citep{anderson1972more}.
 % Likewise, progress of artificial life systems along a path, in the most ambitious framing, to indefinite scalability seems likely to unfold through incremental investments spurred by progressive scientific achievements.
 % In tandem with more farsighted efforts, progress will also require prosaic leverage of existing, commercially-available parallel and distributed compute resources at circumstantially-feasible scales.
-Fundamental orthogonalities between the fundamental structure and objectives of AI and AL methods will complicate any effort to requisition AI hardware for AL purposes.
+Orthogonalities between the fundamental structure and objectives of AI and artificial life methods will complicate any effort to requisition AI hardware for artificial life purposes.
 In common use, deep learning operates as a black box medium \citep{TODO} (but not always \citep{TODO}).
 This paradigm de-emphasizes accessibility of inner state.
-In contrast, artificial life simulations more often function as a tool for inquiry.
-This orientation imbues a special emphasis on capability to observe, and interpret, underlying simulation state \citep{moreno2023toward,horgan1995complexity}.
+In contrast, artificial life more often functions as a tool for inquiry.
+This goal emphasizes capability to observe and interpret underlying simulation state \citep{moreno2023toward,horgan1995complexity}.
 (A similar argument holds for alife work driven by artistic objectives, as well.)
-Although less vital to application-oriented aspects of evolutionary computation, in these contexts observability can nonetheless benefit diagnostics required to tune configuration to achieve good solution quality \citep{hernandez2022can}.
+% Observability is even useful in goal-oriented evolutionary computation, where it can benefit diagnostics required to tune configuration to achieve good solution quality \citep{hernandez2022can}.
 
 Unfortunately, scale complicates simulation observability.
 % Scale transforms simulation into relentless data streams with
@@ -111,7 +110,7 @@ Intentional engineering effort will be required to ensure large-scale simulation
 % Observability  and interpretability \citep{} will be key concerns, as will .
 
 % To serve as a useful experimental platform, digital evolution simulations must be observable.
-Here, we focus to confront just a single aspect of simulation observability within distributed evolutionary simulation: phylogenetic history (i.e., the overall set of evolutionary ancestry relationships).
+Here, we confront just a single aspect of simulation observability within distributed evolutionary simulation: phylogenetic history (i.e., evolutionary ancestry relationships).
 Phylogenetic history plays a critical role in many evolution studies, across study domains and \textit{in vivo} and \textit{in silico} model systems alike \citep{faithConservationEvaluationPhylogenetic1992, STAMATAKIS2005phylogenetics, frenchHostPhylogenyShapes2023,kim2006discovery,TODOCITESOMESIMULATIONPAPERS}.
 Phylogenetic analysis can trace the history of notable evolutionary events (e.g., extinctions, evolutionary innovations), but also characterize more general questions about the underlying mode and tempo of evolution \citep{moreno2023toward,hernandez2022can,shahbandegan2022untangling,lewinsohnStatedependentEvolutionaryModels2023a}.
 Particularly notable, recent work has used comparison of observed phylogenies against those produced under differing simulation conditions to test hypotheses describing underlying dynamics within real-life evo-epidemiological systems \citep{giardina2017inference,voznica2022deep}.
@@ -121,19 +120,17 @@ Additionally, \textit{in silico}, phylogenetic information can even serve as a m
 
 % Unfortunately, existing approaches to recording phylogenetic history from digital evolution simulations do not scale robustly.
 In order to analyze the phylogenetic history of an evolving system, we must first collect it.
-In existing simulation work, a typical approach uses centralized record-keeping to assemble an exact, complete record comprising all parent-offspring relationships that have existed over the course of a simulation \citep{phylotrackandeverythingphylotrackcitedTODO}.
-This process often involves pruning the records of extinct lineages to prevent memory bloat \citep{TODOCITEPREPRINT}.
-Although the direct-tracking approach is well suited to serial simulation or centralized controller-worker schemes, extreme sensitivity to missing data and runtime communication overheads impede scaling this approach up to highly parallel/distributed systems --- particularly those with low memory capacity like the Cerebras WSE \citep{moreno2024analysis}.
+In existing artificial life work, a typical approach uses centralized tracking to maintain an exact, complete record comprising all parent-offspring relationships that have existed over the course of a simulation \citep{phylotrackandeverythingphylotrackcitedTODO}.
+Often, records of extinct lineages are pruned to prevent memory bloat \citep{TODOCITEPREPRINT}.
+Although the direct-tracking approach is well suited to serial simulation or centralized controller-worker schemes, extreme sensitivity to missing data and runtime communication overheads impede scaling to highly distributed systems --- particularly those with lean memory capacity like the Cerebras WSE \citep{moreno2024analysis}.
+To overcome this limitation, we have developed reconstruction-based approaches to phylogenetic tracking \textit{in silico} \citep{moreno2022hereditary}.
+These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons among end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
+Figure \ref{fig:runtime-posthoc-schematic} summarizes this reconstruction-based strategy.
 
-To overcome this limitation to phylogenetic analysis within many-processor HPC contexts, we have developed reconstruction-based approaches to phylogenetic tracking in silico \citep{moreno2022hereditary}.
-These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons between end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
-Figure \ref{fig:runtime-posthoc-schematic} depicts our reconstruction-based strategy.
-
-Deferment to reconstruction, however, is no panacea --- analogous work with natural biosequences is notoriously challenging, uncertain, biased, and data-intensive \citep{TODOthatcitationfromabsractofpreprint}.
-Careful consideration is required to achieve efficient, accurate, and data-lean phylogenetic reconstructions in practice.
-These concerns motivated our recent development of HStrat, a genetic architecture explicitly designed for fast, accurate reconstruction requiring only small amounts of data.
-Work reported here uses just 96 bits of tracking information per agent genome.
-HStrat data is designed to be attached to the underlying genomes within particular digital evolution systems as a neutral annotation, akin to noncoding DNA, making it a general-purpose technique applicable to any domain host to decentralized digital copy trees \citep{FUNCITATIonsFRomPREPRINT}.
+Although analogous work with natural biosequences is notoriously challenging, uncertain, biased, and data-intensive \citep{TODOthatcitationfromabsractofpreprint},
+recent development of hereditary stratigraphy algorithms provides a genetic annotation architecture explicitly designed for fast, accurate reconstruction requiring only small amounts of data.
+% Work reported here uses just 96 bits of tracking information per agent genome.
+Designed for attachment to underlying replicators as a neutral annotation (akin to noncoding DNA), it is a general-purpose technique potentially applicable across study domains \citep{FUNCITATIonsFRomPREPRINT}.
 In a stroke of convergent thinking, Ackley's recent work reports use of ``bar code'' annotations on his self replicators to achieve a measure of coarse-grained lineage tracing \citep{ackley2023TODO}.
 % Details on this methodology and our proposed approach to translate it to the WSE context is provided in Section \ref{sec:methods}.
 
@@ -150,9 +147,9 @@ Both are implemented in Cerebras Software Language (CSL) and validated using Cer
 We use benchmark experiments to evaluate the runtime performance characteristics of the new hereditary stratigraphy algorithms in isolation and in the integrated context providing tracking-enabled support for the island-model GA.
 To evaluate whether the new, stripped-down ``surface''-based hereditary stratigraphy algorithms degraded inference power, we compared reconstruction qualities to the existing ``column''-based approach across a wide variety of evolutionary scenarios.
 
-Results from both experiments are promising
+Results from both experiments are promising.
 We find that, in expected usage, new surface-based algorithms match, or actually enhance, existing reconstruction quality.
-Scaled-down emulator benchmarks suggest potential, with phylogenetic tracking enabled, to achieve on the order of quadrillions of agent replication events a day on WS-2 hardware at full wafer scale.
+Scaled-down emulator benchmarks suggest potential for simple agent models, with phylogenetic tracking enabled, to achieve on the order of quadrillions of agent replication events a day at full wafer scale, with support for population sizes potentially reaching hundreds of millions.
 
 % \item WANT TO DO: we ran the async GA at full wafer scale on hardware with high/low selection pressure (tournament size 2 vs 8 ) and extracted  phylogenetic information; this phylogenetic information was sufficient to detect the difference in selection dynamics between the two runs.
 % \end{itemize}
