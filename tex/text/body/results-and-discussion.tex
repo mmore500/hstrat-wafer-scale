@@ -1,78 +1,89 @@
 \section{Results and Discussion} \label{sec:results}
 
-This section begins by assessing the newly proposed surface-based hereditary stratigraphy algorithms against the existing column-based algorithms in terms of their semantic behavior (how does what data they store influence reconstruction accuracy?) and implementation efficiency (how much time does one annotation update take?).
-Then, we report results of an experiment validating end-to-end application of the implementation of the tilted surface algorithm for the Cerebras Software Language on the WSE hardware emulator.
+Here, we report a series of benchmarks that evaluate the viability of our proposed approaches to harness the CS-2 accelerator for digital evolution simulations and extract phylogenetic records from said simulations.
+First, we compare performance characteristics of new surface-oriented herditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operation.
+%For assessment of  we refer the reader to related work TODOCITE.
+Then, we validate the credibility of our end-to-end annotation-to-reconstruction pipeline by reviewing the clade structure from varying-duration emulated WSE evolutionary runs.
+Finally, we benchmark phylogeny-tracked WSE genetic algorithm implementation.
+To assess the runtime overhead of surface-based tracking, we compare against benchmarking results with phylogenetic tracking disabled.
 
-Next, we report benchmarking experiments for the asynchronous island-model genetic algorithm implemented for the WSE platform, also conducted on the hardware emulator.
-Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
+% Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
 
-\subsection{Reconstruction Quality of New Surface Algorithms}
+% TODO transpant this into the other paper
+% \subsection{Reconstruction Quality of New Surface Algorithms}
 
-\input{fig/col-vs-surf.tex}
+% \input{fig/col-vs-surf.tex}
 
-Figure \ref{fig:col-vs-surf} compares reconstruction quality for surface algorithms against their corresponding column implementation.
-We did this by using a simple simulation to generate phylogenies under different conditions with perfect tracking, then simulating heritage of hstrat annotations down the perfect tree and subsequent reconstruction.
-We could then compare the reconstruction that would have been obtained under approximate tracking to the underlying ground truth.
+% Figure \ref{fig:col-vs-surf} compares reconstruction quality for surface algorithms against their corresponding column implementation.
+% We did this by using a simple simulation to generate phylogenies under different conditions with perfect tracking, then simulating heritage of hstrat annotations down the perfect tree and subsequent reconstruction.
+% We could then compare the reconstruction that would have been obtained under approximate tracking to the underlying ground truth.
 
-To ensure generalizable results, we tested over a large number of evolutionary regimes, population sizes, instrumentation sizes, and instrumentation fingerprint sizes.
-Each row in Figure \ref{fig:col-vs-surf} represents a distinct combination of surveyed conditions.
+% To ensure generalizable results, we tested over a large number of evolutionary regimes, population sizes, instrumentation sizes, and instrumentation fingerprint sizes.
+% Each row in Figure \ref{fig:col-vs-surf} represents a distinct combination of surveyed conditions.
 
-We took three measures of reconstruction quality.
-The first measure, triplet distance, is a measure of accuracy --- it is the fraction of triplet tips that are correctly arranged in the reconstruction.
-Whereas this metric considers polytomies as distinct from separate branching events, our second measure is a lax variant of triplet distance that does not penalize penalties introduced into the reconstruction (i.e., due to uncertainty about branching order) or over-resolution of true polytomies into more nodes in the reconstruction.
-Finally, we also include inner node count, which provides a measure of the amount of detail achieved by reconstructions.
-Higher inner node count indicates that fewer branching events are being lumped together into polytomies due to insufficient information to differentiate them.
-This metric is only applicable to scenarios with fingerprint sizes larger than one bit (i.e., a byte), which are capable of generating non-bifurcating trees.
+% We took three measures of reconstruction quality.
+% The first measure, triplet distance, is a measure of accuracy --- it is the fraction of triplet tips that are correctly arranged in the reconstruction.
+% Whereas this metric considers polytomies as distinct from separate branching events, our second measure is a lax variant of triplet distance that does not penalize penalties introduced into the reconstruction (i.e., due to uncertainty about branching order) or over-resolution of true polytomies into more nodes in the reconstruction.
+% Finally, we also include inner node count, which provides a measure of the amount of detail achieved by reconstructions.
+% Higher inner node count indicates that fewer branching events are being lumped together into polytomies due to insufficient information to differentiate them.
+% This metric is only applicable to scenarios with fingerprint sizes larger than one bit (i.e., a byte), which are capable of generating non-bifurcating trees.
 
-The data tell two clear stories:
-\begin{enumerate}
-\item surface tilted algorithms create higher-quality reconstructions than column-based tilted algorithms and
-\item surface column algorithms create lower-quality reconstructions than column-based column algorithms.
-\end{enumerate}
+% The data tell two clear stories:
+% \begin{enumerate}
+% \item surface tilted algorithms create higher-quality reconstructions than column-based tilted algorithms and
+% \item surface column algorithms create lower-quality reconstructions than column-based column algorithms.
+% \end{enumerate}
 
-The surface tilted performs significantly best in 14 / 48 scenarios for triplet distance, 9 / 48 for lax triplet distance, and all scenarios where inner node count is applicable.
-It performs significantly worse in no scenarios.
+% The surface tilted performs significantly best in 14 / 48 scenarios for triplet distance, 9 / 48 for lax triplet distance, and all scenarios where inner node count is applicable.
+% It performs significantly worse in no scenarios.
 
-The surface steady performs significantly worse in 11 / 48 scenarios for triplet distance, in 1/48 scenarios for lax triplet distance, and 4/12 scenarios for inner node loss.
-The surface steady performs significantly better than the column in no scenarios.
+% The surface steady performs significantly worse in 11 / 48 scenarios for triplet distance, in 1/48 scenarios for lax triplet distance, and 4/12 scenarios for inner node loss.
+% The surface steady performs significantly better than the column in no scenarios.
 
-The performance advantage of surface-tilted is likely because the surface-based algorithms can make better use of available space --- every site is always in use to store a fingerprint.
-In contrast, under the column-based approach, some fraction of the available space is typically unused because of difficulty predicting the order with which sites will need to be eliminated \textit{a priori} and thus eliminating them based on a heuristic (TODO rewrite this sentence).
+% The performance advantage of surface-tilted is likely because the surface-based algorithms can make better use of available space --- every site is always in use to store a fingerprint.
+% In contrast, under the column-based approach, some fraction of the available space is typically unused because of difficulty predicting the order with which sites will need to be eliminated \textit{a priori} and thus eliminating them based on a heuristic (TODO rewrite this sentence).
 
-The performance detriment of column-steady likely stems from precise control of the column approach to sequence eliminations.
-The surface approach guarantees adherence to the fixed resolution qualities provided by the column approach, but the process of degrading from one spacing to the next double-width spacing is slightly more irregular on account of the additional consideration of being mapped onto the surface.
-Unlike the tilted algorithm, the steady column algorithm does not have difficulty filling available space.
+% The performance detriment of column-steady likely stems from precise control of the column approach to sequence eliminations.
+% The surface approach guarantees adherence to the fixed resolution qualities provided by the column approach, but the process of degrading from one spacing to the next double-width spacing is slightly more irregular on account of the additional consideration of being mapped onto the surface.
+% Unlike the tilted algorithm, the steady column algorithm does not have difficulty filling available space.
 
-Recent work indicates that tilted policies should be preferred for better reconstruction accuracy in most cases, except where there are extreme factors promoting phylogenetic richness.
-Thus, degraded reconstruction performance from the steady surface is not much of a concern because the steady policy is not expected to be used frequently in practice.
-So, in addition to being capable of being implemented in a broader range of device contexts (not needing memory allocation or rich data structures) and being faster to calculate (discussed next), the surface-based approach can provide higher-quality phylogenetic reconstructions.
+% Recent work indicates that tilted policies should be preferred for better reconstruction accuracy in most cases, except where there are extreme factors promoting phylogenetic richness.
+% Thus, degraded reconstruction performance from the steady surface is not much of a concern because the steady policy is not expected to be used frequently in practice.
+% So, in addition to being capable of being implemented in a broader range of device contexts (not needing memory allocation or rich data structures) and being faster to calculate (discussed next), the surface-based approach can provide higher-quality phylogenetic reconstructions.
 
 \subsection{Surface Algorithm Benchmark}
 
 \input{fig/benchmarking}
 
-We performed benchmarking experiments to assess the computational performance of our new surface-based algorithms.
-Due to limited completed implementations of compiled-language algorithms, we performed the bulk of benchmarking using the Python implementations.
-While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance and suffer an intrinsic performance penalty due to that, the algorithms were all on the same footing and we use the ``optimize''' flag to strip assert statements out of the benchmarks.
-However, in the process of porting the tilted surface algorithm over to Cerebras Software Language, we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
-We augment the Python with a benchmark of this algorithm.
-Figure \ref{fig:benchmarking} provides an overview of the results.
+We performed microbenchmarking experiments to test computaitonal efficiency gains from new surface-based algorithms.
+These trials measured per-generation execution time of repeated sequential updates to one annotation with capacity for 64 differentia. % TODO check this
+Benchmarks were conducted both using Python, for comparability with existing column algorithm implementations, and Zig, to assess performance in absolute terms under compiler optimization.
+Figure \ref{fig:benchmarking} overviews results.
+
+% Due to limited completed implementations of compiled-language algorithms, we performed the bulk of benchmarking using the Python implementations.
+% However, in the process of porting the tilted surface algorithm over to Cerebras Software Language, we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
+% We augment the Python with a benchmark of this algorithm.
 
 % https://github.com/mmore500/hstrat-surface-concept/blob/51d636d768d474fc5148b9fcaa199c1b7776e915/benchmark.ipynb
-We found that the Python implementations of the surface tilted and steady algorithms both took around 4,200ns per operation (SEM c. 50; $n=20$).
-For context, this was about $4\times$ the measured time for a surface placement using a trivial calculation (SEM c. 0.05; $n=20$).
-The column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
-Mann-Whitney U tests confirmed that surface implementations significantly outperformed their column counterparts. (Figure \ref{fig:benchmarking}).
+Python implementations of the surface tilted and steady algorithms both took around 4.2 microseconds per operation (SEM approx. 50; $n=20$).
+For context, this was about $4\times$ the measured time for a surface placement using a trivial calculation (SEM approx. 0.05; $n=20$).
+As expected, column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
+In both cases, surface implementations significantly outperformed their column counterparts (Mann-Whitney U test, $\alpha = 0.05$).
+It should be noted that these results reflect an intrinsic performance penalty due to interpreter overhead of Python evaluation.
+However, comparisons among these Python implementations are nontheless informative because all are on equal footing in this regard.
+% While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance and suffer an intrinsic performance penalty due to that, the algorithms were all on the same footing and
+% We use the ``optimize''' flag to strip superfluous safety checks.
 
 % https://github.com/mmore500/wse-sketches/blob/d4ab0155f63ff5809f8eeca1169ad9b272c30a68/binder/benchmark.ipynb
-Zig implementation of tilted surface:
-233 ns per operation (SEM 0.9; $n=20$).
-This was $47\times$ the measured time for a trivial placement calculation (SEM 0.2; $n=20$).
+Zig microbenchmarks clock tilted surface annotation updates at 233 ns per operation (SEM 0.9; $n=20$).
 For context, this time a little more than twice the amount of time required for a main memory access in contemporary computing hardware \citep{markus2022memory}.
+Our results measure the operation at $47\times$ the measured time for a trivial placement calculation (SEM 0.2; $n=20$).
+Steady results are not included in this comparison due to a Zig implementation not yet being completed.
 
-Note that further speedups and optimizations can likely to be had.
-For single-bit differentiae, half of the time placement need not be calculated if the coin flip indicates that the bit isn't going to be flipped.
-Further, in synchronous and near-synchronous simulations, placement positions can be cached meaning they would only need to be calculated once for an entire subpopulation.
+Low-hanging speedups and optimizations exist to further improve per-operation surface update performance achieved in practice.
+Half of update operations on surfaces with single bit differentia can be skipped entirely, owing to coin-flip odds that randomization fails to change a stored differentia value.
+Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
+Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
 \subsection{WSE Hereditary Stratigraphy Validation Experiment}
 
