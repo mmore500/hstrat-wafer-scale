@@ -55,28 +55,35 @@ To assess the runtime overhead of surface-based tracking, we compare against ben
 
 \input{fig/benchmarking}
 
-We performed benchmarking experiments to assess the computational performance of our new surface-based algorithms.
-Due to limited completed implementations of compiled-language algorithms, we performed the bulk of benchmarking using the Python implementations.
-While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance and suffer an intrinsic performance penalty due to that, the algorithms were all on the same footing and we use the ``optimize''' flag to strip assert statements out of the benchmarks.
-However, in the process of porting the tilted surface algorithm over to Cerebras Software Language, we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
-We augment the Python with a benchmark of this algorithm.
-Figure \ref{fig:benchmarking} provides an overview of the results.
+We performed microbenchmarking experiments to test computaitonal efficiency gains from new surface-based algorithms.
+These trials measured per-generation execution time of repeated sequential updates to one annotation with capacity for 64 differentia. % TODO check this
+Benchmarks were conducted both using Python, for comparability with existing column algorithm implementations, and Zig, to assess performance in absolute terms under compiler optimization.
+Figure \ref{fig:benchmarking} overviews results.
+
+% Due to limited completed implementations of compiled-language algorithms, we performed the bulk of benchmarking using the Python implementations.
+% However, in the process of porting the tilted surface algorithm over to Cerebras Software Language, we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
+% We augment the Python with a benchmark of this algorithm.
 
 % https://github.com/mmore500/hstrat-surface-concept/blob/51d636d768d474fc5148b9fcaa199c1b7776e915/benchmark.ipynb
-We found that the Python implementations of the surface tilted and steady algorithms both took around 4,200ns per operation (SEM c. 50; $n=20$).
-For context, this was about $4\times$ the measured time for a surface placement using a trivial calculation (SEM c. 0.05; $n=20$).
-The column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
-Mann-Whitney U tests confirmed that surface implementations significantly outperformed their column counterparts. (Figure \ref{fig:benchmarking}).
+Python implementations of the surface tilted and steady algorithms both took around 4.2 microseconds per operation (SEM approx. 50; $n=20$).
+For context, this was about $4\times$ the measured time for a surface placement using a trivial calculation (SEM approx. 0.05; $n=20$).
+As expected, column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
+In both cases, surface implementations significantly outperformed their column counterparts (Mann-Whitney U test, $\alpha = 0.05$).
+It should be noted that these results reflect an intrinsic performance penalty due to interpreter overhead of Python evaluation.
+However, comparisons among these Python implementations are nontheless informative because all are on equal footing in this regard.
+% While Python is an interpreted language and the Python-implemented algorithms weren't specifically implemented to maximize performance and suffer an intrinsic performance penalty due to that, the algorithms were all on the same footing and
+% We use the ``optimize''' flag to strip superfluous safety checks.
 
 % https://github.com/mmore500/wse-sketches/blob/d4ab0155f63ff5809f8eeca1169ad9b272c30a68/binder/benchmark.ipynb
-Zig implementation of tilted surface:
-233 ns per operation (SEM 0.9; $n=20$).
-This was $47\times$ the measured time for a trivial placement calculation (SEM 0.2; $n=20$).
+Zig microbenchmarks clock tilted surface annotation updates at 233 ns per operation (SEM 0.9; $n=20$).
 For context, this time a little more than twice the amount of time required for a main memory access in contemporary computing hardware \citep{markus2022memory}.
+Our results measure the operation at $47\times$ the measured time for a trivial placement calculation (SEM 0.2; $n=20$).
+Steady results are not included in this comparison due to a Zig implementation not yet being completed.
 
-Note that further speedups and optimizations can likely to be had.
-For single-bit differentiae, half of the time placement need not be calculated if the coin flip indicates that the bit isn't going to be flipped.
-Further, in synchronous and near-synchronous simulations, placement positions can be cached meaning they would only need to be calculated once for an entire subpopulation.
+Low-hanging speedups and optimizations exist to further improve per-operation surface update performance achieved in practice.
+Half of update operations on surfaces with single bit differentia can be skipped entirely, owing to coin-flip odds that randomization fails to change a stored differentia value.
+Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
+Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
 \subsection{WSE Hereditary Stratigraphy Validation Experiment}
 
