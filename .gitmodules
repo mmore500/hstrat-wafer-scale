@@ -12,7 +12,7 @@
 	branch = binder
 [submodule "tex/binder"]
 	path = tex/binder
-	url = https://github.com/mmore500/hstrat-wafer-scale.git
+	url = https://github.com/mmore500/wse-sketches.git
 	branch = binder
 [submodule "tex/binder-wafer-scale"]
 	path = tex/binder-wafer-scale
