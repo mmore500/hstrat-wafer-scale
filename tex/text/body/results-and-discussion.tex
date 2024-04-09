@@ -80,7 +80,7 @@ Our results measure the operation at $47\times$ the measured time for a trivial 
 Steady results are not included in this comparison due to a Zig implementation not yet being completed.
 
 Low-hanging speedups and optimizations exist to further improve per-operation surface update performance achieved in practice.
-Half of update operations on surfaces with single-bit differentia can be skipped entirely, owing to coin-flip odds that randomization fails to change a stored differentia value.
+Half of update operations on surfaces with single-bit differentia can be skipped entirely, owing to 50\% probability that randomization fails to change a stored differentia value.
 Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
 Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
