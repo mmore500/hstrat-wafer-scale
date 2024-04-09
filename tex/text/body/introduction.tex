@@ -9,6 +9,7 @@ Such near-limitless freedom to realize arbitrary system configurations, however,
 Take, for instance, the Avida platform, which instantiates populations of self-replicating computer programs for evolution experiments.
 When running on a single CPU, this system can support about 20,000 generations per day, or about two hundred million individual replication cycles daily \citep{ofria2009artificial}.
 By way of comparison, \textit{E. coli} populations within individual flasks of the Lenski Long-Term Evolution Experiment undergo only six doublings per day, meaning their generations take orders of magnitude longer than Avidians \citep{good2017dynamics}.
+(In continuous culture, though, the rate can be c. 72 generations per day.)
 Indeed, such capability for fast generational turnover has been a key motivation for using artificial life systems to study evolution.
 However, the effective population size of flasks in the Long-Term Evolution Experiment is orders of magnitude larger than Avida's: 30 million vs. 10,000.
 Consequently, these systems actually exhibit a similar number of replication events per day.
@@ -20,11 +21,11 @@ Of course, any such comparisons should note profound discrepancies between the g
 % Natural organisms have vastly more genetic content and phenotypic state, as well as more and more diverse interactions with the environment and with other cells.
 
 % Adversely? Crucially? Conversely? Formidabbly? Aversely? Cumbrously?
-Crucially, however, the scale of population size is core to key directions in artificial life research, like transitions in individuality, ecological dynamics, and rare evolutionary innovations \citep{taylor2016open,dolson2021digital,taylor2019evolutionary}.
+Crucially, however, the scale of population size can greatly impact subjects of artificial life research, like transitions in individuality, ecological dynamics, and rare evolutionary innovations \citep{taylor2016open,dolson2021digital,taylor2019evolutionary}.
 % Indeed, there is some evidence that limitations in scale are holding back \citep{CITEGEB}.
 Cross-scale dynamics are also crucial to many key real-world challenges.
-For example, in evolutionary epidemiology, interactions between within-host infection dynamics and population-level epidemiological patterns for evolving disease agents are critical in determining the evolutionary trajectory of the population \citep{schreiber2021cross}.
-However, because capabilities of current Silicon-based processors are not expected to improve markedly in the forseeable future \citep{sutter2005free}, scale-up necessary to progress on these key frontiers will demand many-processor computation.
+For example, in evolutionary epidemiology, interactions between within-host infection dynamics and population-level epidemiological patterns determine the evolutionary trajectory of the population \citep{schreiber2021cross}.
+However, because capabilities of current Silicon-based processors are not expected to improve markedly in the forseeable future \citep{sutter2005free}, scale-up is necessary to progress on these key frontiers will demand many-processor computation.
 Application of parallel and distributed computation, however, imposes compromises with respect to the convienence, flexibility, observability, interpretability, total reliability, and perfect replicability enjoyed under classical centralized, serial models of computation.
 Encouragingly, these challenges are already implicit to much of biology; the productivity of research involving natrual organisms evidences that they are surmountable and even hints at strategies that can be used to solve them.
 Here, we explore alignment of digital evolution to HPC accelerator hardware at the extreme cutting-edge of massively distributed computation, and use techniques inspired by those applied to natural organisms to mitigate limitations of distributed computation with respect to tracking phylogenies.
