@@ -93,23 +93,26 @@ We tested using a $3\times3$ PE collective with the tagged 3-word genome and a p
 PEs completed a mean of 24,138 generation-cycles per second (SEM 99; $n=9$).
 As an indicator of inter-PE exchange throughput, each PE immigrated a mean of 118 genomes (SEM 11; $n=9$) over 40 elapsed generation-cycles.
 
+% https://osf.io/tf89g
 What scale of simulation does this performance imply at full scale on CS-2 hardware?
-A 24 kHz turnover rate multiplies out to around 2 billion generations a day.
-With 32 individuals hosted per PE, the net population size would sit around 27 million at full CS-2 wafer scale.
+Across eight 1 million generation on-device tracking-enabled trials described below, we measured a mean generation rate of 17,688 hz for 562,500 PEs ($750\times750$ rectangle) with runtimes slightly below one minute.
+As a point of comparison, eight trials trials conducted with 1,600 PEs ($40\times40$) yielded a similar mean generation rate of 17,734 hz.
+
+Multiplied out to a full day, a 17 kHz turnover rate would elapse around 1.5 billion generations.
+With 32 individuals hosted per each of 850,000 PEs, the net population size would sit around 27 million at full CS-2 wafer scale.
 (Note, though, that available on-chip memory could support thousands of our very simple agents per PE, raising the potential for a net population size on the order of a billion agents.)
 % 24,000 * 850,000 * 60 * 60 * 24 * 32 ---> ?? quadrillion
-From these figures, a naive extrapolation estimates on the order of a quadrillion agent replications could be achieved hourly at full wafer scale.
-Such a calculation, however, does not account for the likelihood for some level of scaling slowdown.
-We eagerly anticipate putting this question directly to the test in on-hardware trials in the very near future.
+A naive extrapolation estimates on the order of a quadrillion agent replications could be achieved hourly at full wafer scale for such a very simple model.
+We look forward to conducting more thorough benchmarking and scaling experiments in future work.
 %The barebones simplicity of the model should also be noted.
 
 Recall that these figures are inclusive of phylogenetic tracking.
 How fast does simulation run without hereditary stratigraphy instrumentation?
-We repeated the benchmark using one-word genomes stripped of all instrumentation.
+Using the hardware emulator, we repeated our benchmark using one-word genomes stripped of all instrumentation.
 Under these conditions, PEs completed a mean of 47,175 generations per second (SEM 220; $n=20$)
 As before, over the course of simulation, each PE immigrated on average 118 genomes (SEM 12; $n=12$).
 
-These timings indicate cost of phylogeny tracking as approximately equivalent to that of the other aspects of simulation combined.
+These timings indicate cost of phylogeny tracking as approximately equivalent to that of the other aspects of simulation, combined.
 Given the highly minimalistic nature of the agent model and selection process, this result is highly promising.
 In actual use, most experiments will likely involve a much more sophisticated agent model and, thus, the relative overhead of tracking will diminish significantly.
 It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce performance penalty of tracking considerably.
