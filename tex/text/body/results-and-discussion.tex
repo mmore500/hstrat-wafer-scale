@@ -5,7 +5,7 @@ First, we compare the performance characteristics of new surface-oriented heredi
 %For assessment of  we refer the reader to related work TODOCITE.
 Then, we benchmark phylogeny-tracked WSE genetic algorithm implementation.
 To assess the runtime overhead of surface-based tracking, we compare against benchmarking results with phylogenetic tracking disabled.
-Finally, we validate the credibility of the presented end-to-end annotation-to-reconstruction pipeline by reviewing the clade structure from varying-duration emulated WSE evolutionary runs.
+Finally, we validate the credibility of the presented end-to-end annotation-to-reconstruction pipeline by reviewing clade structure and phylometric properties from emulated and on-hardware runs.
 % Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
 
 % TODO transplant this into the other paper
@@ -313,13 +313,13 @@ It is additionally worthwhile to note that caching and coarsening strategies dis
 %  [0. 0. 0.]
 %  [0. 0. 0.]]
 
-\subsection{WSE-to-Reconstruction Validation Experiment}
+\subsection{Clade Reconstruction Trial}
 
 % We performed extensive tests to be confident in our implementation of phylogenetic tracking for the Cerebras Software Language on the WSE device.
 % Extensive other work TODOCITE has validated the underlying hereditary surface algorithm and the reconstruction algorithm.
 % We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
 
-Here, we demonstrate phylogenetic reconstructions from the WSE platform and inspect clade structure to qualitatively assess their credibility.
+Here, we demonstrate phylogenetic reconstructions from emulated WSE hardware and inspect clade structure to qualitatively assess their credibility.
 % report the results of an integration test to assess the general validity of .
 For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Supplementary Figure \ref{fig:genome-layout}.
 % These identifiers identified clades descending from each founding genome.

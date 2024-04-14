@@ -1,5 +1,7 @@
 \section{Introduction}
 
+\input{fig/schematic}
+
 % defining? fundamental?
 A quintessential characteristic of computational artificial life experiments is the near total malleability of the simulacrum \citep{pattee1989simulations}.
 Indeed, ability to explore arbitrary possibilities as-they-could-be is the core of artificial life's role as a tool for inquiry \citep{langton1997artificial}.
@@ -30,7 +32,7 @@ Application of parallel and distributed computation, however, imposes compromise
 Encouragingly, these challenges are already implicit to much of biology; the productivity of research involving natrual organisms evidences that they are surmountable and even hints at strategies that can be used to solve them.
 Here, we explore alignment of digital evolution to HPC accelerator hardware at the extreme cutting-edge of massively distributed computation, and use techniques inspired by those applied to natural organisms to mitigate limitations of distributed computation with respect to tracking phylogenies.
 
-\subsection{Approaches and Progress toward Scale-up in Artificial Life}
+\subsection{Progress toward Scale-up in Artificial Life}
 
 % effort
 Achieving highly-scalable artificial life and digital evolution systems involves two distinct engineering considerations.
@@ -146,11 +148,12 @@ Implementation comprises two primary aspects:
 
 Both are implemented in Cerebras Software Language (CSL) and validated using Cerebras' SDK hardware emulator.
 We use benchmark experiments to evaluate the runtime performance characteristics of the new hereditary stratigraphy algorithms in isolation and in the integrated context providing tracking-enabled support for the island-model GA.
-To evaluate whether the new, stripped-down ``surface''-based hereditary stratigraphy algorithms degraded inference power, we compared reconstruction qualities to the existing ``column''-based approach across a wide variety of evolutionary scenarios.
+In conjunction, we report emulated and on-device trials that validate phylogenetic reconstructions and demonstrate their suitability for inference of underlying evolutionary conditions.
 
 Results from both experiments are promising.
-We find that, in expected usage, new surface-based algorithms match, or actually enhance, existing reconstruction quality.
-Scaled-down emulator benchmarks suggest potential for simple agent models, with phylogenetic tracking enabled, to achieve on the order of quadrillions of agent replication events a day at full wafer scale, with support for population sizes potentially reaching hundreds of millions.
+We find that new surface-based algorithms greatly improve runtime performance.
+Scaled-down emulator benchmarks and early on-hardware trials suggest potential for simple agent models --- with phylogenetic tracking enabled --- to achieve on the order of quadrillions of agent replication events a day at full wafer scale, with support for population sizes potentially reaching hundreds of millions.
+Further, using proposed techniques, phylogenetic analyses of simulations spanning hundreds of thousands of PEs succeed in detecting differences in adaptive dynamics between alternate simulation conditions.
 
 % \item WANT TO DO: we ran the async GA at full wafer scale on hardware with high/low selection pressure (tournament size 2 vs 8 ) and extracted  phylogenetic information; this phylogenetic information was sufficient to detect the difference in selection dynamics between the two runs.
 % \end{itemize}
