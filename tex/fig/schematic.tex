@@ -1,29 +1,12 @@
-\begin{figure*}
-  \centering
-  \begin{subfigure}[t]{0.43\linewidth}
+\begin{figure}
+  \vspace{2ex}
     \centering
-  \includegraphics[width=\linewidth]{binder-wse-sketches/tex-access-proposal/img/runtime-posthoc-schematic}
-    \caption{\footnotesize %
-    hstrat markers help reconstruct phylogenies, which can tell evolutionary dynamics.
+  \includegraphics[width=0.8\linewidth]{binder-wse-sketches/tex-access-proposal/img/runtime-posthoc-schematic}
+  \vspace{-1.5ex}
+    \caption{\textbf{Strategy for trackable distributed evolution simulation.}
+    \footnotesize %
+    Hstrat markers support post hoc estimation of relatedness between lineages, enabling approximate phylogenetic reconstruction.
     }
     \label{fig:runtime-posthoc-schematic}
-  \end{subfigure}
-  \hspace{0.07\linewidth}
-  \begin{subfigure}[t]{0.43\linewidth}
-    \centering
-  \includegraphics[width=\linewidth]{binder-wse-sketches/tex-access-proposal/img/async-ga-schematic}
-    \caption{\footnotesize WSE island model evolutionary algorithm implementation.}
-    \label{fig:async-ga-schematic}
-  \end{subfigure}
-
-\vspace{-1.5ex}
-
-\caption{%
-\textbf{Methods for trackable distributed evolution simulation.}
-\footnotesize
-Subfigure \ref{fig:runtime-posthoc-schematic} shows use of hstrat markers to for reconstruct-based phylogenetic tracking of highly-distributed evolution simulations.
-Subfigure \ref{fig:async-ga-schematic} summarizes asynchronous, callback-based approach to population exchange (``migration''') used to instantiate evolving populations across WSE PEs.
-}
-\label{fig:schematic}
 \vspace{-0.2in}
-\end{figure*}
+\end{figure}
