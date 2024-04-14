@@ -1,16 +1,15 @@
 \begin{abstract}
-Continuing improvements computing hardware are poised to transform capabilities for \textit{in silico} modeling of cross-scale phenomena underlying major open questions in evolutionary biology and artificial life research, such as transitions in individuality, evo-ecological dynamics, and rare evolutionary events.
+Continuing improvements in computing hardware are poised to transform capabilities for \textit{in silico} modeling of cross-scale phenomena underlying major open questions in evolutionary biology and artificial life research, such as transitions in individuality, evo-ecological dynamics, and rare evolutionary events.
 Emerging classes of ML/AI-oriented hardware accelerators, like the 850,000 processor Cerebras Wafer Scale Engine (WSE), hold particular promise.
-However, significant challenges are faced in fully harnessing the huge processor counts of such platforms for richly informative evolution experiments.
-Here, we focus on the problem of extracting phylogenetic information (i.e., historical relatedness among organisms) from agent-based evolution simulations leveraging the WSE platform.
+However, a number of practical challenges in conducting informative evolution experiments that efficiently utilize these platforms' large processor counts remain to be solved.
+Here, we focus on the problem of extracting phylogenetic information (i.e., historical relatedness among organisms) from agent-based evolution simulations that leverage the WSE platform.
 This goal drove significant refinements to recently-introduced hereditary stratigraphy (hstrat) methods for decentralized \textit{in silico} phylogenetic tracking, reported here.
 Microbenchmark experiments confirm order-of-magnitude performance improvements from revised algorithms.
 We also describe implementation of an asynchronous island-based genetic algorithm (GA) framework for WSE hardware.
-Emulated and on-hardware GA benchmarks with a simple, tracking-enabled agent model clock upwards of 1 million generations a minute for population sizes reaching 16 million agents.
+Emulated and on-hardware GA benchmarks with a simple tracking-enabled agent model clock upwards of 1 million generations a minute for population sizes reaching 16 million agents.
 This pace corresponds to quadrillions of agent replication events a day.
 Additional emulated and on-device trials validate quality of phylogenetic reconstructions and demonstrate their suitability for inference of underlying evolutionary conditions.
 In particular, we demonstrate extraction, from wafer-scale simulation, of clear phylometric signals that differentiate runs with adaptive dynamics enabled versus disabled.
-Together, these benchmarkand validation trials reflect strong potential as means for highly-scalable agent-based evolution simulation that is both efficient and observable.
+Together, these benchmark and validation trials reflect strong potential as means for highly scalable agent-based evolution simulation that is both efficient and observable.
 Developed capabilities will bring entirely new classes of previously intractable research questions within reach, benefiting further explorations within the evolutionary biology and artificial life communities across a variety of emerging high-performance computing platforms.
-% Reported implementations target WSE, but the underlying approach generalized to large-scale High-Performance Computing substrates.
 \end{abstract}
