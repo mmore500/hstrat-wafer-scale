@@ -110,9 +110,9 @@ These algorithms are notable in providing a novel and highly efficient solution 
 
 % color swapping
 
-\subsection{Wafer-Scale Engine Architecture and Programming Model}
+\subsection{WSE Architecture and Programming Model}
 
-The Wafer Scale Engine comprises a networked grid of independently executing compute cores (Processing Elements or PEs).
+The Cerebras Wafer Scale Engine comprises a networked grid of independently executing compute cores (Processing Elements or PEs).
 Each PE contains special message-handling infrastructure, which routes tagged 32-bit packets (``wavelets'') to neighboring PEs and/or to be processed locally, according to a programmed rule set.
 Each Processor Element is equipped with 48kb of private on-chip memory, which can be accessed within a single clock cycle;
 communication to neighboring PEs, too, incurs low latency \citep{buitrago2021neocortex}.
@@ -171,8 +171,6 @@ At this point, hereditary stratigraphy annotations --- discussed next --- are up
 The process then repeats, with a self-activating wavelet dispatched to execute the next cycle of the main generation loop, until a generation count halting condition is met.
 
 \subsection{Genome Model}
-
-\input{fig/genome-layout}
 
 % Kernel source code implementing described procedures can be viewed at \url{https://hopth.ru/cl}.
 % Our implementation is defined modularity with respect to genome size, layout, mutational operator, and fitness evaluation criteria, allowing for direct re-use of produced software for follow-on evolution experiments on WSE hardware.

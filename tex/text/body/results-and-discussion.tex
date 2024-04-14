@@ -84,7 +84,7 @@ Half of update operations on surfaces with single-bit differentia can be skipped
 Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
 Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
-\subsection{WSE Genetic Algorithm Benchmarks}
+\subsection{WSE Island-model GA Benchmark}
 
 Next, we sought to characterize the performance of our island model genetic algorithm implementation on WSE hardware and estimate the magnitude of simulation that might be achieved with on-device execution.
 We used per-PE cycle counters in emulation to test the amount of real-time elapsed over the course of a 40 generation-cycle simulation.
@@ -321,7 +321,7 @@ It is additionally worthwhile to note that caching and coarsening strategies dis
 
 Here, we demonstrate phylogenetic reconstructions from the WSE platform and inspect clade structure to qualitatively assess their credibility.
 % report the results of an integration test to assess the general validity of .
-For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Figure \ref{fig:genome-layout}.
+For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Supplementary Figure \ref{fig:genome-layout}.
 % These identifiers identified clades descending from each founding genome.
 Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation-cycles under drift conditions.
 At the end of simulation, phylogenetic reconstruction was conducted using one genome sampled per PE.
@@ -342,9 +342,9 @@ Applications requiring greater reconstruction precision can opt for larger diffe
 % Clade arrangement in the reconstructed tree agrees well with founding clade identities.
 % All different-colored taxa are predicted to have had ancient common ancestry.
 
-% \subsection{On-hardware Demonstration with Evolutionary Inference from Phylogenetic Analysis}
+\subsection{Phylogenetic Inference over On-hardware Simulation}
 
-% \input{fig/wse-phylogenies}
+\input{fig/on-device}
 
 % To perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
 % We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32-bit tilted hstrat surface.
