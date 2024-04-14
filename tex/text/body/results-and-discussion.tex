@@ -84,7 +84,7 @@ Half of update operations on surfaces with single-bit differentia can be skipped
 Further, simulations with synchronous or near-synchronous generations can cache calculated surface-placement indices, meaning they would only need to be computed once for an entire subpopulation.
 Another possibility is to coarsen temporal resolution, only updating annotations at intervals every $n$th generation.
 
-\subsection{WSE Genetic Algorithm Benchmarks}
+\subsection{WSE Island-model GA Benchmark}
 
 Next, we sought to characterize the performance of our island model genetic algorithm implementation on WSE hardware and estimate the magnitude of simulation that might be achieved with on-device execution.
 We used per-PE cycle counters in emulation to test the amount of real-time elapsed over the course of a 40 generation-cycle simulation.
@@ -342,7 +342,7 @@ Applications requiring greater reconstruction precision can opt for larger diffe
 % Clade arrangement in the reconstructed tree agrees well with founding clade identities.
 % All different-colored taxa are predicted to have had ancient common ancestry.
 
-% \subsection{On-hardware Demonstration with Evolutionary Inference from Phylogenetic Analysis}
+\subsection{Phylogenetic Inference over On-hardware Simulation}
 
 % \input{fig/wse-phylogenies}
 

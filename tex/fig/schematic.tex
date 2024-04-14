@@ -4,7 +4,7 @@
     \centering
   \includegraphics[width=\linewidth]{binder-wse-sketches/tex-access-proposal/img/runtime-posthoc-schematic}
     \caption{%
-    Proposed agent-based evolutionary simulation and observation framework, using HStrat markers to estimate phylogenetic history, thereby, infer evolutionary dynamics.
+    Use of hstrat markers to estimate phylogenetic history and, thereby, infer evolutionary dynamics.
     }
     \label{fig:runtime-posthoc-schematic}
   \end{subfigure}
@@ -12,14 +12,14 @@
   \begin{subfigure}[t]{0.43\linewidth}
     \centering
   \includegraphics[width=\linewidth]{binder-wse-sketches/tex-access-proposal/img/async-ga-schematic}
-    \caption{Schematic overview of asynchronous island model evolutionary algorithm implementation.}
+    \caption{WSE island model evolutionary algorithm implementation.}
     \label{fig:async-ga-schematic}
   \end{subfigure}
 
 \caption{%
-\textbf{Summary of proposed experimental framework.}
-Subfigure \ref{fig:runtime-posthoc-schematic} overviews proposed distributed simluation strategy.
-Subfigure \ref{fig:async-ga-schematic} summarizes asynchronous population exchange strategy used to simulate evolving populations on Cerebras Wafer Scale Engine hardware.
+\textbf{Methods for distributed evolution simulation.}
+Subfigure \ref{fig:runtime-posthoc-schematic} shows use of hstrat markers to for reconstruct-based phylogenetic tracking of highly-distributed evolution simulations.
+Subfigure \ref{fig:async-ga-schematic} summarizes asynchronous, callback-based approach to population exchange (``migration''') used to instantiate evolving populations across WSE PEs.
 }
 \label{fig:schematic}
 
