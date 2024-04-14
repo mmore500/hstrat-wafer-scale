@@ -95,7 +95,7 @@ As an indicator of inter-PE exchange throughput, each PE immigrated a mean of 11
 
 % https://osf.io/tf89g
 What scale of simulation does this performance imply at full scale on CS-2 hardware?
-Across eight 1 million generation on-device tracking-enabled trials described below, we measured a mean generation rate of 17,688 hz for 562,500 PEs ($750\times750$ rectangle) with runtimes slightly below one minute.
+Across eight 1 million generation on-device, tracking-enabled trials (described in the following section), we measured a mean generation rate of 17,688 hz for 562,500 PEs ($750\times750$ rectangle) with runtimes slightly below one minute.
 As a point of comparison, eight trials trials conducted with 1,600 PEs ($40\times40$) yielded a similar mean generation rate of 17,734 hz.
 
 Multiplied out to a full day, a 17 kHz turnover rate would elapse around 1.5 billion generations.
@@ -342,18 +342,24 @@ Applications requiring greater reconstruction precision can opt for larger diffe
 % Clade arrangement in the reconstructed tree agrees well with founding clade identities.
 % All different-colored taxa are predicted to have had ancient common ancestry.
 
-\subsection{Phylogenetic Inference over On-hardware Simulation}
+\subsection{On-hardware Trial}
 
 \input{fig/on-device}
 
-% To perform a preliminary assessment of the practicability of this methodology in practice, we ran our genetic algorithm on a WSE device.
-% We annotated genomes with a 64-bit instrumentative annotation, comprising a 32-bit counter and 32-bit tilted hstrat surface.
-% We performed evolutionary runs under two conditions, one with tournament size 2 and one with tournament size 8.
-% We performed TODO replicates per condition, running each for Y minutes.
-% This was sufficient to observe a mean of TODO generations per cycle, SD TODO.
-% At the conclusion of the run, we collected one genome from each PE.
+We next set out to assess the performance of out island model GA and the capability of hstrat methodology to extract descriptive phylogenetic information at full wafer scale
+For these experiments, we the used the four word, tracking-enabled genome layout, with the full first 32 bits containing a floating point fitness value.
+We defined two treatments: \textit{purifying-only}, where 33\% of agent replication events decreased fitness by a normally-distributed amount,  and \textit{adaption-enabled}, which added beneficial mutations that increased fitness by a normally-distributed amount, occuring with 0.3\% probability.
+These beneficial mutations introduced the possiblity for selective sweeps.
+As before, we used tournament size 5 for both treatments.
+We performed four on-hardware replicates of each treatment instantiated on 10k ($100\times100$), 250k ($500\times500$) and 562.5k ($750\times750$) PE arrays.
+We halted each PE after it elapsed 1 million generations.
+Perfmance metrics for these runs are described in the preceding section.
 
-% Figure \ref{fig:wse-phylogenies} compares two example reconstructed phylogenies, one from each treatment.
-% Performing a reconstruction with all 850,000 genomes took X minutes.
-% We used a Mann-Whitney U test between inner node time distributions for pairs of trees to test whether the difference in selection pressure was detectable.
-% Indeed, the recovered phylogenetic information was sufficient to detect this difference in evolutionary dynamics for all pairs ($p < TODO$ for all $n=TODO$).
+Upon completion, we sampled one genome from each PE.
+Then, we performed an agglomerative trie-based reconstruction from subsamples of 10k end-state genomes \citep{moreno2024analysis}.
+Figure \ref{fig:on-device} compares phylogenies generated under the purifying-only and adaption-enabled treatments.
+As expected, purifying-only treatment phylogenies consistently exhibited greater sum branch length and mean evolutionary distinctiveness, with the effect on branch length particularly strong.
+These structural effects are apparent in example phylogeny trees from 562.5k PE trials (Figures \labelcref{fig:on-device-adaptive,fig:on-device-purifying}).
+Successful differentiation between treatments is a highly promising outcome.
+This result not only supports the correctness of our methods and implementation, but also confirms capability for reconstruciton-based analyses to extract meaningful information describing dynamics of very large-scale evolution simulations.
+% We look forward to future work expand the repetoire of  \citep{moreno2023toward}, which
