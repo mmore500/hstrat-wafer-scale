@@ -31,7 +31,7 @@ For instance, single-bit differentiae occupy $32\times$ less memory than full-wo
 Such space savings can be invested to increase the quantity of differentia retained, improving the density of records' coverage across elapsed generations.
 However, it comes at the cost of increased probability for spurious differentia value collisions, which can make two lineages appear more closely related than they actually are.
 We anticipate that most use cases will call for differentia sized on the order of a single bit or a byte.
-Indeed, single-bit differentiae have been shown to yield good quality phylogenies using only 96 bits per genome \citep{TODOOTHERPAPER}.
+Indeed, single-bit differentiae have been shown to yield good quality phylogenies using only 96 bits per genome \citep{moreno2024guide}.
 
 Small differentia size intensifies need for a lean data structure to back differentia record management.
 In particular, shrinking differentia to a single bit absurdifies accompanying each with a generational timestamp.
@@ -43,9 +43,9 @@ In one possible strategy, retained time points would be distributed evenly acros
 In another, more recent time points would be preferred.
 We term these as ``steady'' and ``tilted'' policies, respectively \citep{han2005stream,zhao2005generalized}.
 Note that prior hereditary stratigraphy work refers to them instead as ``depth-proportional'' and ``recency-proportional resolution'' \citep{moreno2022hereditary}.
-Comparisons of reconstruction quality have shown that tilted policy gives higher quality reconstructions from the same amount of reconstruction space in most --- but not all --- circumstances \citep{TODOOTHERPAPER}.
+Comparisons of reconstruction quality have shown that tilted policy gives higher quality reconstructions from the same amount of reconstruction space in most --- but not all --- circumstances \citep{moreno2024guide}.
 This pattern follows an intuition to prefer high absolute precision is more useful to resolving recent events than more ancient ones.
-In practice, it may be desirable to use a hybrid approach that allocates half of available annotation space to each strategy \citep{TODOOTHERPAPER}.
+In practice, it may be desirable to use a hybrid approach that allocates half of available annotation space to each strategy \citep{moreno2024guide}.
 Figure \ref{fig:surf-algorithms} includes retention drip plots that contrast behavior of steady and tilted algorithms.
 
 \subsection{Surface-based Hereditary Stratigraphy Algorithms}
