@@ -26,3 +26,9 @@
 	path = binder-wse-sketches
 	url = https://github.com/mmore500/wse-sketches.git
 	branch = binder
+[submodule "wse-sketches"]
+	path = wse-sketches
+	url = https://github.com/mmore500/wse-sketches.git
+[submodule "hstrat-surface-concept"]
+	path = hstrat-surface-concept
+	url = https://github.com/mmore500/hstrat-surface-concept.git
