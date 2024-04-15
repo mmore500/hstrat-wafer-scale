@@ -22,10 +22,6 @@
 	path = tex/bindertex-evolutionary-inference
 	url = https://github.com/mmore500/hstrat-evolutionary-inference.git
 	branch = tex
-[submodule "binder-wse-sketches"]
-	path = binder-wse-sketches
-	url = https://github.com/mmore500/wse-sketches.git
-	branch = binder
 [submodule "wse-sketches"]
 	path = wse-sketches
 	url = https://github.com/mmore500/wse-sketches.git
