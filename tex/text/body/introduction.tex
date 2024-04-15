@@ -45,8 +45,8 @@ Ackley's ongoing work with the T2 Tile Project and ULAM exemplifies a strong syn
 At the level of simulation semantics, Ackley formulates update procedures in terms of local interactions between discrete, spatially situated particles.
 This design provides for an efficient one-to-one mapping between simulation space and hardware components, minimizing requirements for intra-hardware connectivity and preventing global impacts from on-the-fly augmentations or reductions of available hardware.
 The ULAM framework then ties into implementation-level infrastructure necessary to accomplish performant, best-effort lock/release of spatial event windows spanning bordering hardwares \citep{ackley2013movable}.
-The Santa Fe Board project provided analogous infrastructure foundations for earlier work, coordinating efficient packet-framed, non-blocking communication between hardware tile elements \citep{livingcomputationSFBSanta}.
-Ackley's work is distinguished, in fact, in dipping to a yet-lower level of abstraction and tackling design of bespoke, modular distributed processing hardware \citep{ackley2011homeostatic,ackley2023robust}.
+% The Santa Fe Board project provided analogous infrastructure foundations for earlier work, coordinating efficient packet-framed, non-blocking communication between hardware tile elements \citep{livingcomputationSFBSanta}.
+Ackley's work is distinguished, in fact, in dipping to a yet-lower level of abstraction and tackling design of bespoke, modular distributed processing hardware \citep{ackley2011homeostatic,ackley2023robust,livingcomputationSFBSanta}.
 % to engineer computational artificial life systems for scalability
 % This work joins/builds on a longstanding chorus of interest in scale-up of artificial life, and already some exciting work in that domain.
 % Of particular note is ADVOCACY/ARGUMENTATION Ackley has bespoke hardware \citep{ILLUMINAXMACHINA,ackley2023robust}.
@@ -85,9 +85,9 @@ Although tailored expressly to deep learning workloads, these hardware platforms
 The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path,lie2022cerebras}, holds particular promise as a vehicle for artificial life models.
 This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently with private on-chip memory and interacting locally through a network-like interface.
 
-Our work here explores how such hardware might be recruited for large-scale digital evolution, demonstrating a genetic algorithm implementation tailored to the asynchronous, dataflow-oriented computing model of the CS-2 platform.
+Our work here explores how such hardware might be recruited for large-scale digital evolution, demonstrating a genetic algorithm implementation tailored to the dataflow-oriented computing model of the CS-2 platform.
 Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, is anticipated to play a key role in future advances in agent-based model capabilities \citep{perumalla2022computer}.
-The very recent CS-3 chip announcement is fitting in this respect; among other spec enhancemments, it boosts clustering support to potentiallly thousands of constituent accelerators \citep{moore2024cerebras}.
+The very recent CS-3 chip announcement, which boosts clustering support to potentiallly thousands of constituent accelerators \citep{moore2024cerebras}.
 
 % This will require changes and impose limitations to what is possible, artificial life.
 % This is not an entirely unreasonable notion of a possible future of artificial life.
@@ -130,8 +130,8 @@ To overcome this limitation, we have developed reconstruction-based approaches t
 These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons among end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
 Figure \ref{fig:runtime-posthoc-schematic} summarizes this reconstruction-based strategy.
 
-Although analogous work with natural biosequences is notoriously challenging, uncertain, biased, and data-intensive \citep{neyman1971molecular,lemmon2013high},
-recent development of hereditary stratigraphy algorithms provides a genetic annotation architecture explicitly designed for fast, accurate reconstruction requiring only small amounts of data.
+Although analogous work with natural biosequences is notoriously challenging and data-intensive \citep{neyman1971molecular,lemmon2013high},
+recently-developed hereditary stratigraphy annotation architecture is explicitly designed for fast, accurate, and data-lean reconstruction.
 % Work reported here uses just 96 bits of tracking information per agent genome.
 Designed for attachment to underlying replicators as a neutral annotation (akin to noncoding DNA), it is a general-purpose technique potentially applicable across study domains \citep{liben2008tracing,cohen1987computer,friggeri2014rumor}.
 In a stroke of convergent thinking, Ackley's recent work reports use of ``bar code'' annotations on his self replicators to achieve a measure of coarse-grained lineage tracing \citep{ackley2023robust}.
