@@ -11,9 +11,9 @@ This fact bodes well that scaled-up simulation studies can succeed as a platform
 Indeed, observational and analytical strategies already developed to confront limitations in biological data can solve, or at least guide, work with massively distributed evolution simulations.
 
 In biology, mutational drift encodes ancestry information in DNA genomes.
-Our proposed methods are analogous, with ancestry information contained within genomes themselves rather than in any external tracking mechanism.
-Phylogenetic history can then be estimated after the fact, as depicted in Figure \ref{fig:runtime-posthoc-schematic}.
-This process ensures low runtime communication overhead, as well as near-total resiliency to germane modes of data loss (e.g., dropped messages, hardware crash-out).
+Our proposed methods are analogous, with ancestry information captured within genomes themselves rather than external tracking.
+Phylogenetic history can then be estimated after the fact, as Figure \ref{fig:runtime-posthoc-schematic} depicts.
+This strategy reduces runtime communication and is resilient to germane modes of data loss (e.g., dropped messages, hardware crash-out).
 
 Recent work introducing \textit{hereditary stratigraphy} (hstrat) methodology has explored how best to organize genetic material to maximize reconstruction quality and minimize memory footprint \citep{moreno2022hstrat, moreno2022hereditary}.
 Hstrat material can be bundled with agent genomes in a manner akin to non-coding DNA, entirely neutral with respect to agent traits and fitness.
@@ -45,7 +45,7 @@ Note that prior hereditary stratigraphy work refers to them instead as ``depth-p
 Comparisons of reconstruction quality have shown that tilted policy gives higher quality reconstructions from the same amount of reconstruction space in most --- but not all --- circumstances \citep{moreno2024guide}.
 This pattern follows an intuition that high absolute precision is more useful to resolving recent events than more ancient ones.
 In practice, it may be desirable to use a hybrid approach that allocates half of available annotation space to each strategy \citep{moreno2024guide}.
-Figure \ref{fig:surf-algorithms} includes retention drip plots that contrast behavior of steady and tilted algorithms.
+The bottom panels of Figure \ref{fig:surf-algorithms} contrast steady versus tilted behaviors.
 
 \subsection{Surface-based Hereditary Stratigraphy Algorithms}
 
@@ -57,12 +57,13 @@ The column design, and attendant implementation details, impose various drawback
 \begin{itemize}
 \item \textbf{wasted space}: an annotation size cap can be guaranteed, but a percentage of available space typically goes unused;
 \item \textbf{high-level feature dependencies:} in places, existing column code uses complex data structures with dynamically allocated memory to perform operations like set subtraction,
-\item \textbf{annotation size scaling:} procedures to maintain sorted order among differentia can take time linearly proportional to annotation size.
+\item \textbf{annotation size scaling:} maintaining sorted order among differentia can take time linearly proportional to annotation size.
 % \item \textbf{expensive operations:} in places, slow divide and modulo operations. heavy use
 \end{itemize}
 
 \input{fig/surf-vs-column-schematic}
 
+\noindent
 Addressing these concerns required fundamental reformulation of hereditary stratigraphy conventions.
 To this end, we introduce a constant-time indexing scheme that maps each lineage's fingerprint stream directly onto a fixed-width memory buffer.
 Differentia pruning occurs implicitly, as a result of resident differentia being overwritten by new placements.
@@ -123,8 +124,7 @@ Special faculties are provided for asynchronous send-receive operations that exc
 
 For further detail, we refer readers to extensive developer documentation made available by Cerebras through their SDK program.
 Access can be requested, currently free of charge, via their website.
-For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware, while other experiments used a physical CS-2 device.
-(Scale-down to $3\times3$ was necessary to accommodate significant emulation-layer slowdown.)
+For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware, while other experiments used hundreds of thousands of PEs a physical CS-2 device.
 
 \subsection{Asynchronous Island-model Genetic Algorithm}
 
@@ -134,18 +134,17 @@ We apply an island-model genetic algorithm, common in applications of parallel a
 Under this model, PEs host independent populations that interact through migration (i.e., genome exchange) between neighbors.
 
 Our implementation unfolds according to a generational update cycle, schematized in Figure \ref{fig:async-ga-schematic}.
-
-Migration, depicted as blue-red arrows in Figure \ref{fig:async-ga-schematic}, is handled first.
+Migration, depicted as blue-red arrows, is handled first.
 % fully-asynchronous approach to migration between neighboring PEs.
 % Evolutionary processes tend to occur in asynchronous manner with arbitrary factors influencing things, so this is a reasonable relaxation to make.
 Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor, depicted by Figure \ref{fig:async-ga-schematic} in solid blue and red, respectively.
 On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
 At startup, additionally, each emigration buffer is populated with genomes copied from the population and an asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
-Asynchronous operations are registered to on-completion callbacks that set a per-buffer ``send complete'' or ``receive complete'' flag variable.
-In this work, we arbitrarily size send buffers to hold one genome and receive buffers to hold four genomes.
-The main population buffer was sized to 32 genomes.
+Asynchronous operations are registered to on-completion callbacks that set a per-buffer ``send-'' or ``receive-complete'' flag variable.
+In this work, we size send buffers to hold one genome and receive buffers to hold four genomes.
+The main population buffer held 32 genomes.
 
-Subsequently, the main update loop tests all ``send complete'' and ``receive complete'' flags.
+Subsequently, the main update loop tests all completion flags.
 For each immigration flag that is set, buffered genomes are copied into the main population buffer, replacing randomly chosen population members.
 Then, the flag is reset and a new receive request is initiated.
 Likewise, for each emigration flag set, corresponding send buffers are re-populated with randomly sampled genomes from the main population buffer.
@@ -155,41 +154,38 @@ The bottom right corner of Figure \ref{fig:async-ga-schematic} summarizes the in
 The remainder of the main update loop handles evolutionary operations within the scope of the executing PE.
 Each genome within the population is evaluated to produce a floating point fitness value.
 For this initial work, we use a trivial fitness function that explicitly models additive accumulation of beneficial/deleterious mutations as a floating point value within each genome.
-% However, modular implementation ensures evaluation criteria can be chosen appropriate for underlying experimental objectives.
-
-After evaluation, tournament selection is applied. % with, in our experiments, tournament size 5.
-Each slot in the next generation is populated with a genome exhibiting maximal fitness among $n=5$ randomly sampled individuals, ties broken randomly.
+After evaluation, tournament selection is applied.
+Each slot in the next generation is populated the highest-fitness genome among $n=5$ randomly sampled individuals, ties broken randomly.
 
 Finally, a mutational operator is applied across all genomes in the next population.
 % As with evaluation criteria, modular implementation allows mutation operations to be defined based on experimental objectives.
 Experiments used a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection in some treatments.
 At this point, hereditary stratigraphy annotations --- discussed next --- are updated to reflect an elapsed generation.
 
-The process then repeats, with a self-activating wavelet dispatched to execute the next cycle of the main generation loop, until a generation count halting condition is met.
+The next generation cycle is then launched by a self-activating wavelet, repeating until a generation count halting condition is met.
 
 \subsection{Genome Model}
 
 % Kernel source code implementing described procedures can be viewed at \url{https://hopth.ru/cl}.
 % Our implementation is defined modularity with respect to genome size, layout, mutational operator, and fitness evaluation criteria, allowing for direct re-use of produced software for follow-on evolution experiments on WSE hardware.
-At implementation level, genomes were handled as fixed-length segments of raw memory.
-We used a 96-bit genome layout for clade reconstruction experiments, shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
-The first sixteen bits were used to identify genomes descending from the same founding ancestor.
-At the outset of simulation, founding population members were each assigned a randomized tag value, and the value was inherited without mutation over the course of simulation.
+Genomes were handled as fixed-length segments of raw memory.
+We used a 96-bit genome for clade reconstruction trials, shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
+At the outset of simulation, the first 16 bits of founding genomes were randomized and, subsequently, were inherited without mutation, thus identifing descendants of the same founding ancestor.
 The next 80 bits were used for hereditary stratigraph annotation, 16 bits for a generation counter and the remaining 64 as a field for single-bit differentia managed according to a tilted surface policy.
 For other experiments, a 128-bit genome layout was used instead, with the first 32 bits used for a floating point ``fitness'' value and the generation counter upgraded from 16 to 32 bits.
 % A key question will be the extent to which intentionally desynchronizing affects performance, stability, and computation quality.
 
 \subsection{Software and Data Availability}
 
-Software, configuration files, and executable notebooks for this work are available via Zenodo at \url{https://doi.org/10.5281/zenodo.10974998}.
-Data and supplemental materials are available via the Open Science Framework at \url{https://osf.io/bfm2z/} \citep{foster2017open}.
+Software, configuration files, and executable notebooks for this work are available via Zenodo at \href{https://doi.org/10.5281/zenodo.10974998}{\texttt{doi.org/10.5281/zenodo.10974998}}.
+Data and supplemental materials are available via the Open Science Framework at \href{https://osf.io/bfm2z/}{\texttt{osf.io/bfm2z/}} \citep{foster2017open}.
 
 Hereditary stratigraphy utilities are published in the \texttt{hstrat} Python package \citep{moreno2022hstrat}.
-This project uses data formats and tools associated with the ALife Data Standards project \citep{lalejini2019data} and benefited from many pieces of open-source scientific software \citep{huerta2016ete,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,cock2009biopython,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2024pecking,moreno2024hsurf,moreno2024wse,dolson2024phylotrackpy}.
+This project used data formats from the ALife Standards project \citep{lalejini2019data} and benefited from open-source scientific software \citep{huerta2016ete,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,cock2009biopython,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2024pecking,moreno2024hsurf,moreno2024wse,dolson2024phylotrackpy}.
 
-WSE experiments reported in this work used the CSL compiler and CS-2 hardware emulator bundled with the Cerebras SDK v1.0.0 \citep{selig2022cerebras}, available via request form on the Cerebras website.
+WSE experiments reported in this work used the CSL compiler and CS-2 hardware emulator bundled with the Cerebras SDK v1.0.0 \citep{selig2022cerebras}, available via request from Cerebras.
 SDK utilities can be run from any Linux desktop environment, regardless of access to Cerebras hardware.
-On-hardware trials used computational time on the PSC Neocortex installation \citep{buitrago2021neocortex}.
+We access hardware through PSC Neocortex \citep{buitrago2021neocortex}.
 
 % Cerebras currently makes SDK materials available upon request, which can be .
 % In preparation for proposed work, we joined the Cerebras SDK program \citep{selig2022cerebras} and assembled Cerebras Software Language (CSL) software implementations that will be necessary to conduct experiments with WSE hardware.
