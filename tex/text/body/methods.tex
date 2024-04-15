@@ -7,44 +7,43 @@ Then, we describe the asynchronous compute-communicate implementation strategy b
 \subsection{Distributed Phylogenetic Tracking}
 
 Natural history of biological life operates under no extrinsic provision for interpretable record-keeping, yet efforts to study it have proved immensely fruitful.
-This fact bodes well that scaled-up simulation studies can succeed a platform for rich hypothesis-driven experiments despite potential sacrifices to aspects of observability currently enjoyed with centralized, storage-rich processing.
+This fact bodes well that scaled-up simulation studies can succeed as a platform for rich hypothesis-driven experiments despite potential sacrifices to aspects of observability currently enjoyed with centralized, storage-rich processing.
 Indeed, observational and analytical strategies already developed to confront limitations in biological data can solve, or at least guide, work with massively distributed evolution simulations.
 
-In biology, decoupled processes of mutational drift encode ancestry information in DNA genomes.
-Proposed methods approach analysis of evolutionary operates analogously, with ancestry information contained within genomes themselves rather than in any external tracking mechanism.
+In biology, mutational drift encodes ancestry information in DNA genomes.
+Our proposed methods are analogous, with ancestry information contained within genomes themselves rather than in any external tracking mechanism.
 Phylogenetic history can then be estimated after the fact, as depicted in Figure \ref{fig:runtime-posthoc-schematic}.
-This ensures low runtime communication overhead, as well as near-total resiliency to germane modes of data loss (e.g., dropped messages, hardware crash-out).
+This process ensures low runtime communication overhead, as well as near-total resiliency to germane modes of data loss (e.g., dropped messages, hardware crash-out).
 
 Recent work introducing \textit{hereditary stratigraphy} (hstrat) methodology has explored how best to organize genetic material to maximize reconstruction quality and minimize memory footprint \citep{moreno2022hstrat, moreno2022hereditary}.
-Hstrat material can be bundled to agent genomes in a manner akin to non-coding DNA, entirely neutral with respect to agent traits and fitness.
+Hstrat material can be bundled with agent genomes in a manner akin to non-coding DNA, entirely neutral with respect to agent traits and fitness.
 
 The hereditary stratigraphy algorithm associates each generation along individual lineages with an identifying ``fingerprint'' value, referred to as a differentia.
-On birth, offspring generate a new differentia value and append it to an inherited chronological record of differentia values, each corresponding to a generation along that lineage.
-Under this scheme, mismatching differentia can be used to delimit the extent of common ancestry.
+On birth, offspring recieve a new differentia value and append it to an inherited chronological record of past values, each corresponding to a generation along that lineage.
+Under this scheme, mismatching differentiae can be used to delimit the extent of common ancestry.
 This semantic streamlines \textit{post hoc} phylogenetic reconstruction to a simple trie-building procedure
 \citep{moreno2024analysis}.
 
 To save space, differentia may be pruned away.
 However, care must be taken to ensure retention of checkpoint generations that maximize coverage across evolutionary history.
-Downsizing bits per differentia can also save memory space.
-For instance, single-bit differentiae occupy $32\times$ less memory than full-word differentia.
-Such space savings can be invested to increase the quantity of differentia retained, improving the density of records' coverage across elapsed generations.
-However, it comes at the cost of increased probability for spurious differentia value collisions, which can make two lineages appear more closely related than they actually are.
+Reducing the number of bits per differentia can also provide many-fold memory space savings.
+This savings can be re-invested to increase the quantity of differentia retained, improving the density of record coverage across elapsed generations.
+The cost of this shift is an increased probability of spurious differentia value collisions, which can make two lineages appear more closely related than they actually are.
 We anticipate that most use cases will call for differentia sized on the order of a single bit or a byte.
 Indeed, single-bit differentiae have been shown to yield good quality phylogenies using only 96 bits per genome \citep{moreno2024guide}.
 
 Small differentia size intensifies need for a lean data structure to back differentia record management.
-In particular, shrinking differentia to a single bit absurdifies accompanying each with a generational timestamp.
-To safely drop timestamps, though, we must have means to recalculate them on demand.
+Shrinking differentia to a single bit would be absurd if each is accompanied by a 32-bit generational timestamp.
+To safely drop timestamps, though, we need means to recalculate them on demand.
 As such, all described algorithms include means to deduce timestamps of retained differentia solely from their storage index and the count of the record's elapsed generations.
 
-As a final elaboration, design of hstrat annotations must also consider how available storage space should be allocated across the span of history.
+Lastly, design of hstrat annotations must also consider how available storage space should be allocated across the span of history.
 In one possible strategy, retained time points would be distributed evenly across history.
 In another, more recent time points would be preferred.
 We term these as ``steady'' and ``tilted'' policies, respectively \citep{han2005stream,zhao2005generalized}.
 Note that prior hereditary stratigraphy work refers to them instead as ``depth-proportional'' and ``recency-proportional resolution'' \citep{moreno2022hereditary}.
 Comparisons of reconstruction quality have shown that tilted policy gives higher quality reconstructions from the same amount of reconstruction space in most --- but not all --- circumstances \citep{moreno2024guide}.
-This pattern follows an intuition to prefer high absolute precision is more useful to resolving recent events than more ancient ones.
+This pattern follows an intuition that high absolute precision is more useful to resolving recent events than more ancient ones.
 In practice, it may be desirable to use a hybrid approach that allocates half of available annotation space to each strategy \citep{moreno2024guide}.
 Figure \ref{fig:surf-algorithms} includes retention drip plots that contrast behavior of steady and tilted algorithms.
 
@@ -57,8 +56,8 @@ Forthwith, we refer to algorithms following this convention as ``column''-based.
 The column design, and attendant implementation details, impose various drawbacks:
 \begin{itemize}
 \item \textbf{wasted space}: an annotation size cap can be guaranteed, but a percentage of available space typically goes unused;
-\item \textbf{high-level feature dependencies:} in places, existing column code use complex data structures with dynamically allocated memory to perform operations like set subtraction,
-\item \textbf{annotation size scaling:} slide-down procedures to maintain sorted order among differentia can take time linearly proportional to annotation size.
+\item \textbf{high-level feature dependencies:} in places, existing column code uses complex data structures with dynamically allocated memory to perform operations like set subtraction,
+\item \textbf{annotation size scaling:} procedures to maintain sorted order among differentia can take time linearly proportional to annotation size.
 % \item \textbf{expensive operations:} in places, slow divide and modulo operations. heavy use
 \end{itemize}
 
@@ -80,12 +79,12 @@ Figure \ref{fig:surf-vs-column-schematic} contrasts the two.
 
 \input{fig/surf-algorithms}
 
-In the course of this work, steady- and tilted-policy surface-based hereditary stratigraphy algorithms have both been developed.
-Figure \ref{fig:surf-algorithms} depicts implementation behaviors, with the top panels tracking how placements are sequenced over time in buffer space and the bottom panels showing the consequent distributions of retained time points across history.
+In the course of this work, we developed both steady- and tilted-policy surface-based hereditary stratigraphy algorithms.
+Figure \ref{fig:surf-algorithms} depicts implementation behaviors, with the top panels tracking how placements are sequenced over time in buffer space and the bottom panels showing the resulting distributions of retained time points across history.
 We leave formal descriptions of underlying indexing algorithms to future work.
-However, reference implementations can be found in provided software materials.
-% For this work, we also translated the tilted algorithm to Zig--like Cerebras Software Language for use on the WSE and, as an intermediate step, to the general-purpose Zig programming language.
-% These implementations can be found in associated software repositories with the project.
+However, reference Python implementations can be found in provided software materials.
+For this work, we also translated the tilted algorithm to the general-purpose Zig programming language and then to the Zig-like Cerebras Software Language for use on the WSE.
+
 These algorithms are notable in providing a novel and highly efficient solution the more general problem of curating dynamic temporal cross-samples from a data stream, and may lend themselves to a broad set of applications outside the scope of phylogeny tracking \citep{moreno2024algorithms}.
 
 % async microthread to send from sendBuf to neighbor
@@ -124,8 +123,8 @@ Special faculties are provided for asynchronous send-receive operations that exc
 
 For further detail, we refer readers to extensive developer documentation made available by Cerebras through their SDK program.
 Access can be requested, currently free of charge, via their website.
-For this initial work, we evaluated CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware.
-(Scale-down was necessary to accommodate significant emulation-layer slowdowns).
+For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware, while other experiments used a physical CS-2 device.
+(Scale-down to $3\times3$ was necessary to accommodate significant emulation-layer slowdown.)
 
 \subsection{Asynchronous Island-model Genetic Algorithm}
 
@@ -164,8 +163,8 @@ Each slot in the next generation is populated with a genome exhibiting maximal f
 Finally, a mutational operator is applied across all genomes in the next population.
 % As with evaluation criteria, modular implementation allows mutation operations to be defined based on experimental objectives.
 Here, we use a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection.
-To model purifying selection, we applied a strictly negative mutational effect with probabilty 0.3.
-To model adaptive selection, we additionally allowed the possibility of a positive mutational effect, with probability 0.003.
+To model purifying selection, we applied a strictly negative, normally distributed mutational effect with probabilty 0.3.
+To model adaptive selection, we additionally allowed the possibility of a positive normally distributed mutational effect, with probability 0.003.
 At this point, hereditary stratigraphy annotations --- discussed next --- are updated to reflect an elapsed generation.
 
 The process then repeats, with a self-activating wavelet dispatched to execute the next cycle of the main generation loop, until a generation count halting condition is met.
