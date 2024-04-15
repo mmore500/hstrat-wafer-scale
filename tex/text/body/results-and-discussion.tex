@@ -1,25 +1,19 @@
 \section{Results and Discussion} \label{sec:results}
 
 Here, we report a series of benchmarks that evaluate the viability of our proposed approaches to harness the CS-2 accelerator for digital evolution simulations and extract phylogenetic records from said simulations.
-First, we compare the performance characteristics of new surface-oriented hereditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operation.
-%For assessment of  we refer the reader to related work CITE.
+First, we compare the performance characteristics of new surface-oriented hereditary stratigraphy methods against preceding column-based implementation to determine the extent to which they succeed in streamlining runtime operations.
 Then, we benchmark phylogeny-tracked WSE genetic algorithm implementations.
 To assess the runtime overhead of surface-based tracking, we compare against benchmarking results with phylogenetic tracking disabled.
 Finally, we validate the credibility of the presented end-to-end annotation-to-reconstruction pipeline by reviewing clade structure and phylometric properties from emulated and on-hardware runs.
-% Finally, we show example phylogenies generated from on-hardware simulations under different selection pressure conditions and test the capability of inference from extracted phylogenetic information to detect differing selection pressure conditions.
 
 \subsection{Surface Algorithm Benchmark on Conventional CPU}
 
 \input{fig/benchmarking}
 
 We performed microbenchmark experiments to test computational efficiency of new surface-based algorithms.
-Trials measured the real time speed of sequential generation updates on one annotation with capacity for 64 differentia. % TODO check this
+Trials measured the real-time speed of sequential generation updates on one annotation with capacity for 64 differentiae.
 Benchmarks used both Python, for comparability with existing column algorithm implementations, and Zig, to assess performance under compiler optimization.
 Figure \ref{fig:benchmarking} overviews results.
-
-% Due to limited completed implementations of compiled-language algorithms, we performed the bulk of benchmarking using the Python implementations.
-% However, in the process of porting the tilted surface algorithm over to Cerebras Software Language, we did create an implementation of that algorithm in Zig which is a compiled language and is capable of compiler optimizations.
-% We augment the Python with a benchmark of this algorithm.
 
 % https://github.com/mmore500/hstrat-surface-concept/blob/51d636d768d474fc5148b9fcaa199c1b7776e915/benchmark.ipynb
 Python implementations of the surface tilted and steady algorithms both took around 4.2 microseconds per operation (SEM approx. 50; $n=20$).
@@ -45,17 +39,17 @@ Another possibility is to coarsen temporal resolution, only updating annotations
 \subsection{Wafer-Scale Engine Island-model GA Benchmark}
 
 Next, we used an emulator to characterize the expected performance of our island model genetic algorithm on WSE hardware and estimate the magnitude of simulation that might be achieved with on-device execution.
-We used the emulator's per-PE clock cycle counters to measure the amount of real time elapsed over the course of a 40 generation-cycle simulation.
+We used the emulator's per-PE clock cycle counters to measure the amount of real time elapsed over the course of a 40-generation-cycle simulation.
 We tested using a $3\times3$ PE collective with the tagged 3-word genome and a per-PE population size of 32, applying a tilted hereditary stratigraphy every generation.
-PEs completed a mean of 24,138 generation-cycles per second (SEM 99; $n=9$).
-As an indicator of inter-PE exchange throughput, each PE immigrated a mean of 118 genomes (SEM 11; $n=9$) over 40 elapsed generation-cycles.
+PEs completed a mean of 24,138 generation cycles per second (SEM 99; $n=9$).
+As an indicator of inter-PE exchange throughput, each PE immigrated a mean of 118 genomes (SEM 11; $n=9$) over 40 elapsed generation cycles.
 
 % https://osf.io/tf89g
 What scale of simulation does this performance imply at full scale on CS-2 hardware?
 Across eight on-device, tracking-enabled trials of 1 million generations (described in the following section), we measured a mean simulation rate of 17,688 generations per second for 562,500 PEs ($750\times750$ rectangle) with run times slightly below one minute.
-Ttrials with 1,600 PEs ($40\times40$) performed similarly, completing 17,734 generations per second.
+Trials with 1,600 PEs ($40\times40$) performed similarly, completing 17,734 generations per second.
 
-Multiplied out to a full day, a 17 generations per second turnover rate would elapse around 1.5 billion generations.
+Multiplied out to a full day, 17 generations per second turnover would elapse around 1.5 billion generations.
 With 32 individuals hosted per each of 850,000 PEs, the net population size would sit around 27 million at full CS-2 wafer scale.
 (Note, though, that available on-chip memory could support thousands of our very simple agents per PE, raising the potential for a net population size on the order of a billion agents.)
 % 24,000 * 850,000 * 60 * 60 * 24 * 32 ---> ?? quadrillion
@@ -67,10 +61,10 @@ How fast is simulation without hstrat instrumentation?
 We repeated our hardware-emulated benchmark with 32-bit genomes stripped of all instrumentation.
 Under these conditions, PEs completed on average 47,175 generations per second (SEM 220; $n=9$) and immigrated 118 genomes (SEM 12; $n=9$).
 
-These timings indicate cost of phylogeny tracking as approximately equivalent to that of the other aspects of simulation, combined.
+These timings indicate cost of phylogeny tracking is approximately equivalent to that of the other aspects of simulation, combined.
 Given the highly minimalistic nature of the agent model and selection process, this result is highly promising.
 In actual use, most experiments will likely involve a much more sophisticated agent model; thus, the relative overhead of tracking will diminish significantly.
-It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce performance penalty of tracking considerably.
+It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce the performance penalty of tracking considerably.
 
 % https://github.com/mmore500/wse-sketches-mirror/actions/runs/8590107511/job/23537207835
 % from https://github.com/mmore500/wse-sketches-mirror/commit/3a1bf8e9f2820a38cb7387a7624a86361485174b
@@ -270,15 +264,9 @@ It is additionally worthwhile to note that caching and coarsening strategies dis
 
 \subsection{Clade Reconstruction Trial}
 
-% We performed extensive tests to be confident in our implementation of phylogenetic tracking for the Cerebras Software Language on the WSE device.
-% Extensive other work CITE has validated the underlying hereditary surface algorithm and the reconstruction algorithm.
-% We also used extensive unit tests in CSL to ensure the algorithm was working as expected.
-
 Here, we demonstrate phylogenetic reconstructions from emulated WSE hardware and inspect clade structure to qualitatively assess their credibility.
-% report the results of an integration test to assess the general validity of .
 For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
-% These identifiers identified clades descending from each founding genome.
-Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation-cycles under drift conditions.
+Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation cycles under drift conditions.
 At the end of simulation, phylogenetic reconstruction was conducted using one genome sampled per PE.
 
 \input{fig/tagged.tex}
@@ -291,20 +279,14 @@ Note, however, the incidence of moderate overestimations for relatedness between
 As mentioned earlier, and discussed in greater depth elsewhere \citep{moreno2024guide}, this is an expected artifact of hereditary stratigraphy with single-bit differentia.
 Applications requiring greater reconstruction precision can opt for larger differentia sizes and/or higher differentia counts.
 
-% Figure \ref{fig:validation-example:phylogeny} shows the result of phylogenetic reconstruction on these sampled genomes.
-% To simplify visualization of the phylogeny with existing phyloinformatic tools, all clades were stitched together into a single tree by attaching them to a common ancestor.
-% Taxa are colored according to their clade genesis tag.
-% Clade arrangement in the reconstructed tree agrees well with founding clade identities.
-% All different-colored taxa are predicted to have had ancient common ancestry.
-
 \subsection{On-hardware Trial}
 
 \input{fig/on-device}
 
 Finally, we set out to assess the performance of our pipeline at full wafer scale.
-For these experiments, we the used the four word, tracking-enabled genome layout, with the full first 32 bits containing a floating point fitness value.
-We defined two treatments: \textit{purifying-only}, where 33\% of agent replication events decreased fitness by a normally-distributed amount,  and \textit{adaption-enabled}, which added beneficial mutations that increased fitness by a normally-distributed amount, occuring with 0.3\% probability.
-These beneficial mutations introduced the possiblity for selective sweeps.
+For these experiments, we used the four-word, tracking-enabled genome layout, with the full first 32 bits containing a floating point fitness value.
+We defined two treatments: \textit{purifying-only}, where 33\% of agent replication events decreased fitness by a normally-distributed amount,  and \textit{adaption-enabled}, which added beneficial mutations that increased fitness by a normally-distributed amount, occurring with 0.3\% probability.
+These beneficial mutations introduced the possibility for selective sweeps.
 As before, we used tournament size 5 for both treatments.
 We performed four on-hardware replicates of each treatment instantiated on 10k ($100\times100$), 250k ($500\times500$) and 562.5k ($750\times750$) PE arrays.
 We halted each PE after it elapsed 1 million generations.
@@ -315,5 +297,4 @@ Figure \ref{fig:on-device} compares phylogenies generated under the purifying-on
 As expected \citep{moreno2023toward}, purifying-only treatment phylogenies consistently exhibited greater sum branch length and mean evolutionary distinctiveness, with the effect on branch length particularly strong.
 These structural effects are apparent in example phylogeny trees from 562.5k PE trials (Figures \labelcref{fig:on-device-adaptive,fig:on-device-purifying}).
 Successful differentiation between treatments is a highly promising outcome.
-This result not only supports the correctness of our methods and implementation, but also confirms capability for reconstruction-based analyses to extract meaningful information describing dynamics of very large-scale evolution simulations.
-% We look forward to future work expand the repetoire of  \citep{moreno2023toward}, which
+This result not only supports the correctness of our methods and implementation, but also confirms the capability of reconstruction-based analyses to meaningfully describe dynamics of very large-scale evolution simulations.

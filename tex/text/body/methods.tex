@@ -19,7 +19,7 @@ Recent work introducing \textit{hereditary stratigraphy} (hstrat) methodology ha
 Hstrat material can be bundled with agent genomes in a manner akin to non-coding DNA, entirely neutral with respect to agent traits and fitness.
 
 The hereditary stratigraphy algorithm associates each generation along individual lineages with an identifying ``fingerprint'' value, referred to as a differentia.
-On birth, offspring recieve a new differentia value and append it to an inherited chronological record of past values, each corresponding to a generation along that lineage.
+On birth, offspring receive a new differentia value and append it to an inherited chronological record of past values, each corresponding to a generation along that lineage.
 Under this scheme, mismatching differentiae can be used to delimit the extent of common ancestry.
 This semantic streamlines \textit{post hoc} phylogenetic reconstruction to a simple trie-building procedure
 \citep{moreno2024analysis}.
@@ -27,7 +27,7 @@ This semantic streamlines \textit{post hoc} phylogenetic reconstruction to a sim
 To save space, differentia may be pruned away.
 However, care must be taken to ensure retention of checkpoint generations that maximize coverage across evolutionary history.
 Reducing the number of bits per differentia can also provide many-fold memory space savings.
-This savings can be re-invested to increase the quantity of differentia retained, improving the density of record coverage across elapsed generations.
+These savings can be re-invested to increase the quantity of differentia retained, improving the density of record coverage across elapsed generations.
 The cost of this shift is an increased probability of spurious differentia value collisions, which can make two lineages appear more closely related than they actually are.
 We anticipate that most use cases will call for differentia sized on the order of a single bit or a byte.
 Indeed, single-bit differentiae have been shown to yield good quality phylogenies using only 96 bits per genome \citep{moreno2024guide}.
@@ -49,16 +49,14 @@ The bottom panels of Figure \ref{fig:surf-algorithms} contrast steady versus til
 
 \subsection{Surface-based Hereditary Stratigraphy Algorithms}
 
-% Although designed with efficiency in mind, existing ``column''-based  have several properties that make them a poor fit with a resource-constrained environment like the the Cerebras WSE:
 At the outset of this project, several problematic aspects of porting existing hereditary stratigraphy algorithms to the WSE became apparent.
 Issues stemmed, in part, from a fundamental feature of these algorithms: organization of retained strata in contiguous, sorted order.
 Forthwith, we refer to algorithms following this convention as ``column''-based.
 The column design, and attendant implementation details, impose various drawbacks:
 \begin{itemize}
 \item \textbf{wasted space}: an annotation size cap can be guaranteed, but a percentage of available space typically goes unused;
-\item \textbf{high-level feature dependencies:} in places, existing column code uses complex data structures with dynamically allocated memory to perform operations like set subtraction,
+\item \textbf{high-level feature dependencies:} in places, existing column code uses complex data structures with dynamically allocated memory to perform operations like set subtraction; and
 \item \textbf{annotation size scaling:} maintaining sorted order among differentia can take time linearly proportional to annotation size.
-% \item \textbf{expensive operations:} in places, slow divide and modulo operations. heavy use
 \end{itemize}
 
 \input{fig/surf-vs-column-schematic}
@@ -67,16 +65,9 @@ The column design, and attendant implementation details, impose various drawback
 Addressing these concerns required fundamental reformulation of hereditary stratigraphy conventions.
 To this end, we introduce a constant-time indexing scheme that maps each lineage's fingerprint stream directly onto a fixed-width memory buffer.
 Differentia pruning occurs implicitly, as a result of resident differentia being overwritten by new placements.
-As before, care is taken to guarantee temporally-representative collections of resident differentiae within the memory buffer over elapsed time.
+As before, care is taken to guarantee temporally representative collections of resident differentiae within the memory buffer over elapsed time.
 We refer to this new approach as ``surface''-based, as opposed to ``column''-based.
 Figure \ref{fig:surf-vs-column-schematic} contrasts the two.
-% to distinguish it from earlier conventions
-
-
-% New approach uses a constant-time indexing scheme that maps each lineage's fingerprint stream onto a fixed-width memory buffer such that eviction of existing fingerprint values by new placements maintains a temporally-representative sampling over elapsed time .
-% We call this approach ``surface''-based to distinguish it from earlier hereditary stratigraphy methods.
-% As before, time stamps can be positionally inferred and thus do not need to be stored --- a several-fold savings that enables fingerprint values to be shrunk down and packed together.
-
 
 \input{fig/surf-algorithms}
 
@@ -86,7 +77,7 @@ We leave formal descriptions of underlying indexing algorithms to future work.
 However, reference Python implementations can be found in provided software materials.
 For this work, we also translated the tilted algorithm to the general-purpose Zig programming language and then to the Zig-like Cerebras Software Language for use on the WSE.
 
-These algorithms are notable in providing a novel and highly efficient solution the more general problem of curating dynamic temporal cross-samples from a data stream, and may lend themselves to a broad set of applications outside the scope of phylogeny tracking \citep{moreno2024algorithms}.
+These algorithms are notable in providing a novel and highly efficient solution to the more general problem of curating dynamic temporal cross-samples from a data stream, and may lend themselves to a broad set of applications outside the scope of phylogeny tracking \citep{moreno2024algorithms}.
 
 % async microthread to send from sendBuf to neighbor
 % fn dispatchSend_S() void {
@@ -110,7 +101,7 @@ These algorithms are notable in providing a novel and highly efficient solution 
 
 \subsection{WSE Architecture and Programming Model}
 
-The Cerebras Wafer Scale Engine comprises a networked grid of independently executing compute cores (Processing Elements or PEs).
+The Cerebras Wafer-Scale Engine comprises a networked grid of independently executing compute cores (Processing Elements or PEs).
 Each PE contains special message-handling infrastructure, which routes tagged 32-bit packets (``wavelets'') to neighboring PEs and/or to be processed locally, according to a programmed rule set.
 Each Processor Element is equipped with 48kb of private on-chip memory, which can be accessed within a single clock cycle;
 communication to neighboring PEs, too, incurs low latency \citep{buitrago2021neocortex}.
@@ -124,7 +115,7 @@ Special faculties are provided for asynchronous send-receive operations that exc
 
 For further detail, we refer readers to extensive developer documentation made available by Cerebras through their SDK program.
 Access can be requested, currently free of charge, via their website.
-For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware, while other experiments used hundreds of thousands of PEs a physical CS-2 device.
+For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware, while other experiments used hundreds of thousands of PEs on a physical CS-2 device.
 
 \subsection{Asynchronous Island-model Genetic Algorithm}
 
@@ -135,8 +126,6 @@ Under this model, PEs host independent populations that interact through migrati
 
 Our implementation unfolds according to a generational update cycle, schematized in Figure \ref{fig:async-ga-schematic}.
 Migration, depicted as blue-red arrows, is handled first.
-% fully-asynchronous approach to migration between neighboring PEs.
-% Evolutionary processes tend to occur in asynchronous manner with arbitrary factors influencing things, so this is a reasonable relaxation to make.
 Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor, depicted by Figure \ref{fig:async-ga-schematic} in solid blue and red, respectively.
 On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
 At startup, additionally, each emigration buffer is populated with genomes copied from the population and an asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
@@ -155,10 +144,9 @@ The remainder of the main update loop handles evolutionary operations within the
 Each genome within the population is evaluated to produce a floating point fitness value.
 For this initial work, we use a trivial fitness function that explicitly models additive accumulation of beneficial/deleterious mutations as a floating point value within each genome.
 After evaluation, tournament selection is applied.
-Each slot in the next generation is populated the highest-fitness genome among $n=5$ randomly sampled individuals, ties broken randomly.
+Each slot in the next generation is populated with the highest-fitness genome among $n=5$ randomly sampled individuals, ties broken randomly.
 
 Finally, a mutational operator is applied across all genomes in the next population.
-% As with evaluation criteria, modular implementation allows mutation operations to be defined based on experimental objectives.
 Experiments used a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection in some treatments.
 At this point, hereditary stratigraphy annotations --- discussed next --- are updated to reflect an elapsed generation.
 
@@ -166,11 +154,9 @@ The next generation cycle is then launched by a self-activating wavelet, repeati
 
 \subsection{Genome Model}
 
-% Kernel source code implementing described procedures can be viewed at \url{https://hopth.ru/cl}.
-% Our implementation is defined modularity with respect to genome size, layout, mutational operator, and fitness evaluation criteria, allowing for direct re-use of produced software for follow-on evolution experiments on WSE hardware.
 Genomes were handled as fixed-length segments of raw memory.
 We used a 96-bit genome for clade reconstruction trials, shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
-At the outset of simulation, the first 16 bits of founding genomes were randomized and, subsequently, were inherited without mutation, thus identifing descendants of the same founding ancestor.
+At the outset of simulation, the first 16 bits of founding genomes were randomized and, subsequently, were inherited without mutation, thus identifying descendants of the same founding ancestor.
 The next 80 bits were used for hereditary stratigraph annotation, 16 bits for a generation counter and the remaining 64 as a field for single-bit differentia managed according to a tilted surface policy.
 For other experiments, a 128-bit genome layout was used instead, with the first 32 bits used for a floating point ``fitness'' value and the generation counter upgraded from 16 to 32 bits.
 % A key question will be the extent to which intentionally desynchronizing affects performance, stability, and computation quality.
@@ -186,8 +172,3 @@ This project used data formats from the ALife Standards project \citep{lalejini2
 WSE experiments reported in this work used the CSL compiler and CS-2 hardware emulator bundled with the Cerebras SDK v1.0.0 \citep{selig2022cerebras}, available via request from Cerebras.
 SDK utilities can be run from any Linux desktop environment, regardless of access to Cerebras hardware.
 We access hardware through PSC Neocortex \citep{buitrago2021neocortex}.
-
-% Cerebras currently makes SDK materials available upon request, which can be .
-% In preparation for proposed work, we joined the Cerebras SDK program \citep{selig2022cerebras} and assembled Cerebras Software Language (CSL) software implementations that will be necessary to conduct experiments with WSE hardware.
-% Access to the SDK can be requested, currently free of charge, via their website.
-% For the time being, we have used Cerebras' hardware emulator to test our software implementations.
