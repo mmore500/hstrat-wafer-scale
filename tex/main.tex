@@ -1,4 +1,44 @@
-\documentclass{article}
+\documentclass[dvipsnames,format=sigconf,anonymous=true,review=true]{acmart}
+
+
+\acmDOI{10.1145/nnnnnnn.nnnnnnn} % To be updated after completing copyright process
+\acmISBN{978-x-xxxx-xxxx-x/YY/MM} % To be updated after completing copyright process
+\acmConference[GECCO '24]{The Genetic and Evolutionary Computation Conference 2024}{July 14--18, 2024}{Melbourne, Australia}
+\acmYear{2024}
+\copyrightyear{2024}
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
 
 \input{lib/dependencies.tex}
 \input{lib/pragmaonce.tex}
@@ -7,17 +47,11 @@
 \mydraft
 \fi
 
-\defaultbibliography{bibl}
-\defaultbibliographystyle{apalike-ejor}
-
-\setlength\titlebox{2.1in}
-\setlength\affilsep{1em}
-
 \begin{document}
 
 \input{text/frontmatter.tex}
 
-\begin{bibunit}
+% \begin{bibunit}
 
 \input{text/body.tex}
 
@@ -25,7 +59,7 @@
 
 \input{text/references.tex}
 
-\end{bibunit}
+% \end{bibunit}
 
 % \clearpage
 % \newpage
