@@ -1,16 +1,16 @@
 \begin{abstract}
 \vspace{-2ex}
-Continuing improvements in computing hardware are poised to transform capabilities for \textit{in silico} modeling of cross-scale phenomena underlying major open questions in evolutionary biology and artificial life, such as transitions in individuality, eco-evolutionary dynamics, and rare evolutionary events.
-Emerging ML/AI-oriented hardware accelerators, like the 850,000 processor Cerebras Wafer Scale Engine (WSE), hold particular promise.
-However, many practical challenges remain in conducting informative evolution experiments that efficiently utilize these platforms' large processor counts.
+% Continuing improvements in computing hardware are poised to transform capabilities for \textit{in silico} modeling of cross-scale phenomena underlying major open questions in evolutionary biology and artificial life, such as transitions in individuality, eco-evolutionary dynamics, and rare evolutionary events.
+Emerging ML/AI-oriented hardware accelerators, like the 850,000 processor Cerebras Wafer Scale Engine (WSE), hold great promise to scale up the capabilities of evolutionary computation.
+However, challenges remain in maintaining the telemetry necessary to assess the mode and tempo of evolution while efficiently utilizing these platforms' large processor counts.
 Here, we focus on the problem of extracting phylogenetic information from agent-based evolution on the WSE platform.
-This goal drove significant refinements to decentralized \textit{in silico} phylogenetic tracking, reported here.
-These improvements yield order-of-magnitude performance improvements.
-We also present an asynchronous island-based genetic algorithm (GA) framework for WSE hardware.
-Emulated and on-hardware GA benchmarks with a simple tracking-enabled agent model clock upwards of 1 million generations a minute for population sizes reaching 16 million agents.
-This pace enables quadrillions of agent replication events a day.
+% This goal drove significant refinements to decentralized \textit{in silico} phylogenetic tracking, reported here.
+% These improvements yield order-of-magnitude performance improvements.
+We present a tracking-enabled asynchronous island-based genetic algorithm (GA) framework for WSE hardware.
+Emulated and on-hardware GA benchmarks with a simple tracking-enabled agent model clock upwards of 1 million generations a minute for population sizes reaching 16 million.
+This pace enables quadrillions of evaluations a day.
 We validate phylogenetic reconstructions from these trials and demonstrate their suitability for inference of underlying evolutionary conditions.
 In particular, we demonstrate extraction, from wafer-scale simulation, of clear phylometric signals that differentiate runs with adaptive dynamics enabled versus disabled.
-Together, these benchmark and validation trials reflect strong potential for highly scalable agent-based evolution simulation that is both efficient and observable.
-Developed capabilities will bring entirely new classes of previously intractable research questions within reach, benefiting further explorations within the evolutionary biology and artificial life communities across a variety of emerging high-performance computing platforms.
+Together, these benchmark and validation trials reflect strong potential for highly scalable evolutionary computation that is both efficient and observable.
+% Developed capabilities will bring entirely new classes of previously intractable research questions within reach, benefiting further explorations within the evolutionary biology and artificial life communities across a variety of emerging high-performance computing platforms.
 \end{abstract}
