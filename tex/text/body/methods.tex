@@ -117,16 +117,15 @@
 % Access can be requested, currently free of charge, via their website.
 % For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE array emulated with conventional CPU hardware, while other experiments used hundreds of thousands of PEs on a physical CS-2 device.
 
-\subsection{Asynchronous Island-model Genetic Algorithm}
+% \subsection{Asynchronous Island-model Genetic Algorithm}
 
 % \input{fig/async-ga-schematic}
 
 We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning PEs \citep{bennett1999building}.
 Under this model, PEs host independent populations that interact through migration (i.e., genome exchange) between neighbors.
 
-Our implementation unfolds according to a generational update cycle, schematized in Figure \ref{fig:async-ga-schematic}.
-Migration, depicted as blue-red arrows, is handled first.
-Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor, depicted by Figure \ref{fig:async-ga-schematic} in solid blue and red, respectively.
+Our implementation unfolds according to a generational update cycle, with migration is handled first.
+Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor.
 On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
 At startup, additionally, each emigration buffer is populated with genomes copied from the population and an asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
 Asynchronous operations are registered to on-completion callbacks that set a per-buffer ``send-'' or ``receive-complete'' flag variable.
@@ -138,18 +137,17 @@ For each immigration flag that is set, buffered genomes are copied into the main
 Then, the flag is reset and a new receive request is initiated.
 Likewise, for each emigration flag set, corresponding send buffers are re-populated with randomly sampled genomes from the main population buffer.
 Corresponding flags are then reset and new send requests are initiated.
-The bottom right corner of Figure \ref{fig:async-ga-schematic} summarizes the interplay between send/receive requests, callbacks, flags and buffers.
+% The bottom right corner of Figure \ref{fig:async-ga-schematic} summarizes the interplay between send/receive requests, callbacks, flags and buffers.
 
 The remainder of the main update loop handles evolutionary operations within the scope of the executing PE.
 Each genome within the population is evaluated to produce a floating point fitness value.
-For this initial work, we use a trivial fitness function that explicitly models additive accumulation of beneficial/deleterious mutations as a floating point value within each genome.
+% For this initial work, we use a trivial fitness function that explicitly models additive accumulation of beneficial/deleterious mutations as a floating point value within each genome.
 After evaluation, tournament selection is applied.
 Each slot in the next generation is populated with the highest-fitness genome among $n=5$ randomly sampled individuals, ties broken randomly.
 
 Finally, a mutational operator is applied across all genomes in the next population.
-Experiments used a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection in some treatments.
+% Experiments used a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection in some treatments.
 At this point, hereditary stratigraphy annotations --- discussed next --- are updated to reflect an elapsed generation.
-
 The next generation cycle is then launched by a self-activating wavelet, repeating until a generation count halting condition is met.
 
 % \subsection{Genome Model}
@@ -161,14 +159,13 @@ The next generation cycle is then launched by a self-activating wavelet, repeati
 % For other experiments, a 128-bit genome layout was used instead, with the first 32 bits used for a floating point ``fitness'' value and the generation counter upgraded from 16 to 32 bits.
 % % A key question will be the extent to which intentionally desynchronizing affects performance, stability, and computation quality.
 
-\subsection{Software and Data Availability}
+% \subsection{Software and Data Availability}
 
-Software, configuration files, and executable notebooks for this work are available via Zenodo at \href{https://doi.org/10.5281/zenodo.10974998}{\texttt{doi.org/10.5281/zenodo.10974998}}.
-Data and supplemental materials are available via the Open Science Framework at \href{https://osf.io/bfm2z/}{\texttt{osf.io/bfm2z/}}.
+Software, configuration files, and executable notebooks for this work are provided with the main paper TODO \citep{moreno2024trackable}.
 Hereditary stratigraphy utilities are published in the \texttt{hstrat} Python package \citep{moreno2022hstrat}.
+We accessed CS-2 hardware through PSC Neocortex \citep{buitrago2021neocortex}.
 
 % This project used data formats from the ALife Standards project \citep{lalejini2019data} and benefited from open-source scientific software \citep{huerta2016ete,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,cock2009biopython,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2024pecking,moreno2024hsurf,moreno2024wse,dolson2024phylotrackpy}.
-We accessed CS-2 hardware through PSC Neocortex \citep{buitrago2021neocortex}.
 
 % WSE experiments reported in this work used the CSL compiler and CS-2 hardware emulator bundled with the Cerebras SDK v1.0.0 \citep{selig2022cerebras}, available via request from Cerebras.
 % SDK utilities can be run from any Linux desktop environment, regardless of access to Cerebras hardware.
