@@ -126,10 +126,10 @@ Under this model, PEs each host independent populations and exchange genomes wit
 
 Our implementation unfolds according to a generational update cycle, with migration handled first.
 Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor.
-On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
-At startup, additionally, each emigration buffer is populated with genomes copied from the population and an asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
+% On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
+% At startup, additionally, each emigration buffer is populated with genomes copied from the population and an asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
 Asynchronous operations are registered to on-completion callbacks that set a per-buffer ``send-'' or ``receive-complete'' flag variable.
-In this work, we size send buffers to hold one genome and receive buffers to hold four genomes.
+% In this work, we size send buffers to hold one genome and receive buffers to hold four genomes.
 The main population buffer held 32 genomes.
 
 Subsequently, the main update loop tests all completion flags.
@@ -140,10 +140,10 @@ Corresponding flags are then reset and new send requests are initiated.
 % The bottom right corner of Figure \ref{fig:async-ga-schematic} summarizes the interplay between send/receive requests, callbacks, flags and buffers.
 
 The remainder of the main update loop handles evolutionary operations within the scope of the executing PE.
-Each genome within the population is evaluated to produce a floating point fitness value.
+Each genome within the population is evaluated to produce a scalar fitness value.
 % For this initial work, we use a trivial fitness function that explicitly models additive accumulation of beneficial/deleterious mutations as a floating point value within each genome.
 After evaluation, tournament selection is applied.
-Each slot in the next generation is populated with the highest-fitness genome among $n=5$ randomly sampled individuals, ties broken randomly.
+Each slot in the next generation is populated with the highest-fitness genome among $n=5$ randomly sampled individuals, with ties broken randomly.
 
 Finally, a mutational operator is applied across all genomes in the next population.
 % Experiments used a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection in some treatments.
@@ -161,11 +161,8 @@ The next generation cycle is then launched by a self-activating wavelet, repeati
 
 % \subsection{Software and Data Availability}
 
-Software, configuration files, and executable notebooks for this work are provided in \citep{moreno2024trackableTODO}.
-Hereditary stratigraphy utilities are published in the \textit{hstrat} Python package \citep{moreno2022hstrat}.
-We accessed CS-2 hardware through PSC Neocortex \citep{buitrago2021neocortex}.
-
-% This project used data formats from the ALife Standards project \citep{lalejini2019data} and benefited from open-source scientific software \citep{huerta2016ete,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,cock2009biopython,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2024pecking,moreno2024hsurf,moreno2024wse,dolson2024phylotrackpy}.
-
-% WSE experiments reported in this work used the CSL compiler and CS-2 hardware emulator bundled with the Cerebras SDK v1.0.0 \citep{selig2022cerebras}, available via request from Cerebras.
-% SDK utilities can be run from any Linux desktop environment, regardless of access to Cerebras hardware.
+Kernel code for the island-model GA is open source at \url{https://github.com/mmore500/wse-sketches/tree/v0.2.1}{github.com/mmore500/wse-sketches/tree/v0.2.1}, and can be harnessed for any fixed-length genome model and evaluation criteria through drop-in replacement of one source file containing three functions (initialize, mutate, and evaluate fitness).
+We hope to see this work contribute to scale-up in use cases across the research community.
+We used Cerebras SDK v1.0.0 \citep{selig2022cerebras}, which allows wafer-scale code to be developed and tested regardless of access to Cerebras hardware.
+Hereditary stratigraphy utilities were used from the \textit{hstrat} Python package \citep{moreno2022hstrat}.
+For more details, see our upcoming publication on this work \citep{moreno2024trackableTODO}.
