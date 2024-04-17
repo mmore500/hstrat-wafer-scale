@@ -121,10 +121,10 @@
 
 % \input{fig/async-ga-schematic}
 
-We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning PEs \citep{bennett1999building}.
-Under this model, PEs host independent populations that interact through migration (i.e., genome exchange) between neighbors.
+We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning the Wafer-Scale Engine's PEs \citep{bennett1999building}.
+Under this model, PEs each host independent populations and exchange genomes with neighbor PEs through migration.
 
-Our implementation unfolds according to a generational update cycle, with migration is handled first.
+Our implementation unfolds according to a generational update cycle, with migration handled first.
 Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor.
 On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
 At startup, additionally, each emigration buffer is populated with genomes copied from the population and an asynchronous send request is opened for each. %to dispatch wavelets containing genome data from the emigration buffer to the neighbor.
@@ -147,7 +147,7 @@ Each slot in the next generation is populated with the highest-fitness genome am
 
 Finally, a mutational operator is applied across all genomes in the next population.
 % Experiments used a simple Gaussian mutation on each genome's stored fitness value, with sign restrictions used to manipulate the character of selection in some treatments.
-At this point, hereditary stratigraphy annotations --- discussed next --- are updated to reflect an elapsed generation.
+At this point, hereditary stratigraphy annotations are updated to reflect an elapsed generation.
 The next generation cycle is then launched by a self-activating wavelet, repeating until a generation count halting condition is met.
 
 % \subsection{Genome Model}
@@ -161,8 +161,8 @@ The next generation cycle is then launched by a self-activating wavelet, repeati
 
 % \subsection{Software and Data Availability}
 
-Software, configuration files, and executable notebooks for this work are provided with the main paper TODO \citep{moreno2024trackable}.
-Hereditary stratigraphy utilities are published in the \texttt{hstrat} Python package \citep{moreno2022hstrat}.
+Software, configuration files, and executable notebooks for this work are provided in \citep{moreno2024trackableTODO}.
+Hereditary stratigraphy utilities are published in the \textit{hstrat} Python package \citep{moreno2022hstrat}.
 We accessed CS-2 hardware through PSC Neocortex \citep{buitrago2021neocortex}.
 
 % This project used data formats from the ALife Standards project \citep{lalejini2019data} and benefited from open-source scientific software \citep{huerta2016ete,2020SciPy-NMeth,harris2020array,reback2020pandas,mckinney-proc-scipy-2010,cock2009biopython,waskom2021seaborn,hunter2007matplotlib,moreno2024apc,moreno2024pecking,moreno2024hsurf,moreno2024wse,dolson2024phylotrackpy}.

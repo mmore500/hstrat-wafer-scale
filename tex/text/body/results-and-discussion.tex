@@ -273,7 +273,7 @@
 \input{fig/on-device}
 
 % Finally, we set out to assess the performance of our pipeline at full wafer scale.
-For these experiments, we used a four-word, tracking-enabled genome layout, with the full first 32 bits containing a floating point fitness value.
+For on-hardware experiments, we used a four-word, tracking-enabled genome layout, with the full first 32 bits containing a floating point fitness value.
 We defined two treatments: \textit{purifying-only}, where 33\% of agent replication events decreased fitness by a normally-distributed amount,  and \textit{adaption-enabled}, which added beneficial mutations that increased fitness by a normally-distributed amount, occurring with 0.3\% probability.
 These beneficial mutations introduced the possibility for selective sweeps.
 As before, we used tournament size 5 for both treatments.
