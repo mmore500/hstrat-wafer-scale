@@ -290,7 +290,7 @@ With 32 individuals hosted per each of 850,000 PEs, the net population size woul
 (Note, though, that available on-chip memory could support thousands of our very simple agents per PE, raising the potential for a net population size on the order of a billion agents.)
 % 24,000 * 850,000 * 60 * 60 * 24 * 32 ---> ?? quadrillion
 A naive extrapolation estimates on the order of a quadrillion agent replications could be achieved hourly at full wafer scale for such a very simple model.
-We look forward to conducting more thorough benchmarking and scaling experiments in future work.
+We look forward to more benchmarking and scaling experiments in future work.
 
 Upon completion, we sampled one genome from each PE.
 Then, we performed an agglomerative trie-based reconstruction from subsamples of 10k end-state genomes \citep{moreno2024analysis}.
@@ -298,4 +298,4 @@ Figure \ref{fig:on-device} compares phylogenies generated under the purifying-on
 As expected \citep{moreno2023toward}, purifying-only treatment phylogenies consistently exhibited greater sum branch length and mean evolutionary distinctiveness, with the effect on branch length particularly strong.
 These structural effects are apparent in example phylogeny trees from 562.5k PE trials (Figures \labelcref{fig:on-device-adaptive,fig:on-device-purifying}).
 Successful differentiation between treatments is a highly promising outcome.
-This result not only supports the correctness of our methods and implementation, but also confirms the capability of reconstruction-based analyses to meaningfully describe dynamics of very large-scale evolution simulations.
+This result not only supports the correctness of our methods and implementation, but also confirms the capability of reconstruction-based analyses to meaningfully describe very large-scale evolving populations.

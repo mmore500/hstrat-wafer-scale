@@ -59,10 +59,10 @@
 A major upshot of the deep learning race is the emergence of spectacularly capable next-generation compute accelerators \citep{zhang2016cambricon,emani2021accelerating,jia2019dissecting,medina2020habana}.
 Although tailored expressly to deep learning workloads, these hardware platforms represent an exceptional opportunity to springboard the capabilities of evolutionary computation.
 The emerging class of fabric-based accelerators, led by the 850,000 core Cerebras CS-2 Wafer Scale Engine (WSE) \citep{lauterbach2021path}, holds particular promise in this regard.
-This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently with private on-chip memory and interacting locally through a network-like interface.
+This architecture interfaces multitudinous processor elements (PEs) in a physical lattice, with PEs executing independently and interacting locally through a network-like interface.
 
-Our work here explores how such hardware might be recruited for large-scale, telemetry-enabled digital evolution, demonstrating a genetic algorithm implementation tailored to the dataflow-oriented computing model of the CS-2 platform.
-We apply the hereditary stratigraphy algorithms to enable \textit{post hoc} reconstruction of phylogenetic history by annotating genomes with special fitness-neutral annotations, akin to noncoding DNA \citep{moreno2022hereditary} (Figure \ref{fig:runtime-posthoc-schematic}).
+Our work here explores how such hardware might be recruited for large-scale, telemetry-enabled digital evolution, demonstrating a GA implementation tailored to the dataflow-oriented computing model of the CS-2 platform.
+We apply hereditary stratigraphy algorithms to enable \textit{post hoc} reconstruction of phylogenetic history from special fitness-neutral annotations on genomes (Figure \ref{fig:runtime-posthoc-schematic}) \citep{moreno2022hereditary} .
 % Indeed, rapid advances in the capability of accelerator devices, driven in particular by market demand for deep learning operations, are anticipated to play a key role in future advances in agent-based model capabilities \citep{perumalla2022computer}.
 % The very recent CS-3 chip announcement, which boosts clustering support to potentially thousands of constituent accelerators \citep{moore2024cerebras}.
 
