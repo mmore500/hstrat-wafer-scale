@@ -121,7 +121,7 @@
 
 % \input{fig/async-ga-schematic}
 
-We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning the Wafer-Scale Engine's PEs \citep{bennett1999building}.
+We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning the Wafer-Scale Engine's PEs.
 Under this model, PEs each host independent populations and exchange genomes with neighbor PEs through migration.
 
 Our implementation unfolds according to a generational update cycle, with migration handled first.
@@ -165,4 +165,4 @@ Kernel code for the island-model GA is open source at \url{https://github.com/mm
 We hope to see this work contribute to scale-up in use cases across the research community.
 We used Cerebras SDK v1.0.0 \citep{selig2022cerebras}, which allows wafer-scale code to be developed and tested regardless of access to Cerebras hardware.
 Hereditary stratigraphy utilities were used from the \textit{hstrat} Python package \citep{moreno2022hstrat}.
-For more details, see our upcoming publication on this work \citep{moreno2024trackableTODO}.
+For more details, see our upcoming publication on this work \citep{moreno2024trackable}.
