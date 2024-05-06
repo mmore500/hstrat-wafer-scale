@@ -18,12 +18,16 @@ find . -type d -empty -delete
 find . -type l -delete
 
 rm -rf binder-surface-concept/teeplots/0*
+rm -rf bindertex-evolutionary-inference/img
+rm -rf binder-reconstruction-quality
+rm -rf binder-surface-concept
 
 rm -f arxiv.tar.gz
+git checkout bibl.bib
 make cleaner
 make
 make clean
 mv bibl.bib main.bib
-cp bu1.bbl main.bbl
-cp bu1.blg main.blg
+cp tex-extended-abstract-draft.bbl main.bbl
+cp tex-extended-abstract-draft.blg main.blg
 tar -czvf arxiv.tar.gz *
