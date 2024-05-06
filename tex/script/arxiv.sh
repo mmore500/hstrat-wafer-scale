@@ -18,8 +18,10 @@ find . -type d -empty -delete
 find . -type l -delete
 
 rm -rf binder-surface-concept/teeplots/0*
+rm -rf bindertex-evolutionary-inference/img
 
 rm -f arxiv.tar.gz
+git checkout bibl.bib
 make cleaner
 make
 make clean
