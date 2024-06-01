@@ -36,8 +36,8 @@ Indeed, single-bit differentiae have been shown to yield good quality phylogenie
 
 Small differentia size intensifies need for a lean data structure to back differentia record management.
 Shrinking differentia to a single bit would be absurd if each is accompanied by a 32-bit generational timestamp.
-To safely drop timestamps, though, we need means to recalculate them on demand.
-As such, all described algorithms include means to deduce timestamps of retained differentia solely from their storage index and the count of the record's elapsed generations.
+To delete timestamps, though, we need means to recalculate them on demand.
+As such, all described algorithms can deduce timestamps of retained differentia solely from their storage index and the count of elapsed generations.
 
 Lastly, design of hstrat annotations must also consider how available storage space should be allocated across the span of history.
 In one possible strategy, which we call \textit{\textbf{``steady'' policy}}, retained time points would be distributed evenly across history.
