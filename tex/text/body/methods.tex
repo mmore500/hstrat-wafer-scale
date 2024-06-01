@@ -40,9 +40,8 @@ To safely drop timestamps, though, we need means to recalculate them on demand.
 As such, all described algorithms include means to deduce timestamps of retained differentia solely from their storage index and the count of the record's elapsed generations.
 
 Lastly, design of hstrat annotations must also consider how available storage space should be allocated across the span of history.
-In one possible strategy, retained time points would be distributed evenly across history.
-In another, more recent time points would be preferred.
-We term these as ``steady'' and ``tilted'' policies, respectively \citep{han2005stream,zhao2005generalized}.
+In one possible strategy, which we call \textit{\textbf{``steady'' policy}}, retained time points would be distributed evenly across history.
+By contrast, under \textit{\textbf{``tilted'' policy}} more recent time points are preferred \citep{han2005stream,zhao2005generalized}.
 Note that prior hereditary stratigraphy work refers to them instead as ``depth-proportional'' and ``recency-proportional resolution'' \citep{moreno2022hereditary}.
 Comparisons of reconstruction quality have shown that tilted policy gives higher quality reconstructions from the same amount of reconstruction space in most --- but not all --- circumstances \citep{moreno2024guide}.
 This pattern follows an intuition that high absolute precision is more useful to resolving recent events than more ancient ones.
@@ -55,12 +54,11 @@ The bottom panels of Figure \ref{fig:surf-algorithms} contrast steady versus til
 
 At the outset of this project, several problematic aspects of porting existing hereditary stratigraphy algorithms to the WSE became apparent.
 Issues stemmed, in part, from a fundamental feature of these algorithms: organization of retained strata in contiguous, sorted order.
-Forthwith, we refer to algorithms following this convention as ``column''-based.
-The column design, and attendant implementation details, impose various drawbacks:
+This design imposes various drawbacks:
 \begin{itemize}
-\item \textbf{wasted space}: an annotation size cap can be guaranteed, but a percentage of available space typically goes unused;
-\item \textbf{high-level feature dependencies:} in places, existing column code uses complex data structures with dynamically allocated memory to perform operations like set subtraction; and
-\item \textbf{annotation size scaling:} maintaining sorted order among differentia can take time linearly proportional to annotation size.
+\item \textit{wasted space}: an annotation size cap can be guaranteed, but a percentage of available space typically goes unused;
+\item \textit{high-level feature dependencies:} in places, existing column code uses complex data structures with dynamically allocated memory to perform operations like set subtraction; and
+\item \textit{annotation size scaling:} maintaining sorted order among differentia can take time linearly proportional to annotation size.
 \end{itemize}
 
 \noindent
@@ -68,8 +66,8 @@ Addressing these concerns required fundamental reformulation of hereditary strat
 To this end, we introduce a constant-time indexing scheme that maps each lineage's fingerprint stream directly onto a fixed-width memory buffer.
 Differentia pruning occurs implicitly, as a result of resident differentia being overwritten by new placements.
 As before, care is taken to guarantee temporally representative collections of resident differentiae within the memory buffer over elapsed time.
-We refer to this new approach as ``surface''-based, as opposed to ``column''-based.
-Figure \ref{fig:surf-vs-column-schematic} contrasts the two.
+In this new \textit{\textbf{``surface''-based approach}}, differentiae remain in the same buffer position until they are overwritten --- as opposed to the existing \textit{\textbf{``column''-based approach}}, where they are kept in sorted order.
+Figure \ref{fig:surf-vs-column-schematic} contrasts the two approaches.
 
 In the course of this work, we developed both steady- and tilted-policy surface-based hereditary stratigraphy algorithms.
 Figure \ref{fig:surf-algorithms} depicts implementation behaviors, with the top panels tracking how placements are sequenced over time in buffer space and the bottom panels showing the resulting distributions of retained time points across history.
