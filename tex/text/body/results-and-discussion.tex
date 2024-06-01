@@ -264,7 +264,9 @@ It is additionally worthwhile to note that caching and coarsening strategies dis
 
 \subsection{Clade Reconstruction Trial}
 
-Here, we demonstrate phylogenetic reconstructions from emulated WSE hardware and inspect clade structure to qualitatively assess their credibility.
+To assess overall correctness of our Cerebras Software Language (CSL) surface algorithm implementation, we reviewed the clade structure of sample phylogenetic reconstructions from emulated WSE hardware.
+Full reconstruction quality testing of the underlying new surface algorithms themselves is provided in other recent work \citep{moreno2024guide}.
+(There, we found quality to be comparable to existing column algorithms.)
 For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
 Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation cycles under drift conditions.
 At the end of simulation, phylogenetic reconstruction was conducted using one genome sampled per PE.
@@ -274,9 +276,9 @@ At the end of simulation, phylogenetic reconstruction was conducted using one ge
 Figure \ref{fig:tagged} shows reconstructed phylogenies from each duration.
 As expected, taxa belonging to the same founding clade (shown by color) are reconstructed as more closely related to each other than to other taxa.
 Additionally, and also as expected, the number of distinct remaining founding clades diminishes monotonically with increasing simulation duration.
-These consistencies corroborate the general integrity of implemented annotation and reconstruction processes.
+These consistencies corroborate the general integrity of our CSL surface implementation.
 Note, however, the incidence of moderate overestimations for relatedness between independently-tagged clades throughout.
-As mentioned earlier, and discussed in greater depth elsewhere \citep{moreno2024guide}, this is an expected artifact of hereditary stratigraphy with single-bit differentia.
+As mentioned earlier, and discussed in greater depth elsewhere \citep{moreno2024guide}, this is an expected artifact of hereditary stratigraphy with single-bit differentiae.
 Applications requiring greater reconstruction precision can opt for larger differentia sizes and/or higher differentia counts.
 
 \subsection{On-hardware Trial}
