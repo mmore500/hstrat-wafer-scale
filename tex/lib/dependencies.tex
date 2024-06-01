@@ -15,6 +15,7 @@
 \usepackage{hyperref,cleveref}
 \usepackage{import}
 \usepackage{natbib}[sort]
+\usepackage{newunicodechar}
 \usepackage{rotating}
 \usepackage[moderate]{savetrees}
 \usepackage{siunitx}
@@ -28,3 +29,7 @@
 \usepackage{listings}
 \usepackage{placeins}
 \usepackage{pythonhighlight}
+
+% adapted from https://tex.stackexchange.com/a/82763/316176
+\newunicodechar{🧬}{\includegraphics[height=\fontcharht\font`A]{img/emoji-dna}}
+\newunicodechar{🦠}{\includegraphics[height=\fontcharht\font`A]{img/emoji-microbe}}
