@@ -101,9 +101,9 @@ These algorithms are notable in providing a novel and highly efficient solution 
 
 The Cerebras Wafer-Scale Engine comprises a networked grid of independently executing compute cores (Processing Elements or PEs).
 Each PE contains special message-handling infrastructure, which routes tagged 32-bit packets (``wavelets'') to neighboring PEs and/or to be processed locally, according to a programmed rule set.
-Each Processor Element is equipped with 48kb of private on-chip memory, which can be accessed within a single clock cycle;
+Each PE is equipped with 48kb of private on-chip memory, which can be accessed within a single clock cycle;
 communication to neighboring PEs, too, incurs low latency \citep{buitrago2021neocortex}.
-Processor Elements provide faculties for standard arithmetic and flow-control operations, as well as vectorized 32- and 16-bit integer and floating-point operations.
+PEs provide faculties for standard arithmetic and flow-control operations, as well as vectorized 32- and 16-bit integer and floating-point operations.
 
 The WSE device is programmed by providing ``kernel'' code, written in the Cerebras Software Language (CSL), to be executed on each PE.
 This language's programming model purposefully reflects underlying capabilities and particularities of the WSE architecture.
