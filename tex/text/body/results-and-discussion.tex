@@ -268,7 +268,7 @@ To assess overall correctness of our Cerebras Software Language (CSL) surface al
 Full reconstruction quality testing of the underlying new surface algorithms themselves is provided in other recent work \citep{moreno2024guide}.
 (There, we found quality to be comparable to existing column algorithms.)
 For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
-Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation cycles under drift conditions.
+Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation cycles with neutral selection.
 At the end of simulation, phylogenetic reconstruction was conducted using one genome sampled per PE.
 
 \input{fig/tagged.tex}
