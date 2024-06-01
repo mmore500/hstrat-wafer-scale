@@ -125,7 +125,7 @@ For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE
 We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning PEs \citep{bennett1999building}.
 Under this model, PEs host independent populations that interact through migration (i.e., genome exchange) between neighbors.
 
-Our implementation unfolds according to a generational update cycle, schematized in Figure \ref{fig:async-ga-schematic}.
+Our implementation unfolds according to a generational update cycle.
 Migration, depicted as blue-red arrows, is handled first.
 Each PE maintains independent immigration buffers and emigration buffers dedicated to each cardinal neighbor, depicted by Figure \ref{fig:async-ga-schematic} in solid blue and red, respectively.
 On simulation startup, asynchronous receive operations are opened to accept genomes from each neighboring PE into its corresponding immigration buffer.
@@ -139,7 +139,7 @@ For each immigration flag that is set, buffered genomes are copied into the main
 Then, the flag is reset and a new receive request is initiated.
 Likewise, for each emigration flag set, corresponding send buffers are re-populated with randomly sampled genomes from the main population buffer.
 Corresponding flags are then reset and new send requests are initiated.
-The bottom right corner of Figure \ref{fig:async-ga-schematic} summarizes the interplay between send/receive requests, callbacks, flags and buffers.
+Figure \ref{fig:async-ga-schematic-controlflow} summarizes the interplay between send/receive requests, callbacks, flags, and buffers each generation (``main cycle'').
 
 The remainder of the main update loop handles evolutionary operations within the scope of the executing PE.
 Each genome within the population is evaluated to produce a floating point fitness value.
