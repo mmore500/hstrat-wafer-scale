@@ -287,7 +287,7 @@ Applications requiring greater reconstruction precision can opt for larger diffe
 
 Finally, we set out to assess the performance of our pipeline at full wafer scale.
 For these experiments, we used the four-word, tracking-enabled genome layout, with the full first 32 bits containing a floating point fitness value.
-We defined two treatments: \textit{purifying-only}, where 33\% of agent replication events decreased fitness by a normally-distributed amount,  and \textit{adaption-enabled}, which added beneficial mutations that increased fitness by a normally-distributed amount, occurring with 0.3\% probability.
+We defined two treatments: \textit{\textbf{purifying-only conditions}}, where 33\% of agent replication events decreased fitness by a normally-distributed amount, and \textit{\textbf{adaption-enabled conditions}}, which added beneficial mutations that increased fitness by a normally-distributed amount, occurring with 0.3\% probability.
 These beneficial mutations introduced the possibility for selective sweeps.
 As before, we used tournament size 5 for both treatments.
 We performed four on-hardware replicates of each treatment instantiated on 10k ($100\times100$), 250k ($500\times500$) and 562.5k ($750\times750$) PE arrays.
