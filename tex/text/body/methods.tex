@@ -1,5 +1,7 @@
 \section{Methods} \label{sec:methods}
 
+\input{fig/surf-algorithms}
+
 This section details the algorithm and implementation design used in this work.
 After briefly recounting the core mechanics of hereditary stratigraphy methods for phylogenetic tracking, we motivate and describe new lightweight ``surface'' data structures used to annotate agent genomes in this work.
 Then, we describe the asynchronous compute-communicate implementation strategy behind the testbed WSE-oriented island-based genetic algorithm used for validation and benchmarking experiments.
@@ -49,6 +51,8 @@ The bottom panels of Figure \ref{fig:surf-algorithms} contrast steady versus til
 
 \subsection{Surface-based Hereditary Stratigraphy Algorithms}
 
+\input{fig/surf-vs-column-schematic}
+
 At the outset of this project, several problematic aspects of porting existing hereditary stratigraphy algorithms to the WSE became apparent.
 Issues stemmed, in part, from a fundamental feature of these algorithms: organization of retained strata in contiguous, sorted order.
 Forthwith, we refer to algorithms following this convention as ``column''-based.
@@ -59,8 +63,6 @@ The column design, and attendant implementation details, impose various drawback
 \item \textbf{annotation size scaling:} maintaining sorted order among differentia can take time linearly proportional to annotation size.
 \end{itemize}
 
-\input{fig/surf-vs-column-schematic}
-
 \noindent
 Addressing these concerns required fundamental reformulation of hereditary stratigraphy conventions.
 To this end, we introduce a constant-time indexing scheme that maps each lineage's fingerprint stream directly onto a fixed-width memory buffer.
@@ -68,8 +70,6 @@ Differentia pruning occurs implicitly, as a result of resident differentia being
 As before, care is taken to guarantee temporally representative collections of resident differentiae within the memory buffer over elapsed time.
 We refer to this new approach as ``surface''-based, as opposed to ``column''-based.
 Figure \ref{fig:surf-vs-column-schematic} contrasts the two.
-
-\input{fig/surf-algorithms}
 
 In the course of this work, we developed both steady- and tilted-policy surface-based hereditary stratigraphy algorithms.
 Figure \ref{fig:surf-algorithms} depicts implementation behaviors, with the top panels tracking how placements are sequenced over time in buffer space and the bottom panels showing the resulting distributions of retained time points across history.
@@ -120,6 +120,7 @@ For this initial work, we evaluated some CSL code on a virtualized $3\times3$ PE
 \subsection{Asynchronous Island-model Genetic Algorithm}
 
 \input{fig/async-ga-schematic}
+\input{fig/benchmarking}
 
 We apply an island-model genetic algorithm, common in applications of parallel and distributed computing to evolutionary computation, to instantiate a wafer-scale evolutionary process spanning PEs \citep{bennett1999building}.
 Under this model, PEs host independent populations that interact through migration (i.e., genome exchange) between neighbors.
