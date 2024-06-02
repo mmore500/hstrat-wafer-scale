@@ -2,9 +2,8 @@
 
 \input{fig/surf-algorithms}
 
-This section details the algorithm and implementation design used in this work.
-After briefly recounting the core mechanics of hereditary stratigraphy methods for phylogenetic tracking, we motivate and describe new lightweight ``surface'' data structures used to annotate agent genomes in this work.
-Then, we describe the asynchronous compute-communicate implementation strategy behind the testbed WSE-oriented island-based genetic algorithm used for validation and benchmarking experiments.
+This section recounts the core mechanics of hereditary stratigraphy methods for phylogenetic tracking and describes new lightweight ``surface'' data structures used in this work.
+Then, we describe the asynchronous compute-communicate implementation strategy behind the testbed island-based genetic algorithm used for WSE validation and benchmarking experiments.
 
 \subsection{Distributed Phylogenetic Tracking}
 
@@ -100,16 +99,16 @@ These algorithms are notable in providing a novel and highly efficient solution 
 \subsection{WSE Architecture and Programming Model}
 
 The Cerebras Wafer-Scale Engine comprises a networked grid of independently executing compute cores (Processing Elements or PEs).
-Each PE contains special message-handling infrastructure, which routes tagged 32-bit packets (``wavelets'') to neighboring PEs and/or to be processed locally, according to a programmed rule set.
-Each PE is equipped with 48kb of private on-chip memory, which can be accessed within a single clock cycle;
+Each PE contains dedicated message-handling infrastructure, which routes tagged 32-bit packets (``wavelets'') to neighboring PEs and/or to be processed locally, according to a programmed rule set.
+Each PE contains 48kb of private on-chip memory wideth single clock cycle latency;
 communication to neighboring PEs, too, incurs low latency \citep{buitrago2021neocortex}.
-PEs provide faculties for standard arithmetic and flow-control operations, as well as vectorized 32- and 16-bit integer and floating-point operations.
+PEs support standard arithmetic and flow-control operations, as well as vectorized 32- and 16-bit integer and floating-point operations.
 
 The WSE device is programmed by providing ``kernel'' code, written in the Cerebras Software Language (CSL), to be executed on each PE.
-This language's programming model purposefully reflects underlying capabilities and particularities of the WSE architecture.
-CSL organizes code within an event-driven framework, with the programmer defining tasks to be triggered in response to wavelet activation signals exchanged between --- and within --- PEs.
+This language's programming model purposefully reflects characteristics of the underlying WSE architecture.
+CSL uses an event-driven framework, with tasks defined to respond to wavelet activation signals exchanged between --- and within --- PEs.
 Scheduling of active tasks occurs via hardware-level microthreading, which allows for some level of concurrency.
-Special faculties are provided for asynchronous send-receive operations that exchange contiguous, or strided, buffer data between PEs.
+Special faculties are provided for asynchronous send-receive operations that exchange buffered data between PEs.
 
 For further detail, we refer readers to extensive developer documentation made available by Cerebras through their SDK program.
 Access can be requested, currently free of charge, via their website.
@@ -153,11 +152,11 @@ The next generation cycle is then launched by a self-activating wavelet, repeati
 
 \subsection{Genome Model}
 
-Genomes were handled as fixed-length segments of raw memory.
+% Genomes were handled as fixed-length segments of raw memory.
 We used a 96-bit genome for clade reconstruction trials, shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
 At the outset of simulation, the first 16 bits of founding genomes were randomized and, subsequently, were inherited without mutation, thus identifying descendants of the same founding ancestor.
-The next 80 bits were used for hereditary stratigraph annotation, 16 bits for a generation counter and the remaining 64 as a field for single-bit differentia managed according to a tilted surface policy.
-For other experiments, a 128-bit genome layout was used instead, with the first 32 bits used for a floating point ``fitness'' value and the generation counter upgraded from 16 to 32 bits.
+The next 80 bits were used for hereditary stratigraph annotation, 16 bits for a generation counter and the remaining 64 as a tilted-retention surface with single-bit differentiae.
+Other experiments use a 128-bit genome layout, with the first 32 bits used for a floating point ``fitness'' value and the generation counter upgraded from 16 to 32 bits.
 % A key question will be the extent to which intentionally desynchronizing affects performance, stability, and computation quality.
 
 \subsection{Software and Data Availability}
