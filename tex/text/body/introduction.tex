@@ -87,12 +87,11 @@ Additionally, \textit{in silico}, phylogenetic information can even serve as a m
 
 \input{fig/schematic}
 
-In order to analyze the phylogenetic history of an evolving system, we must first collect it.
-In existing artificial life work, a typical approach uses centralized tracking to maintain an exact, complete record comprising all parent-offspring relationships that have existed over the course of a simulation \citep{ray1992evolution,bohm2017mabe,de2012deap,garwood2019revosim,godin2019apoget,dolson2024phylotrackpy}.
-Often, records of extinct lineages are pruned to prevent memory bloat \citep{moreno2024analysis}.
-Although the direct-tracking approach is well suited to serial simulation or centralized controller-worker schemes, extreme sensitivity to missing data and runtime communication overheads impede scaling to highly distributed systems --- particularly those with lean memory capacity like the Cerebras WSE \citep{moreno2024analysis}.
-To overcome this limitation, we have developed reconstruction-based approaches to phylogenetic tracking \textit{in silico} \citep{moreno2022hereditary}.
-These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons among end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses tell how lineages of contemporary organisms relate in natural history.
+Most existing artificial life work uses centralized tracking to maintain an exact, complete record of phylogenetic history comprising all parent-offspring relationships that have existed over the course of a simulation \citep{ray1992evolution,bohm2017mabe,de2012deap,garwood2019revosim,godin2019apoget,dolson2024phylotrackpy}.
+Typically, records of extinct lineages are pruned to prevent memory bloat \citep{moreno2024analysis}.
+Although direct-tracking is well suited to serial simulation or centralized controller-worker schemes, runtime communication overheads and sensitivity to data loss impede scaling to highly distributed systems --- particularly those with lean memory capacity like the Cerebras WSE \citep{moreno2024analysis}.
+To overcome this limitation, we have developed reconstruction-based approaches to \textit{in silico} phylogenetic tracking \citep{moreno2022hereditary}.
+These approaches require no centralized data collection during simulation runtime; instead, they use \textit{post hoc} comparisons among end-state agent genomes to deduce approximate phylogenetic history --- akin to how DNA-based analyses describe natural history.
 Figure \ref{fig:runtime-posthoc-schematic} summarizes this reconstruction-based strategy.
 
 Although analogous work with natural biosequences is notoriously challenging and data-intensive \citep{neyman1971molecular,lemmon2013high},
