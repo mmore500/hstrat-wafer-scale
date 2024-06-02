@@ -2,7 +2,7 @@
 
 Computing hardware with transformative capabilities is presently coming to market.
 This fact presents an immediate opportunity to bring orders-of-magnitude greater simulation scale to bear on grand challenges in artificial life.
-It is not unreasonable to anticipate possibility that with such resources some aspects of these open questions will be revealed to harbor more-is-different dispositions, in which larger scales reveal qualitatively different dynamics \citep{anderson1972more}.
+It is not unreasonable to anticipate the possibility that with such resources some aspects of these open questions will be revealed to harbor more-is-different dispositions, in which larger scales reveal qualitatively different dynamics \citep{anderson1972more}.
 Riding the coattails of AI-workload-driven hardware development, itself largely driven by profound more-is-different payoffs in deep learning, provides perhaps the most immediate means toward this possibility.
 
 Such an endeavor is a community-level challenge that will require significant resources and collaborative effort.
@@ -11,6 +11,7 @@ We have demonstrated new algorithms and software for phylogeny-enabled agent-bas
 Microbenchmarking results show that proposed instrumentation algorithms achieve several-fold improvement in computational efficiency.
 Related work shows new algorithms to improve reconstruction quality in some cases, too \citep{moreno2024guide}.
 Benchmarks confirm that, including tracking operations, simple models at wafer scale can achieve quintillions of replications per day.
+In future work, it will be necessary to move beyond proof-of-concept and explore the limits of these capabilities in the context of more demanding, interaction-intensive models.
 
 Special characteristics set agent-based digital evolution apart from many other HPC application domains and position it as a potentially valuable testbed for innovation and leadership.
 Among these factors are challenging workload heterogeneity (varying within a population and over evolutionary time), resiliency of global state to local perturbations, and perhaps substantial freedom to recompose underlying simulation semantics to accommodate hardware capabilities.
@@ -20,7 +21,7 @@ Work done to scale up digital evolution simulation should be done with an eye fo
 In this vein, presented ``surface'' indexing algorithms stand to benefit larger classes of stream curation problems, situations in which a rolling feed of sequenced observations must be dynamically downsampled to ensure retention of elements representative across observed history \citep{moreno2024algorithms}.
 In particular, to further benefit observable agent-based modeling, we are interested in exploring applications that sample time-series activity at simulation sites or distill coarsened agent histories (e.g., position over time).
 
-The immediate goal of our presented work, however, is to build means for progress toward existing research agendas held across the realms of digital evolution and artificial life.
-To this end, our work has prioritized production of reusable CSL and Python software tools ready to be harnessed by the broader research community.
-In particular, CSL code implementing the presented island-model GA is defined in a modularized and extensible manner to support drop-in customization to instantiate any fixed-length genome content and fitness criteria corresponding to research interests within the community.
+Our goal in this work is to build new capabilities that empower research agendas across the digital evolution and artificial life community.
+To this end, we have prioritized making our CSL and Python software easily reusable by other researchers.
+In particular, CSL code implementing the presented island-model GA is modularized and extensible for drop-in customization to instantiate any fixed-length genome content and fitness criteria.
 We look forward to collaboration in broader tandem efforts to harness the Cerebras platform, and other emerging hardware, in follow-on work.

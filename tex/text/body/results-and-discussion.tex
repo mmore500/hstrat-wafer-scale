@@ -14,7 +14,7 @@ Benchmarks used both Python, for comparability with existing column algorithm im
 Figure \ref{fig:benchmarking} overviews results.
 
 % https://github.com/mmore500/hstrat-surface-concept/blob/51d636d768d474fc5148b9fcaa199c1b7776e915/benchmark.ipynb
-Python implementations of the surface tilted and steady algorithms both took around 4.2 microseconds per operation (standard errors [SE] 50ns and 66ns; $n=20$).
+Python implementations of the surface tilted and steady algorithms both took around 4.2 microseconds per operation (standard error [SE] 50ns and 66ns; $n=20$).
 For context, this speed was about $4\times$ the measured time for a surface placement using a trivial calculation (SE 0.05; $n=20$).
 As expected, column implementations of steady and tilted fared much worse, taking about $7\times$ and $34\times$ the execution time per operation compared to the surface operations.
 In both cases, surface implementations significantly outperformed their column counterparts (Mann-Whitney U test, $\alpha = 0.05$).
