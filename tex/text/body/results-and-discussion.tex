@@ -61,10 +61,10 @@ How fast is simulation without hstrat instrumentation?
 We repeated our hardware-emulated benchmark with 32-bit genomes stripped of all instrumentation.
 Under these conditions, PEs completed on average 47,175 generations per second (SEM 220; $n=9$) and immigrated 118 genomes (SEM 12; $n=9$).
 
-These timings indicate cost of phylogeny tracking is approximately equivalent to that of the other aspects of simulation, combined.
+These timings measure phylogeny tracking as approximately equivalent to that of the other aspects of simulation, combined.
 Given the highly minimalistic nature of the agent model and selection process, this result is highly promising.
-In actual use, most experiments will likely involve a much more sophisticated agent model; thus, the relative overhead of tracking will diminish significantly.
-It is additionally worthwhile to note that caching and coarsening strategies discussed above have not yet been applied, which may reduce the performance penalty of tracking considerably.
+In actual use, most experiments will likely involve a much more sophisticated agent model, so relative overhead of tracking will be diminished.
+Additionally, these results do not include caching and coarsening strategies discussed above, which would speed tracking up considerably.
 
 % https://github.com/mmore500/wse-sketches-mirror/actions/runs/8590107511/job/23537207835
 % from https://github.com/mmore500/wse-sketches-mirror/commit/3a1bf8e9f2820a38cb7387a7624a86361485174b
@@ -268,8 +268,8 @@ To assess overall correctness of our Cerebras Software Language (CSL) surface al
 Full reconstruction quality testing of the underlying new surface algorithms themselves is provided in other recent work \citep{moreno2024guide}.
 (There, we found quality to be comparable to existing column algorithms.)
 For these experiments, we tagged genomes with a 16-bit randomly generated identifier at simulation startup, as shown in Supplementary Figure \ref{fig:genome-layout} \citep{moreno2024supplement}.
-Using the hardware emulator, we instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation cycles with neutral selection.
-At the end of simulation, phylogenetic reconstruction was conducted using one genome sampled per PE.
+We instantiated populations over a $3\times3$ PE collective for durations of 25, 50, 100, and 250 generation cycles with neutral selection.
+Phylogenetic reconstruction used one end-state genome sampled per PE.
 
 \input{fig/tagged.tex}
 
