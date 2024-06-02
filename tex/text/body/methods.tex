@@ -15,6 +15,7 @@ In biology, mutational drift encodes ancestry information in DNA genomes.
 Our proposed methods are analogous, with ancestry information captured within genomes themselves rather than external tracking.
 Phylogenetic history can then be estimated after the fact, as Figure \ref{fig:runtime-posthoc-schematic} depicts.
 This strategy reduces runtime communication and is resilient to germane modes of data loss (e.g., dropped messages, hardware crash-out).
+Note that, in addition to sampling end-state genomes, extracting ``fossil'' genomes over the course of simulation can allow lineages that end up going extinct to be included in phylogenetic reconstruction.
 
 Recent work introducing \textit{hereditary stratigraphy} (hstrat) methodology has explored how best to organize genetic material to maximize reconstruction quality and minimize memory footprint \citep{moreno2022hstrat, moreno2022hereditary}.
 Hstrat material can be bundled with agent genomes in a manner akin to non-coding DNA, entirely neutral with respect to agent traits and fitness.
