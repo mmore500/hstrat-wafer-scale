@@ -32,3 +32,7 @@
 	path = tex-extended-abstract
 	url = https://github.com/mmore500/hstrat-wafer-scale.git
 	branch = tex-extended-abstract
+[submodule "tex-supercomputing-abstract"]
+	path = tex-supercomputing-abstract
+	url = https://github.com/mmore500/hstrat-wafer-scale.git
+	branch = tex-extended-abstract
